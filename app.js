@@ -201,6 +201,38 @@ const MAX_SESSOES = 300;
 let SESSIONS = store.get('bbq.sessions', []);
 if (!Array.isArray(SESSIONS)) SESSIONS = [];
 
+/* =====================================================================
+   CADERNO DE ERROS (localStorage: bbq.erros)
+   qid → { qid, q (cópia da questão), marcada, erros, acertosDepois,
+           primeiraVez, ultimaVez, dominada, dominadaEm }
+   Guarda uma cópia da questão para que ela continue legível mesmo se
+   sair do banco; ao refazer, usa a versão atual do banco quando existir.
+   ===================================================================== */
+let CADERNO = store.get('bbq.erros', null);
+
+function snapshotQ(q) {
+  const { id, disciplina, assunto, dificuldade, fonte, tempoAlvoSeg, enunciado, alternativas,
+          correta, explicacaoCorreta, explicacaoAlternativas, tags } = q;
+  return { id, disciplina, assunto, dificuldade, fonte, tempoAlvoSeg, enunciado, alternativas,
+           correta, explicacaoCorreta, explicacaoAlternativas, tags };
+}
+function saveCaderno() { store.set('bbq.erros', CADERNO); }
+function registrarErro(q, marcada, quando = new Date().toISOString()) {
+  const e = CADERNO[q.id] || { qid: q.id, erros: 0, primeiraVez: quando };
+  Object.assign(e, {
+    q: snapshotQ(q), marcada, erros: e.erros + 1, ultimaVez: quando,
+    acertosDepois: 0, dominada: false, dominadaEm: null
+  });
+  CADERNO[q.id] = e;
+}
+function questaoDoCaderno(e) { return BANK.find((q) => q.id === e.qid) || e.q; }
+function pendentesCaderno() { return Object.values(CADERNO).filter((e) => !e.dominada); }
+function setDominada(qid, valor) {
+  const e = CADERNO[qid]; if (!e) return;
+  e.dominada = valor; e.dominadaEm = valor ? new Date().toISOString() : null;
+  saveCaderno(); updateErrosBadge();
+}
+
 function saveSession(sess) {
   const i = SESSIONS.findIndex((s) => s.id === sess.id);
   if (i >= 0) SESSIONS[i] = sess; else SESSIONS.push(sess);
@@ -237,7 +269,7 @@ function toast(msg) {
   clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2400);
 }
 function show(id) {
-  ['home', 'quiz', 'result', 'perf'].forEach((s) => { $(s).hidden = s !== id; });
+  ['home', 'quiz', 'result', 'perf', 'erros'].forEach((s) => { $(s).hidden = s !== id; });
   $('actionbar').hidden = id !== 'quiz';
   window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
 }
@@ -315,6 +347,18 @@ function renderHome() {
     $('homePerfTxt').textContent = `${SESSIONS.length} sessão(ões) · última: ${s.acertos}/${s.total} (${pctOf(s.acertos, s.total)}%), ${fmtPts(s.pontos)} pts`
       + (fracos ? ` · ${fracos} assunto(s) abaixo de 60%` : '');
   }
+
+  const pend = pendentesCaderno().length;
+  const dom = Object.keys(CADERNO).length - pend;
+  $('homeErrosTxt').textContent = pend
+    ? `${pend} questão(ões) para revisar` + (dom ? ` · ${dom} dominada(s)` : '')
+    : (dom ? `Tudo revisado! ${dom} questão(ões) dominada(s). 🎉` : 'Vazio por enquanto. As questões que você errar aparecem aqui.');
+  updateErrosBadge();
+}
+function updateErrosBadge() {
+  const n = pendentesCaderno().length;
+  $('errosBadge').hidden = !n;
+  $('errosBadge').textContent = n > 99 ? '99+' : n;
 }
 $('fDisc').addEventListener('change', () => { refreshAssuntos(); updateCount(); });
 ['fAssunto', 'fDif', 'fModo'].forEach((id) => $(id).addEventListener('change', updateCount));
@@ -430,6 +474,13 @@ function answer() {
   S.session.fim = new Date().toISOString();
   saveSession(S.session);
 
+  // Caderno de Erros: errou → entra (ou volta) para a lista; acertou → conta como revisão
+  const noCaderno = CADERNO[q.id];
+  if (!ok) registrarErro(q, S.selected);
+  else if (noCaderno && !noCaderno.dominada) noCaderno.acertosDepois = (noCaderno.acertosDepois || 0) + 1;
+  saveCaderno(); updateErrosBadge();
+  const sugerirDominei = ok && noCaderno && !noCaderno.dominada;
+
   // Feedback
   const exp = q.explicacaoAlternativas || {};
   const others = LETTERS.filter((L) => L !== correct && exp[L]);
@@ -441,6 +492,11 @@ function answer() {
         <span class="t">⏱ ${fmtTime(S.elapsed)}${target ? ' de ' + fmtTime(target) : ''}</span>
       </div>
       <div class="fb-body">
+        ${!ok ? `<div class="block muted" style="font-size:13.5px">📕 Questão adicionada ao Caderno de Erros.</div>` : ''}
+        ${sugerirDominei ? `<div class="block fb-dominei">
+            <span>📕 Esta questão está no seu Caderno de Erros${noCaderno.acertosDepois > 1 ? ` (acertou ${noCaderno.acertosDepois}× na revisão)` : ''}.</span>
+            <button class="btn btn-ok btn-sm" data-dominei="${esc(q.id)}">✓ Dominei, tirar do caderno</button>
+          </div>` : ''}
         <div class="block">
           <h4>Por que a ${esc(correct)} está correta</h4>
           <p>${rich(q.explicacaoCorreta || 'Sem explicação cadastrada.')}</p>
@@ -460,6 +516,11 @@ function answer() {
   $('hint').textContent = 'Enter para ' + (last ? 'ver o resultado' : 'avançar');
   setTimeout(() => $('qFeedback').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
 }
+$('qFeedback').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-dominei]'); if (!b) return;
+  setDominada(b.dataset.dominei, true);
+  b.parentElement.innerHTML = '<span style="color:var(--ok);font-weight:700">✓ Marcada como dominada e retirada do caderno.</span>';
+});
 function next() {
   if (S.i < S.queue.length - 1) { S.i++; renderQuestion(); }
   else finish();
@@ -682,6 +743,98 @@ $('resetBankBtn').addEventListener('click', () => {
   if (!confirm('Substituir o banco atual pelas 5 questões de exemplo?')) return;
   BANK = SAMPLE_QUESTIONS; store.del('bbq.bank'); renderHome(); toast('Banco restaurado.');
 });
+/* =====================================================================
+   TELA: CADERNO DE ERROS
+   ===================================================================== */
+function excerpt(s, n = 150) {
+  const t = String(s || '').replace(/```[\s\S]*?```/g, ' [código] ').replace(/[`*]/g, '').replace(/\s+/g, ' ').trim();
+  return t.length > n ? t.slice(0, n).trimEnd() + '…' : t;
+}
+function fmtData(iso) {
+  return iso ? new Date(iso).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : '';
+}
+function errosFiltrados() {
+  const status = $('eStatus').value, d = $('eDisc').value;
+  return Object.values(CADERNO)
+    .filter((e) => (status === 'dominadas' ? e.dominada : !e.dominada))
+    .filter((e) => !d || (questaoDoCaderno(e).disciplina || 'Sem disciplina') === d)
+    .sort((a, b) => String(status === 'dominadas' ? b.dominadaEm : b.ultimaVez)
+      .localeCompare(String(status === 'dominadas' ? a.dominadaEm : a.ultimaVez)));
+}
+function erroCardHTML(e) {
+  const q = questaoDoCaderno(e);
+  const alts = q.alternativas || {}, exps = q.explicacaoAlternativas || {};
+  const correta = String(q.correta || '').toUpperCase();
+  const m = e.marcada;
+  const acoes = e.dominada
+    ? `<button class="btn btn-ghost btn-sm" data-act="voltar">↩ Voltar para o caderno</button>`
+    : `<button class="btn btn-ghost btn-sm" data-act="refazer">Refazer esta</button>
+       <button class="btn btn-ok btn-sm" data-act="dominei">✓ Dominei</button>`;
+  return `<article class="erro-card" data-id="${esc(e.qid)}">
+    <div class="erro-top">
+      <div class="meta">
+        <span class="chip">${esc(q.disciplina || 'Sem disciplina')}</span>
+        ${q.assunto ? `<span class="chip" style="background:var(--surface-2);color:var(--muted)">${esc(q.assunto)}</span>` : ''}
+        <span class="chip chip-err">errou ${e.erros}×</span>
+        ${e.acertosDepois ? `<span class="chip chip-ok">acertou ${e.acertosDepois}× depois</span>` : ''}
+      </div>
+      <span class="erro-date">${e.dominada ? 'dominada em ' + esc(fmtData(e.dominadaEm)) : 'último erro ' + esc(fmtData(e.ultimaVez))}</span>
+    </div>
+    <details class="enun">
+      <summary><span class="lbl">Enunciado</span> <span class="excerpt muted">· ${esc(excerpt(q.enunciado))}</span></summary>
+      <div class="enunciado">${rich(q.enunciado)}</div>
+    </details>
+    <div class="ans ans-wrong">
+      <div class="ans-label">Você marcou</div>
+      <div class="ans-alt"><span class="letter-badge">${esc(m)}</span><span>${rich(alts[m] ?? '')}</span></div>
+      <p><b>Por que está errada:</b> ${rich(exps[m] || 'Sem explicação cadastrada para esta alternativa.')}</p>
+    </div>
+    <div class="ans ans-ok">
+      <div class="ans-label">Resposta correta</div>
+      <div class="ans-alt"><span class="letter-badge">${esc(correta)}</span><span>${rich(alts[correta] ?? '')}</span></div>
+      <p><b>Por que está certa:</b> ${rich(q.explicacaoCorreta || 'Sem explicação cadastrada.')}</p>
+    </div>
+    <div class="erro-actions">${acoes}</div>
+  </article>`;
+}
+function renderErros() {
+  const status = $('eStatus').value;
+  const doStatus = Object.values(CADERNO).filter((e) => (status === 'dominadas' ? e.dominada : !e.dominada));
+  fillSelect($('eDisc'), uniq(doStatus.map((e) => questaoDoCaderno(e).disciplina || 'Sem disciplina')), 'Todas', $('eDisc').value);
+
+  const lista = errosFiltrados();
+  const pend = pendentesCaderno().length, dom = Object.keys(CADERNO).length - pend;
+  $('eCount').innerHTML = `<b>${lista.length}</b> <span class="muted">${status === 'dominadas' ? 'dominada(s)' : 'para revisar'}`
+    + ` · total: ${pend} pendente(s), ${dom} dominada(s)</span>`;
+  $('eRedoBtn').hidden = status === 'dominadas' || !lista.length;
+  $('eRedoBtn').textContent = `Refazer ${lista.length} questão(ões) →`;
+
+  $('eList').innerHTML = lista.length ? lista.map(erroCardHTML).join('') : `<div class="card"><p class="empty">${
+    status === 'dominadas' ? 'Nenhuma questão dominada ainda.'
+      : Object.keys(CADERNO).length ? 'Nenhum erro pendente com esse filtro. 🎉'
+      : 'Seu caderno está vazio. As questões que você errar aparecem aqui automaticamente.'}</p></div>`;
+}
+function openErros() { clearInterval(S.timerId); renderErros(); show('erros'); }
+
+$('errosBtn').addEventListener('click', () => { if ($('quiz').hidden || confirmQuit()) openErros(); });
+$('homeErrosBtn').addEventListener('click', openErros);
+$('errosBackBtn').addEventListener('click', goHome);
+$('eDisc').addEventListener('change', renderErros);
+$('eStatus').addEventListener('change', () => { $('eDisc').value = ''; renderErros(); });
+$('eRedoBtn').addEventListener('click', () => {
+  let list = errosFiltrados().map(questaoDoCaderno);
+  if ($('fShuffle').checked) list = shuffle(list);
+  startQuiz(list);
+});
+$('eList').addEventListener('click', (ev) => {
+  const b = ev.target.closest('[data-act]'); if (!b) return;
+  const id = b.closest('.erro-card').dataset.id;
+  if (b.dataset.act === 'refazer') return startQuiz([questaoDoCaderno(CADERNO[id])]);
+  setDominada(id, b.dataset.act === 'dominei');
+  toast(b.dataset.act === 'dominei' ? 'Marcada como dominada ✓' : 'Questão voltou para o caderno.');
+  renderErros();
+});
+
 $('resetStatsBtn').addEventListener('click', () => {
   if (!confirm('Apagar todas as estatísticas e o histórico de sessões?')) return;
   STATS = {}; store.del('bbq.stats');
@@ -690,5 +843,16 @@ $('resetStatsBtn').addEventListener('click', () => {
 });
 
 /* ===================================================================== */
+// Primeira execução do caderno: importa os erros já registrados no histórico de sessões
+if (!CADERNO || typeof CADERNO !== 'object') {
+  CADERNO = {};
+  const porId = new Map(BANK.map((q) => [q.id, q]));
+  SESSIONS.forEach((s) => (s.respostas || []).forEach((r) => {
+    const q = porId.get(r.qid); if (!q) return;
+    if (!r.ok) registrarErro(q, r.marcada, r.em);
+    else if (CADERNO[q.id]) CADERNO[q.id].acertosDepois++;
+  }));
+  saveCaderno();
+}
 renderThemeBtn();
 renderHome();

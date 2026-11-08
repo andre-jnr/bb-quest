@@ -20,6 +20,10 @@
       </div>
     </div>
     <div class="spacer"></div>
+    <button class="icon-btn has-badge" id="errosBtn" aria-label="Caderno de Erros" title="Caderno de Erros">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/><path d="M10 8l4 4M14 8l-4 4"/></svg>
+      <span class="badge" id="errosBadge" hidden>0</span>
+    </button>
     <button class="icon-btn" id="perfBtn" aria-label="Meu desempenho" title="Meu desempenho">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
     </button>
@@ -99,6 +103,16 @@
     </div>
 
     <div class="card">
+      <div class="card-row">
+        <div>
+          <h2 style="margin-bottom:4px">Caderno de Erros</h2>
+          <p class="muted" id="homeErrosTxt" style="margin:0;font-size:14px"></p>
+        </div>
+        <button class="btn btn-blue" id="homeErrosBtn">Abrir caderno →</button>
+      </div>
+    </div>
+
+    <div class="card">
       <h2>Banco de questões</h2>
       <p class="muted" style="margin:0 0 12px;font-size:14px">Importe um arquivo <code>.json</code> com um array de questões no formato do BB Quest. Questões com o mesmo <code>id</code> são atualizadas.</p>
       <div class="bank-actions">
@@ -158,6 +172,36 @@
         <button class="btn btn-ghost" id="resultPerfBtn">Meu desempenho</button>
       </div>
     </div>
+  </section>
+
+  <!-- ===================== CADERNO DE ERROS ===================== -->
+  <section id="erros" class="screen" hidden>
+    <div class="page-head">
+      <button class="btn btn-ghost btn-sm" id="errosBackBtn">← Início</button>
+      <h2>Caderno de Erros</h2>
+    </div>
+
+    <div class="card">
+      <div class="filters">
+        <div class="field">
+          <label for="eDisc">Disciplina</label>
+          <select id="eDisc"></select>
+        </div>
+        <div class="field">
+          <label for="eStatus">Mostrar</label>
+          <select id="eStatus">
+            <option value="pendentes">Pendentes</option>
+            <option value="dominadas">Dominadas</option>
+          </select>
+        </div>
+      </div>
+      <div class="start-row">
+        <div class="count" id="eCount"></div>
+        <button class="btn btn-primary" id="eRedoBtn">Refazer as erradas →</button>
+      </div>
+    </div>
+
+    <div id="eList" class="erro-list"></div>
   </section>
 
   <!-- ===================== MEU DESEMPENHO ===================== -->
