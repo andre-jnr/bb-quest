@@ -153,24 +153,57 @@ const $ = (id) => document.getElementById(id);
    PESOS DO EDITAL E PLACAR
    Pontuação ponderada = soma dos pesos das questões acertadas.
    ===================================================================== */
+// alvo = tempo-alvo padrão (s) quando a questão não traz tempoAlvoSeg.
+// alvoCodigo = alvo para questões com código (bloco ``` no enunciado/alternativas ou "tipo": "codigo").
 const PESOS_EDITAL = [
-  { nome: 'Língua Portuguesa',                 peso: 1.5, chaves: ['portugues'] },
-  { nome: 'Matemática',                        peso: 1.5, chaves: ['matematica'] },
-  { nome: 'Probabilidade e Estatística',       peso: 1.5, chaves: ['probabilidade', 'estatistica', '=p&e', '=pe'] },
-  { nome: 'Conhecimentos Bancários',           peso: 1.5, chaves: ['bancari'] },
-  { nome: 'Tecnologia da Informação',          peso: 1.5, chaves: ['tecnologia', 'informatica', '=ti'] },
-  { nome: 'Língua Inglesa',                    peso: 1.0, chaves: ['ingles'] },
-  { nome: 'Atualidades do Mercado Financeiro', peso: 1.0, chaves: ['atualidades'] }
+  { nome: 'Língua Portuguesa',                 peso: 1.5, alvo: 180, chaves: ['portugues'] },
+  { nome: 'Matemática',                        peso: 1.5, alvo: 210, chaves: ['matematica'] },
+  { nome: 'Probabilidade e Estatística',       peso: 1.5, alvo: 240, chaves: ['probabilidade', 'estatistica', '=p&e', '=pe'] },
+  { nome: 'Conhecimentos Bancários',           peso: 1.5, alvo: 90,  chaves: ['bancari'] },
+  { nome: 'Tecnologia da Informação',          peso: 1.5, alvo: 120, alvoCodigo: 180, chaves: ['tecnologia', 'informatica', '=ti'] },
+  { nome: 'Língua Inglesa',                    peso: 1.0, alvo: 150, chaves: ['ingles'] },
+  { nome: 'Atualidades do Mercado Financeiro', peso: 1.0, alvo: 90,  chaves: ['atualidades'] }
 ];
 const PESO_PADRAO = 1.0;
+const ALVO_PADRAO = 150;      // disciplina não reconhecida
+const LIMITE_AMARELO = 1.3;   // semáforo: verde ≤ alvo < amarelo ≤ 1,3× alvo < vermelho
 
 function norm(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); }
 // Chaves com "=" exigem nome exato (ex.: "TI"); as demais casam por trecho do nome.
-function pesoDe(disciplina) {
+function regraDe(disciplina) {
   const n = norm(disciplina);
-  const hit = PESOS_EDITAL.find((p) => p.chaves.some((k) => (k[0] === '=' ? n === k.slice(1) : n.includes(k))));
-  return hit ? hit.peso : PESO_PADRAO;
+  return PESOS_EDITAL.find((p) => p.chaves.some((k) => (k[0] === '=' ? n === k.slice(1) : n.includes(k)))) || null;
 }
+function pesoDe(disciplina) {
+  const r = regraDe(disciplina);
+  return r ? r.peso : PESO_PADRAO;
+}
+
+/* ---------- Tempo-alvo e semáforo ---------- */
+function temCodigo(q) {
+  if (norm(q.tipo) === 'codigo') return true;
+  return /```/.test(q.enunciado || '') || Object.values(q.alternativas || {}).some((t) => /```/.test(String(t)));
+}
+// tempoAlvoSeg da questão tem prioridade; senão, padrão da disciplina (TI: conceitual × código)
+function alvoDe(q) {
+  if (+q.tempoAlvoSeg > 0) return +q.tempoAlvoSeg;
+  const r = regraDe(q.disciplina);
+  if (!r) return ALVO_PADRAO;
+  return r.alvoCodigo && temCodigo(q) ? r.alvoCodigo : r.alvo;
+}
+// Alvo de uma resposta já registrada (sessões antigas não guardavam o alvo)
+function alvoDaResposta(r) {
+  if (r.alvo) return r.alvo;
+  const q = BANK.find((x) => x.id === r.qid);
+  return q ? alvoDe(q) : alvoDe({ disciplina: r.disciplina });
+}
+function semaforo(tempo, alvo) {
+  if (!alvo) return 'verde';
+  const k = tempo / alvo;
+  return k <= 1 ? 'verde' : k <= LIMITE_AMARELO ? 'amarelo' : 'vermelho';
+}
+const SEM_LABEL = { verde: 'dentro do alvo', amarelo: 'até 30% acima do alvo', vermelho: 'mais de 30% acima do alvo' };
+function semDot(cor, title) { return `<span class="sem-dot ${cor}" title="${esc(title || SEM_LABEL[cor])}"></span>`; }
 function fmtPts(n) { return (+n || 0).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
 function pctOf(a, t) { return t ? Math.round((a / t) * 100) : 0; }
 
@@ -392,7 +425,12 @@ function startTimer(target) {
   const tick = () => {
     S.elapsed = (Date.now() - S.t0) / 1000;
     $('timerTxt').textContent = fmtTime(S.elapsed) + (target ? ' / ' + fmtTime(target) : '');
-    $('timer').classList.toggle('over', !!target && S.elapsed > target);
+    const cor = semaforo(S.elapsed, target);
+    if ($('timer').dataset.sem !== cor) {
+      $('timer').dataset.sem = cor;
+      $('timer').className = 'timer t-' + cor;
+      $('timer').title = `Tempo nesta questão / alvo ${fmtTime(target)} · ${SEM_LABEL[cor]}`;
+    }
   };
   tick(); S.timerId = setInterval(tick, 500);
 }
@@ -424,7 +462,8 @@ function renderQuestion() {
 
   setAction('Confirmar resposta', true);
   $('hint').textContent = 'Atalhos: teclas A–E para escolher · Enter para confirmar';
-  startTimer(+q.tempoAlvoSeg || 0);
+  $('timer').dataset.sem = '';
+  startTimer(alvoDe(q));
   window.scrollTo({ top: 0 });
 }
 function setAction(label, disabled) { $('actionBtn').textContent = label; $('actionBtn').disabled = !!disabled; }
@@ -463,13 +502,15 @@ function answer() {
   const s = STATS[q.id] || { t: 0, a: 0 };
   s.t++; if (ok) s.a++; s.last = ok;
   STATS[q.id] = s; store.set('bbq.stats', STATS);
-  S.results.push({ q, chosen: S.selected, ok, time: S.elapsed });
+  const target = alvoDe(q);
+  const cor = semaforo(S.elapsed, target);
+  S.results.push({ q, chosen: S.selected, ok, time: S.elapsed, alvo: target, sem: cor });
 
-  // Histórico da sessão (salvo a cada resposta)
+  // Histórico da sessão (salvo a cada resposta, com tempo gasto e alvo)
   S.session.respostas.push({
     qid: q.id, disciplina: q.disciplina || 'Sem disciplina', assunto: q.assunto || 'Sem assunto',
     peso: pesoDe(q.disciplina), ok, marcada: S.selected, correta: correct,
-    tempo: Math.round(S.elapsed), em: new Date().toISOString()
+    tempo: Math.round(S.elapsed), alvo: target, em: new Date().toISOString()
   });
   S.session.fim = new Date().toISOString();
   saveSession(S.session);
@@ -484,12 +525,11 @@ function answer() {
   // Feedback
   const exp = q.explicacaoAlternativas || {};
   const others = LETTERS.filter((L) => L !== correct && exp[L]);
-  const target = +q.tempoAlvoSeg || 0;
   $('qFeedback').innerHTML = `
     <div class="feedback ${ok ? 'ok' : 'err'}">
       <div class="fb-head">
         ${ok ? '✅ Você acertou!' : `❌ Você errou. Resposta correta: ${esc(correct)}`}
-        <span class="t">⏱ ${fmtTime(S.elapsed)}${target ? ' de ' + fmtTime(target) : ''}</span>
+        <span class="t" title="${esc(SEM_LABEL[cor])}">${semDot(cor)} ${fmtTime(S.elapsed)} de ${fmtTime(target)}</span>
       </div>
       <div class="fb-body">
         ${!ok ? `<div class="block muted" style="font-size:13.5px">📕 Questão adicionada ao Caderno de Erros.</div>` : ''}
@@ -563,7 +603,8 @@ function finish() {
   $('rPct').textContent = pct + '%';
   $('rFrac').textContent = `${hits} de ${total}`;
   $('rTitle').textContent = pct >= 80 ? 'Mandou muito bem! 🏆' : pct >= 60 ? 'Bom resultado! 💪' : pct >= 40 ? 'Está no caminho 📚' : 'Hora de revisar 🔁';
-  $('rSub').textContent = `Tempo total ${fmtTime(time)} · média ${fmtTime(total ? time / total : 0)} por questão`;
+  const noAlvo = S.results.filter((r) => r.sem === 'verde').length;
+  $('rSub').textContent = `Tempo total ${fmtTime(time)} · média ${fmtTime(total ? time / total : 0)} por questão · ${noAlvo} de ${total} dentro do tempo-alvo`;
   const ring = $('ring');
   ring.style.stroke = pct >= 60 ? 'var(--yellow)' : 'var(--err)';
   ring.style.strokeDashoffset = 326.7;
@@ -574,7 +615,7 @@ function finish() {
       <span class="ic ${r.ok ? 'ok' : 'err'}">${r.ok ? '✓' : '✕'}</span>
       <div class="info">
         <div>${esc(r.q.assunto || r.q.id)}</div>
-        <div>Sua: ${esc(r.chosen)} · Correta: ${esc(r.q.correta)} · ${fmtTime(r.time)} · ${r.ok ? '+' + fmtPts(pesoDe(r.q.disciplina)) + ' pts' : '0 pts'}</div>
+        <div>Sua: ${esc(r.chosen)} · Correta: ${esc(r.q.correta)} · ${semDot(r.sem)} ${fmtTime(r.time)}/${fmtTime(r.alvo)} · ${r.ok ? '+' + fmtPts(pesoDe(r.q.disciplina)) + ' pts' : '0 pts'}</div>
       </div>
     </li>`).join('');
   const wrong = S.results.filter((r) => !r.ok).length;
@@ -626,14 +667,52 @@ function topicRow({ nome, chipHTML = '', v, trainBtn = '' }) {
   </div>`;
 }
 
+// Tempo médio por disciplina × alvo médio, com distribuição do semáforo
+const ESCALA_TEMPO = 1.6; // a barra vai de 0 a 1,6× o alvo
+function tempoStats(respostas) {
+  const n = respostas.length || 1;
+  const media = respostas.reduce((a, r) => a + (r.tempo || 0), 0) / n;
+  const alvo = respostas.reduce((a, r) => a + alvoDaResposta(r), 0) / n;
+  const dist = { verde: 0, amarelo: 0, vermelho: 0 };
+  respostas.forEach((r) => dist[semaforo(r.tempo || 0, alvoDaResposta(r))]++);
+  return { media, alvo, dist, cor: semaforo(media, alvo), ratio: alvo ? media / alvo : 0 };
+}
+function tempoRowHTML(nome, t) {
+  const diff = Math.round(Math.abs(t.ratio - 1) * 100);
+  const txtDiff = diff === 0 ? 'no alvo' : `${diff}% ${t.ratio < 1 ? 'abaixo' : 'acima'} do alvo`;
+  const pos = (k) => Math.min(100, (k / ESCALA_TEMPO) * 100);
+  return `<div class="tempo-row">
+    <div class="tempo-head">
+      <span class="name">${semDot(t.cor)} ${esc(nome)}</span>
+      <span class="right"><strong>${fmtTime(t.media)}</strong> média · alvo ${fmtTime(t.alvo)} · <b class="c-${t.cor}">${txtDiff}</b></span>
+    </div>
+    <div class="tempo-track" title="Marcas: alvo e 1,3× o alvo">
+      <i class="fill ${t.cor}" style="width:${pos(t.ratio)}%"></i>
+      <span class="mark" style="left:${pos(1)}%"></span>
+      <span class="mark mark-y" style="left:${pos(LIMITE_AMARELO)}%"></span>
+    </div>
+    <div class="tempo-dist">
+      ${semDot('verde')} ${t.dist.verde} no alvo · ${semDot('amarelo')} ${t.dist.amarelo} até +30% · ${semDot('vermelho')} ${t.dist.vermelho} acima de +30%
+    </div>
+  </div>`;
+}
+
 function renderPerf() {
   const sess = sessoesNoPeriodo();
   const resp = sess.flatMap((s) => s.respostas || []);
   const tot = summarize(resp);
 
+  const byDiscT = agrupar(resp, (r) => r.disciplina);
+  const discsT = Object.keys(byDiscT).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  $('perfTempo').innerHTML = discsT.length
+    ? discsT.map((d) => tempoRowHTML(d, tempoStats(byDiscT[d].respostas))).join('')
+    : '<p class="empty">Nada por aqui ainda.</p>';
+  const tGeral = tempoStats(resp);
+
   $('perfBoard').innerHTML = scoreboardHTML(tot);
   $('perfInfo').innerHTML = resp.length
-    ? `${sess.length} sessão(ões) · ${tot.total} questões · tempo total ${fmtTime(tot.tempo)}. `
+    ? `${sess.length} sessão(ões) · ${tot.total} questões · tempo total ${fmtTime(tot.tempo)} · `
+      + `média ${fmtTime(tGeral.media)} por questão (alvo médio ${fmtTime(tGeral.alvo)}). `
       + `Pontos = acertos × peso do edital (Português, Matemática, P&amp;E, Bancários e TI = 1,5; Inglês e Atualidades = 1,0).`
     : 'Sem respostas neste período. Faça um treino para gerar seu histórico.';
 

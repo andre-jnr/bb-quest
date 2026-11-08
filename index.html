@@ -133,8 +133,8 @@
         <div class="progress-label"><span id="qPos">Questão 1 de 1</span></div>
         <div class="bar"><i id="qBar" style="width:0"></i></div>
       </div>
-      <div class="timer" id="timer" title="Tempo nesta questão / tempo-alvo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>
+      <div class="timer t-verde" id="timer" title="Tempo nesta questão / tempo-alvo">
+        <span class="sem" aria-hidden="true"><i></i><i></i><i></i></span>
         <span id="timerTxt">0:00</span>
       </div>
     </div>
@@ -224,6 +224,18 @@
     <div class="card">
       <h2>Por disciplina</h2>
       <div class="topic-list" id="perfDisc"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-row" style="margin-bottom:14px">
+        <h2 style="margin:0">Tempo médio × alvo</h2>
+        <span class="sem-legend">
+          <span><span class="sem-dot verde"></span> até o alvo</span>
+          <span><span class="sem-dot amarelo"></span> até 1,3×</span>
+          <span><span class="sem-dot vermelho"></span> acima</span>
+        </span>
+      </div>
+      <div class="tempo-list" id="perfTempo"></div>
     </div>
 
     <div class="card">
