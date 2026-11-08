@@ -13,6 +13,7 @@
 <script src="app.js" defer></script>
 <script src="revisao.js" defer></script>
 <script src="gamificacao.js" defer></script>
+<script src="dashboard.js" defer></script>
 <script src="simulado.js" defer></script>
 </head>
 <body>
@@ -130,7 +131,10 @@
           <h2 style="margin-bottom:4px">Meu desempenho</h2>
           <p class="muted" id="homePerfTxt" style="margin:0;font-size:14px"></p>
         </div>
-        <button class="btn btn-blue" id="homePerfBtn">Ver desempenho →</button>
+        <div class="bank-actions">
+          <button class="btn btn-ghost" id="homeDashBtn">📈 Dashboard</button>
+          <button class="btn btn-blue" id="homePerfBtn">Ver desempenho →</button>
+        </div>
       </div>
     </div>
 
@@ -401,11 +405,80 @@
     </div>
   </section>
 
+  <!-- ===================== DASHBOARD ===================== -->
+  <section id="dash" class="screen" hidden>
+    <div class="page-head">
+      <button class="btn btn-ghost btn-sm" id="dashBack">← Início</button>
+      <h2>Dashboard de evolução</h2>
+    </div>
+
+    <div class="card export-card">
+      <div class="card-row">
+        <div>
+          <h2 style="margin-bottom:4px">📓 Exportar para Obsidian</h2>
+          <p class="muted" style="margin:0;font-size:14px">Gera um <code>.md</code> com o resumo da semana, a tabela por disciplina, os assuntos para reforçar e os erros com as explicações.</p>
+        </div>
+        <div class="bank-actions">
+          <select id="dashSemanaExp" class="select-sm" aria-label="Semana a exportar">
+            <option value="0">Esta semana</option>
+            <option value="1">Semana passada</option>
+          </select>
+          <button class="btn btn-primary" id="dashExportBtn">⬇ Exportar .md</button>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="dash-sec">Esta semana</h3>
+    <div class="stat-row" id="dashStats"></div>
+
+    <div class="dash-filters">
+      <label for="dashPeriodo">Evolução</label>
+      <select id="dashPeriodo" class="select-sm">
+        <option value="8">Últimas 8 semanas</option>
+        <option value="12" selected>Últimas 12 semanas</option>
+        <option value="26">Últimas 26 semanas</option>
+      </select>
+    </div>
+
+    <div class="card" id="dashVazio" hidden><p class="empty">Responda algumas questões para ver sua evolução aqui.</p></div>
+
+    <div class="card viz-card">
+      <h2>% de acertos por semana</h2>
+      <p class="viz-sub">Todas as disciplinas · linha cinza = meta de 60%</p>
+      <div class="viz" id="vizAcertos"></div>
+      <details class="viz-table"><summary>Ver tabela</summary><div id="tabAcertos"></div></details>
+    </div>
+
+    <div class="card viz-card">
+      <h2>Questões respondidas por semana</h2>
+      <div class="viz" id="vizVolume"></div>
+      <details class="viz-table"><summary>Ver tabela</summary><div id="tabVolume"></div></details>
+    </div>
+
+    <div class="card viz-card">
+      <h2>% de acertos por disciplina</h2>
+      <p class="viz-sub">Um gráfico por disciplina, todos na mesma escala · linha cinza = 60%</p>
+      <div class="multiples" id="vizDisc"></div>
+      <details class="viz-table"><summary>Ver tabela</summary><div id="tabDisc"></div></details>
+    </div>
+
+    <div class="card viz-card">
+      <h2>Tempo médio por questão</h2>
+      <div class="viz-legend">
+        <span><i class="v-key s1"></i>Tempo médio</span>
+        <span><i class="v-key s2"></i>Tempo-alvo médio</span>
+      </div>
+      <div class="viz" id="vizTempo"></div>
+      <details class="viz-table"><summary>Ver tabela</summary><div id="tabTempo"></div></details>
+    </div>
+  </section>
+
   <!-- ===================== MEU DESEMPENHO ===================== -->
   <section id="perf" class="screen" hidden>
     <div class="page-head">
       <button class="btn btn-ghost btn-sm" id="perfBackBtn">← Início</button>
       <h2>Meu desempenho</h2>
+      <button class="btn btn-ghost btn-sm" id="perfDashBtn">📈 Dashboard</button>
       <select id="perfPeriodo" class="select-sm" aria-label="Período">
         <option value="0">Todo o período</option>
         <option value="7">Últimos 7 dias</option>
