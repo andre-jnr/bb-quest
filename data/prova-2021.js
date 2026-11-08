@@ -1,7 +1,7 @@
 /* Prova oficial do Banco do Brasil 2021 — Agente de Tecnologia (Cesgranrio).
    70 questões com gabarito, convertidas de data/fontes/prova_2021.json (extraído do PDF).
    Gerado por tools/converter-prova.js — não edite à mão.
-   Explicações (0 questões) vêm de data/fontes/explicacoes-2021.json.
+   Explicações (53 questões) vêm de data/fontes/explicacoes-2021.json.
    O conteúdo entre os colchetes é JSON puro. */
 window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
   {
@@ -25,6 +25,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "No parágrafo 4, o texto afirma que “felizmente, mensagens direcionadas são uma forma relativamente barata de comunicação”. O baixo custo dos aplicativos de mensagens, o principal meio de contato entre professores e alunos (83% dos professores, segundo o parágrafo 3), é apresentado como um ponto a favor do ensino remoto.",
+    "explicacaoAlternativas": {
+      "B": "Errada: o texto diz o contrário. Os professores usaram muito mais os aplicativos de mensagens “do que pelas próprias plataformas de aprendizagem” (parágrafo 3), por falta de acesso a planos de dados e dispositivos.",
+      "C": "Errada: o uso de imagens e áudios disponíveis na rede não é mencionado no texto.",
+      "D": "Errada: o texto não fala em aprofundamento de conteúdos; ao contrário, menciona alunos com “ensino mínimo ou nulo” (parágrafo 5).",
+      "E": "Errada: o texto aponta “pouco acesso a planos de dados ou a dispositivos” e celulares compartilhados pela família, o oposto de alta conectividade."
+    },
     "textoApoio": "**Lições após um ano de ensino remoto na pandemia**\n\n**1** No momento em que se tornam ainda mais complexas as discussões sobre a volta às aulas presenciais, o ensino remoto continua a ser a rotina de muitas famílias, atualmente.\n\n**2** Mas um ano sem precedentes na história veio acompanhado de lições inéditas para professores, alunos e estudiosos. Diante do pouco acesso a planos de dados ou a dispositivos, a alternativa de muitas famílias e professores tem sido se conectar regularmente via aplicativos de mensagens.\n\n**3** Uma pesquisa apontou que 83% dos professores mantinham contato com seus alunos por meio dos aplicativos de mensagens, muito mais do que pelas próprias plataformas de aprendizagem. Esse uso foi uma grande surpresa, mas é porque não temos outras ferramentas de massificação. A maior parte do ensino foi feita pelo celular e, geralmente, por um celular compartilhado (entre vários membros da família), o que é algo muito desafiador.\n\n**4** Outro aspecto a ser considerado é que, felizmente, mensagens direcionadas são uma forma relativamente barata de comunicação. A importância de cultivar interações entre os estudantes, mesmo que eles não estejam no mesmo ambiente físico, também é uma forma de motivá-los e melhorar seus resultados. Recentemente, uma pesquisadora afirmou que “Aprendemos que precisamos dos demais: comparar estratégias, falar com alunos, com outros professores e dar mais oportunidades de trabalho coletivo, mesmo que seja cada um na sua casa. Além disso, a pandemia ressaltou a importância do vínculo anterior entre escolas e comunidades”.\n\n**5** Embora seja difícil prever exatamente como o fechamento das escolas vai afetar o desenvolvimento futuro dos alunos, educadores internacionais estimam que estudantes da educação básica já foram impactados. É preciso pensar em como agrupar esses alunos e averiguar os que tiveram ensino mínimo ou nulo e decidir como enfrentar essa ruptura, com aulas ou encontros extras, com anos (letivos) de transição.\n\n_IDOETA, P.A. 8 lições após um ano de ensino remoto na pandemia. Disponível em: <https://educacao.uol.com.br/noticias/bbc/2021/04/24/8-licoes-apos-um-ano-de-ensino-remoto-na-pandemia.htm>. Acesso em: 21 jul. 2021. Adaptado._",
     "paginasPdf": [
       4
@@ -51,6 +58,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Depois de dizer que os estudantes já foram impactados, o parágrafo 5 conclui: “É preciso pensar em como agrupar esses alunos e averiguar os que tiveram ensino mínimo ou nulo e decidir como enfrentar essa ruptura, com aulas ou encontros extras, com anos (letivos) de transição”. A ideia desenvolvida é a necessidade de aulas ou encontros extras para os prejudicados.",
+    "explicacaoAlternativas": {
+      "A": "Errada: o parágrafo 5 trata justamente dos **prejuízos** à escolarização, e não da sua continuidade bem-sucedida.",
+      "C": "Errada: o uso de aplicativos de mensagens é tratado no parágrafo 2, e não é a ideia desenvolvida no parágrafo 5.",
+      "D": "Errada: o dado sobre o contato dos professores pelos aplicativos aparece no parágrafo 3.",
+      "E": "Errada: o celular compartilhado é mencionado no parágrafo 3, e não no desenvolvimento do parágrafo 5."
+    },
     "textoApoio": "**Lições após um ano de ensino remoto na pandemia**\n\n**1** No momento em que se tornam ainda mais complexas as discussões sobre a volta às aulas presenciais, o ensino remoto continua a ser a rotina de muitas famílias, atualmente.\n\n**2** Mas um ano sem precedentes na história veio acompanhado de lições inéditas para professores, alunos e estudiosos. Diante do pouco acesso a planos de dados ou a dispositivos, a alternativa de muitas famílias e professores tem sido se conectar regularmente via aplicativos de mensagens.\n\n**3** Uma pesquisa apontou que 83% dos professores mantinham contato com seus alunos por meio dos aplicativos de mensagens, muito mais do que pelas próprias plataformas de aprendizagem. Esse uso foi uma grande surpresa, mas é porque não temos outras ferramentas de massificação. A maior parte do ensino foi feita pelo celular e, geralmente, por um celular compartilhado (entre vários membros da família), o que é algo muito desafiador.\n\n**4** Outro aspecto a ser considerado é que, felizmente, mensagens direcionadas são uma forma relativamente barata de comunicação. A importância de cultivar interações entre os estudantes, mesmo que eles não estejam no mesmo ambiente físico, também é uma forma de motivá-los e melhorar seus resultados. Recentemente, uma pesquisadora afirmou que “Aprendemos que precisamos dos demais: comparar estratégias, falar com alunos, com outros professores e dar mais oportunidades de trabalho coletivo, mesmo que seja cada um na sua casa. Além disso, a pandemia ressaltou a importância do vínculo anterior entre escolas e comunidades”.\n\n**5** Embora seja difícil prever exatamente como o fechamento das escolas vai afetar o desenvolvimento futuro dos alunos, educadores internacionais estimam que estudantes da educação básica já foram impactados. É preciso pensar em como agrupar esses alunos e averiguar os que tiveram ensino mínimo ou nulo e decidir como enfrentar essa ruptura, com aulas ou encontros extras, com anos (letivos) de transição.\n\n_IDOETA, P.A. 8 lições após um ano de ensino remoto na pandemia. Disponível em: <https://educacao.uol.com.br/noticias/bbc/2021/04/24/8-licoes-apos-um-ano-de-ensino-remoto-na-pandemia.htm>. Acesso em: 21 jul. 2021. Adaptado._",
     "paginasPdf": [
       4
@@ -78,6 +92,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Os destaques em negrito foram reconstruídos a partir das alternativas (na prova, as palavras aparecem em destaque gráfico).",
+    "explicacaoCorreta": "“Mesmo que” é uma locução conjuntiva **concessiva**: admite um fato contrário (os estudantes não estão no mesmo ambiente físico) que não impede o que se afirma na oração principal (a importância de cultivar interações). Equivale a “ainda que” ou “embora”.",
+    "explicacaoAlternativas": {
+      "A": "Errada: condição seria expressa por “se”, “caso” ou “desde que”.",
+      "C": "Errada: comparação seria expressa por “como”, “tal qual” ou “mais (do) que”.",
+      "D": "Errada: conformidade seria expressa por “conforme”, “segundo” ou “como” (no sentido de “de acordo com”).",
+      "E": "Errada: proporcionalidade seria expressa por “à medida que” ou “à proporção que”."
+    },
     "textoApoio": "**Lições após um ano de ensino remoto na pandemia**\n\n**1** No momento em que se tornam ainda mais complexas as discussões sobre a volta às aulas presenciais, o ensino remoto continua a ser a rotina de muitas famílias, atualmente.\n\n**2** Mas um ano sem precedentes na história veio acompanhado de lições inéditas para professores, alunos e estudiosos. Diante do pouco acesso a planos de dados ou a dispositivos, a alternativa de muitas famílias e professores tem sido se conectar regularmente via aplicativos de mensagens.\n\n**3** Uma pesquisa apontou que 83% dos professores mantinham contato com seus alunos por meio dos aplicativos de mensagens, muito mais do que pelas próprias plataformas de aprendizagem. Esse uso foi uma grande surpresa, mas é porque não temos outras ferramentas de massificação. A maior parte do ensino foi feita pelo celular e, geralmente, por um celular compartilhado (entre vários membros da família), o que é algo muito desafiador.\n\n**4** Outro aspecto a ser considerado é que, felizmente, mensagens direcionadas são uma forma relativamente barata de comunicação. A importância de cultivar interações entre os estudantes, mesmo que eles não estejam no mesmo ambiente físico, também é uma forma de motivá-los e melhorar seus resultados. Recentemente, uma pesquisadora afirmou que “Aprendemos que precisamos dos demais: comparar estratégias, falar com alunos, com outros professores e dar mais oportunidades de trabalho coletivo, mesmo que seja cada um na sua casa. Além disso, a pandemia ressaltou a importância do vínculo anterior entre escolas e comunidades”.\n\n**5** Embora seja difícil prever exatamente como o fechamento das escolas vai afetar o desenvolvimento futuro dos alunos, educadores internacionais estimam que estudantes da educação básica já foram impactados. É preciso pensar em como agrupar esses alunos e averiguar os que tiveram ensino mínimo ou nulo e decidir como enfrentar essa ruptura, com aulas ou encontros extras, com anos (letivos) de transição.\n\n_IDOETA, P.A. 8 lições após um ano de ensino remoto na pandemia. Disponível em: <https://educacao.uol.com.br/noticias/bbc/2021/04/24/8-licoes-apos-um-ano-de-ensino-remoto-na-pandemia.htm>. Acesso em: 21 jul. 2021. Adaptado._",
     "paginasPdf": [
       4
@@ -105,6 +126,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Os destaques em negrito foram reconstruídos a partir das alternativas (na prova, as palavras aparecem em destaque gráfico).",
+    "explicacaoCorreta": "“Felizmente” é um advérbio que expressa a **avaliação do autor** sobre o fato: ele considera positivo que as mensagens direcionadas sejam baratas. É um modalizador, isto é, marca de opinião.",
+    "explicacaoAlternativas": {
+      "A": "Errada: “atualmente” indica **tempo**; apenas situa o fato, sem opinião.",
+      "B": "Errada: “regularmente” indica **frequência**, ou seja, com que periodicidade as famílias se conectam.",
+      "C": "Errada: “geralmente” também indica **frequência** (na maioria das vezes), e não avaliação.",
+      "E": "Errada: “exatamente” indica **precisão**; não expressa juízo de valor do autor."
+    },
     "textoApoio": "**Lições após um ano de ensino remoto na pandemia**\n\n**1** No momento em que se tornam ainda mais complexas as discussões sobre a volta às aulas presenciais, o ensino remoto continua a ser a rotina de muitas famílias, atualmente.\n\n**2** Mas um ano sem precedentes na história veio acompanhado de lições inéditas para professores, alunos e estudiosos. Diante do pouco acesso a planos de dados ou a dispositivos, a alternativa de muitas famílias e professores tem sido se conectar regularmente via aplicativos de mensagens.\n\n**3** Uma pesquisa apontou que 83% dos professores mantinham contato com seus alunos por meio dos aplicativos de mensagens, muito mais do que pelas próprias plataformas de aprendizagem. Esse uso foi uma grande surpresa, mas é porque não temos outras ferramentas de massificação. A maior parte do ensino foi feita pelo celular e, geralmente, por um celular compartilhado (entre vários membros da família), o que é algo muito desafiador.\n\n**4** Outro aspecto a ser considerado é que, felizmente, mensagens direcionadas são uma forma relativamente barata de comunicação. A importância de cultivar interações entre os estudantes, mesmo que eles não estejam no mesmo ambiente físico, também é uma forma de motivá-los e melhorar seus resultados. Recentemente, uma pesquisadora afirmou que “Aprendemos que precisamos dos demais: comparar estratégias, falar com alunos, com outros professores e dar mais oportunidades de trabalho coletivo, mesmo que seja cada um na sua casa. Além disso, a pandemia ressaltou a importância do vínculo anterior entre escolas e comunidades”.\n\n**5** Embora seja difícil prever exatamente como o fechamento das escolas vai afetar o desenvolvimento futuro dos alunos, educadores internacionais estimam que estudantes da educação básica já foram impactados. É preciso pensar em como agrupar esses alunos e averiguar os que tiveram ensino mínimo ou nulo e decidir como enfrentar essa ruptura, com aulas ou encontros extras, com anos (letivos) de transição.\n\n_IDOETA, P.A. 8 lições após um ano de ensino remoto na pandemia. Disponível em: <https://educacao.uol.com.br/noticias/bbc/2021/04/24/8-licoes-apos-um-ano-de-ensino-remoto-na-pandemia.htm>. Acesso em: 21 jul. 2021. Adaptado._",
     "paginasPdf": [
       4
@@ -132,6 +160,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Os destaques em negrito foram reconstruídos a partir das alternativas (na prova, as palavras aparecem em destaque gráfico).",
+    "explicacaoCorreta": "Em C, “combatem-se batalhas” está na voz passiva sintética: equivale a “batalhas **são combatidas**”. O sujeito é “batalhas” (plural), então o verbo vai para o plural.",
+    "explicacaoAlternativas": {
+      "A": "Errada: “aspirar”, no sentido de desejar, é transitivo indireto (aspirar **a** algo). Com o “se” como índice de indeterminação do sujeito, o verbo fica no singular: “**Aspira-se** a bons cargos”.",
+      "B": "Errada: “fazer” indicando tempo decorrido é impessoal e fica no singular: “**faz** dois anos que não viajo”.",
+      "D": "Errada: “existir” é verbo pessoal e concorda com o sujeito “problemas”: “**existem** problemas a serem resolvidos”.",
+      "E": "Errada: “precisar de” é transitivo indireto. Com o “se” indeterminador, o verbo fica no singular: “**precisa-se** de equipamentos digitais”."
+    },
     "paginasPdf": [
       5
     ]
@@ -158,6 +193,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Os destaques em negrito foram reconstruídos a partir das alternativas (na prova, as palavras aparecem em destaque gráfico).",
+    "explicacaoCorreta": "Quando o adjetivo (ou particípio) se refere a núcleos de gêneros diferentes, ele vai para o **masculino plural**. Em A, “A capacitação” (feminino) e “o atendimento” (masculino) precisam ser “desenvolvidos”: concordância correta.",
+    "explicacaoAlternativas": {
+      "B": "Errada: “As famílias” (feminino) e “os professores” (masculino) → “devem ser **acolhidos**”.",
+      "C": "Errada: “O estudo” (masculino) e “a realização” (feminino) → “têm sido **planejados**”.",
+      "D": "Errada: “O tratamento” (masculino) e “a vacinação” (feminino) → “devem ser **implementados**”.",
+      "E": "Errada: “Os arquivos” (masculino) e “as notas” (feminino) → “necessitam ser **guardados**”."
+    },
     "paginasPdf": [
       5
     ]
@@ -184,6 +226,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Os destaques em negrito foram reconstruídos a partir das alternativas (na prova, as palavras aparecem em destaque gráfico).",
+    "explicacaoCorreta": "Em E, a conjunção subordinativa “Quando” atrai o pronome oblíquo para antes do verbo (**próclise**): “Quando as escolas **se** preocuparem”. A colocação está correta.",
+    "explicacaoAlternativas": {
+      "A": "Errada: a conjunção “para que” e o advérbio “sempre” exigem próclise: “para que os alunos sempre **se** mantenham em dia”.",
+      "B": "Errada: pela norma-padrão, não se inicia oração com pronome oblíquo átono; o correto é “**Reclama-se** muito…”.",
+      "C": "Errada: a palavra negativa “nunca” atrai o pronome: “nunca **se** cansam de estudar”.",
+      "D": "Errada: o advérbio “sempre”, anteposto ao verbo, atrai o pronome: “sempre **se** dedicam a pesquisar”."
+    },
     "paginasPdf": [
       5
     ]
@@ -210,6 +259,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Os destaques em negrito foram reconstruídos a partir das alternativas (na prova, as palavras aparecem em destaque gráfico). Nas alternativas A e D há mais de um \"a\" candidato, e o destaque não pôde ser identificado com certeza (nenhum deles leva crase).",
+    "explicacaoCorreta": "Em E, a locução “graças a” exige a preposição “a”, e “dedicação” é substantivo feminino que admite o artigo “a” (“a dedicação dos professores”). Preposição e artigo se fundem: “graças **à** dedicação dos professores”.",
+    "explicacaoAlternativas": {
+      "A": "Errada: “levou as famílias” tem só o artigo “as” (objeto direto), e em “a situações” há apenas a preposição diante de substantivo no plural sem artigo; em nenhum dos casos há crase.",
+      "B": "Errada: em “para a redução”, a preposição já é “para”; o “a” é só artigo e não há crase.",
+      "C": "Errada: não há crase antes do pronome demonstrativo “essa”; “a essa prática” tem apenas a preposição.",
+      "D": "Errada: em “a ser considerado” o “a” vem antes de verbo, posição em que nunca há crase; e em “considerado a única opção” o “a” é só artigo."
+    },
     "paginasPdf": [
       5
     ]
@@ -235,6 +291,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Em C, a oração subordinada adverbial causal “Como o país não tinha experiências significativas no ensino remoto” está anteposta à principal e é corretamente separada dela por vírgula.",
+    "explicacaoAlternativas": {
+      "A": "Errada: o termo intercalado “com a pandemia de Covid-19” deveria ficar entre duas vírgulas; com uma só, a vírgula separa o sujeito (“O ensino remoto”) do verbo (“passou”).",
+      "B": "Errada: a vírgula está fora do lugar. O certo é “tem sido vivida atualmente, embora permaneça a dúvida…”, separando a oração concessiva introduzida por “embora”.",
+      "D": "Errada: falta pontuação antes da conjunção adversativa “porém”, que inicia nova oração: “era questionada no passado; porém, o aprendizado conta…”.",
+      "E": "Errada: a vírgula separa o verbo “avaliar” do seu complemento (“quais são as vantagens e desvantagens…”), o que a norma-padrão não admite."
+    },
     "paginasPdf": [
       5
     ]
@@ -261,6 +324,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Os destaques em negrito foram reconstruídos a partir das alternativas (na prova, as palavras aparecem em destaque gráfico).",
+    "explicacaoCorreta": "Em “averiguar **os** que tiveram ensino mínimo ou nulo”, o pronome “os” retoma “esses alunos”, citados logo antes no parágrafo 5 (“como agrupar esses alunos e averiguar os que…”). A referência entre colchetes, [alunos], está correta.",
+    "explicacaoAlternativas": {
+      "A": "Errada: “seus” se refere aos **professores** (“83% dos professores mantinham contato com seus alunos”), e não a pesquisadores.",
+      "B": "Errada: “Esse uso” retoma o uso dos **aplicativos de mensagens**, e não o “contato”.",
+      "C": "Errada: “os demais” são as **outras pessoas** (alunos, outros professores, colegas), como a própria citação explica; não são “resultados”.",
+      "E": "Errada: “essa ruptura” retoma a interrupção causada pelo **fechamento das escolas**, e não o “desenvolvimento” dos alunos."
+    },
     "textoApoio": "**Lições após um ano de ensino remoto na pandemia**\n\n**1** No momento em que se tornam ainda mais complexas as discussões sobre a volta às aulas presenciais, o ensino remoto continua a ser a rotina de muitas famílias, atualmente.\n\n**2** Mas um ano sem precedentes na história veio acompanhado de lições inéditas para professores, alunos e estudiosos. Diante do pouco acesso a planos de dados ou a dispositivos, a alternativa de muitas famílias e professores tem sido se conectar regularmente via aplicativos de mensagens.\n\n**3** Uma pesquisa apontou que 83% dos professores mantinham contato com seus alunos por meio dos aplicativos de mensagens, muito mais do que pelas próprias plataformas de aprendizagem. Esse uso foi uma grande surpresa, mas é porque não temos outras ferramentas de massificação. A maior parte do ensino foi feita pelo celular e, geralmente, por um celular compartilhado (entre vários membros da família), o que é algo muito desafiador.\n\n**4** Outro aspecto a ser considerado é que, felizmente, mensagens direcionadas são uma forma relativamente barata de comunicação. A importância de cultivar interações entre os estudantes, mesmo que eles não estejam no mesmo ambiente físico, também é uma forma de motivá-los e melhorar seus resultados. Recentemente, uma pesquisadora afirmou que “Aprendemos que precisamos dos demais: comparar estratégias, falar com alunos, com outros professores e dar mais oportunidades de trabalho coletivo, mesmo que seja cada um na sua casa. Além disso, a pandemia ressaltou a importância do vínculo anterior entre escolas e comunidades”.\n\n**5** Embora seja difícil prever exatamente como o fechamento das escolas vai afetar o desenvolvimento futuro dos alunos, educadores internacionais estimam que estudantes da educação básica já foram impactados. É preciso pensar em como agrupar esses alunos e averiguar os que tiveram ensino mínimo ou nulo e decidir como enfrentar essa ruptura, com aulas ou encontros extras, com anos (letivos) de transição.\n\n_IDOETA, P.A. 8 lições após um ano de ensino remoto na pandemia. Disponível em: <https://educacao.uol.com.br/noticias/bbc/2021/04/24/8-licoes-apos-um-ano-de-ensino-remoto-na-pandemia.htm>. Acesso em: 21 jul. 2021. Adaptado._",
     "paginasPdf": [
       5
@@ -287,6 +357,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "O texto, de um especialista do U.S. Bank, reúne recomendações para atravessar a crise da Covid-19: não entrar em pânico, manter hábitos de consumo, aproveitar juros baixos, apoiar pequenos negócios e confiar na força prévia da economia. O propósito é compartilhar ideias sobre como lidar com os desafios da pandemia.",
+    "explicacaoAlternativas": {
+      "B": "Errada: o distanciamento social é apenas o contexto; o texto não ensina a praticá-lo durante as compras.",
+      "C": "Errada: distorce o texto. Os empréstimos são sugeridos para pagar contas, manter o negócio ou enfrentar desemprego (parágrafo 4); as doações às lojas aparecem em outro conselho (parágrafo 5).",
+      "D": "Errada: contradiz o texto, que diz “While we prioritize health and safety” e fala em reconstruir a economia quando a saúde não estiver mais em risco.",
+      "E": "Errada: a série de TV pausada é só uma analogia para a economia “em pausa”; o texto não fala em ver menos TV."
+    },
     "textoApoio": "**COVID-19 Economy: Expert insights on what you need to know**\n\n**1** As we practice social distancing and businesses struggle to adapt, it’s no secret the unique challenges of Covid-19 are profoundly shaping our economic climate. U.S. Bank financial industry and regulatory affairs expert Robert Schell explains what you need to know in this uncertain time.\n\n**• Don’t panic while things are “on pause”**\n\n**2** Imagine clicking the pause button on your favorite TV show. Whether you stopped to make dinner or put kids to bed, hitting pause gives you time to tackle what matters most. Today’s economy is similar. While we prioritize health and safety, typical activities like driving to work, eating at restaurants, traveling and attending sporting events are on hold. This widespread social distancing takes a toll on our economy, putting strain on businesses and individuals alike.\n\n**3** Keep your financial habits as normal as possible during this time. Make online purchases, order takeout, pay bills and buy groceries. These everyday purchases put money back into the economy and prevent it from dipping further into a recession.\n\n**• Low interest rates could help make ends meet**\n\n**4** In March, the Federal Reserve cut rates drastically to boost economic activity and make borrowing more affordable. For you, this means interest rates are low for credit cards, loans and lines of credit, and even fixed-rate mortgages. Consider taking advantage of these low rates if you need extra help paying your bills, keeping your business running or withstanding a period of unemployment.\n\n**• Spend on small businesses**\n\n**5** Looking to make a positive impact? Supporting small businesses is an easy and powerful way to help. You can order takeout, tip generously or donate to your local brick-and-mortar retail store, if they provide that option. Your support makes a big impact for struggling business owners.\n\n**• Prior economic strength may help us bounce back**\n\n**6** The thriving economy of 2019 isn’t just a distant, bittersweet memory. When our health is no longer at risk and social distancing mandates begin to diminish, we’ll slowly start to rebuild. The stability, low unemployment rate and upward-trending market we experienced prior to Covid-19 puts us in a good position to kick-start economic activity and rebound more quickly.\n\n_Available at <https://www.usbank.com/financialiq/manage-your-household/personal-finance/covid-economy-expert-insights.html>. Retrieved on: Jul. 20, 2021. Adapted._",
     "paginasPdf": [
       6
@@ -313,6 +390,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "“It’s no secret (that)…” significa que algo é **de conhecimento geral**, todo mundo sabe: é sabido que os desafios da Covid-19 estão moldando a economia. Equivale a “it’s common knowledge”.",
+    "explicacaoAlternativas": {
+      "B": "Errada: “nunca foi dito antes” é o oposto; a expressão indica algo já sabido por todos.",
+      "C": "Errada: a expressão não relativiza a verdade da afirmação; ao contrário, a reforça.",
+      "D": "Errada: “it’s no secret” não expressa avaliação negativa sobre uma ideia.",
+      "E": "Errada: “revelação importante” sugere algo novo e surpreendente, o contrário de algo que todos já sabem."
+    },
     "textoApoio": "**COVID-19 Economy: Expert insights on what you need to know**\n\n**1** As we practice social distancing and businesses struggle to adapt, it’s no secret the unique challenges of Covid-19 are profoundly shaping our economic climate. U.S. Bank financial industry and regulatory affairs expert Robert Schell explains what you need to know in this uncertain time.\n\n**• Don’t panic while things are “on pause”**\n\n**2** Imagine clicking the pause button on your favorite TV show. Whether you stopped to make dinner or put kids to bed, hitting pause gives you time to tackle what matters most. Today’s economy is similar. While we prioritize health and safety, typical activities like driving to work, eating at restaurants, traveling and attending sporting events are on hold. This widespread social distancing takes a toll on our economy, putting strain on businesses and individuals alike.\n\n**3** Keep your financial habits as normal as possible during this time. Make online purchases, order takeout, pay bills and buy groceries. These everyday purchases put money back into the economy and prevent it from dipping further into a recession.\n\n**• Low interest rates could help make ends meet**\n\n**4** In March, the Federal Reserve cut rates drastically to boost economic activity and make borrowing more affordable. For you, this means interest rates are low for credit cards, loans and lines of credit, and even fixed-rate mortgages. Consider taking advantage of these low rates if you need extra help paying your bills, keeping your business running or withstanding a period of unemployment.\n\n**• Spend on small businesses**\n\n**5** Looking to make a positive impact? Supporting small businesses is an easy and powerful way to help. You can order takeout, tip generously or donate to your local brick-and-mortar retail store, if they provide that option. Your support makes a big impact for struggling business owners.\n\n**• Prior economic strength may help us bounce back**\n\n**6** The thriving economy of 2019 isn’t just a distant, bittersweet memory. When our health is no longer at risk and social distancing mandates begin to diminish, we’ll slowly start to rebuild. The stability, low unemployment rate and upward-trending market we experienced prior to Covid-19 puts us in a good position to kick-start economic activity and rebound more quickly.\n\n_Available at <https://www.usbank.com/financialiq/manage-your-household/personal-finance/covid-economy-expert-insights.html>. Retrieved on: Jul. 20, 2021. Adapted._",
     "paginasPdf": [
       6
@@ -339,6 +423,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Em “uncertain”, o prefixo **un-** tem sentido de **negação** (não certo). Em C, “**im**possible” (não possível) e “**dis**courage” (desencorajar) também são formados com prefixos de sentido negativo ou contrário.",
+    "explicacaoAlternativas": {
+      "A": "Errada: “doubtful” e “joblessness” são formadas por **sufixos** (-ful, -less, -ness), e não por prefixos.",
+      "B": "Errada: em “unique” o “uni-” significa “um”, e não negação; “only” nem tem prefixo.",
+      "D": "Errada: “certainty” tem sufixo (-ty), e o prefixo “en-” de “envision” significa “pôr em, tornar”, e não negação.",
+      "E": "Errada: em “inside” o “in-” indica lugar (dentro), e não negação; “intimate” não é formada por prefixo."
+    },
     "textoApoio": "**COVID-19 Economy: Expert insights on what you need to know**\n\n**1** As we practice social distancing and businesses struggle to adapt, it’s no secret the unique challenges of Covid-19 are profoundly shaping our economic climate. U.S. Bank financial industry and regulatory affairs expert Robert Schell explains what you need to know in this uncertain time.\n\n**• Don’t panic while things are “on pause”**\n\n**2** Imagine clicking the pause button on your favorite TV show. Whether you stopped to make dinner or put kids to bed, hitting pause gives you time to tackle what matters most. Today’s economy is similar. While we prioritize health and safety, typical activities like driving to work, eating at restaurants, traveling and attending sporting events are on hold. This widespread social distancing takes a toll on our economy, putting strain on businesses and individuals alike.\n\n**3** Keep your financial habits as normal as possible during this time. Make online purchases, order takeout, pay bills and buy groceries. These everyday purchases put money back into the economy and prevent it from dipping further into a recession.\n\n**• Low interest rates could help make ends meet**\n\n**4** In March, the Federal Reserve cut rates drastically to boost economic activity and make borrowing more affordable. For you, this means interest rates are low for credit cards, loans and lines of credit, and even fixed-rate mortgages. Consider taking advantage of these low rates if you need extra help paying your bills, keeping your business running or withstanding a period of unemployment.\n\n**• Spend on small businesses**\n\n**5** Looking to make a positive impact? Supporting small businesses is an easy and powerful way to help. You can order takeout, tip generously or donate to your local brick-and-mortar retail store, if they provide that option. Your support makes a big impact for struggling business owners.\n\n**• Prior economic strength may help us bounce back**\n\n**6** The thriving economy of 2019 isn’t just a distant, bittersweet memory. When our health is no longer at risk and social distancing mandates begin to diminish, we’ll slowly start to rebuild. The stability, low unemployment rate and upward-trending market we experienced prior to Covid-19 puts us in a good position to kick-start economic activity and rebound more quickly.\n\n_Available at <https://www.usbank.com/financialiq/manage-your-household/personal-finance/covid-economy-expert-insights.html>. Retrieved on: Jul. 20, 2021. Adapted._",
     "paginasPdf": [
       6
@@ -365,6 +456,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "As compras do dia a dia “put money back into the **economy** and prevent **it** from dipping further into a recession”. O que pode “afundar ainda mais numa recessão” é a economia; “it” retoma “economy”.",
+    "explicacaoAlternativas": {
+      "A": "Errada: o dinheiro é o que volta para a economia; não é ele que poderia cair em recessão.",
+      "B": "Errada: “purchases” está no plural e seria retomado por “they/them”, e não por “it”.",
+      "C": "Errada: “recession” é o estado em que a economia poderia cair; o pronome não pode se referir a ela própria.",
+      "E": "Errada: “back” é um advérbio (“put money back”), e não um substantivo que possa ser retomado por pronome."
+    },
     "textoApoio": "**COVID-19 Economy: Expert insights on what you need to know**\n\n**1** As we practice social distancing and businesses struggle to adapt, it’s no secret the unique challenges of Covid-19 are profoundly shaping our economic climate. U.S. Bank financial industry and regulatory affairs expert Robert Schell explains what you need to know in this uncertain time.\n\n**• Don’t panic while things are “on pause”**\n\n**2** Imagine clicking the pause button on your favorite TV show. Whether you stopped to make dinner or put kids to bed, hitting pause gives you time to tackle what matters most. Today’s economy is similar. While we prioritize health and safety, typical activities like driving to work, eating at restaurants, traveling and attending sporting events are on hold. This widespread social distancing takes a toll on our economy, putting strain on businesses and individuals alike.\n\n**3** Keep your financial habits as normal as possible during this time. Make online purchases, order takeout, pay bills and buy groceries. These everyday purchases put money back into the economy and prevent it from dipping further into a recession.\n\n**• Low interest rates could help make ends meet**\n\n**4** In March, the Federal Reserve cut rates drastically to boost economic activity and make borrowing more affordable. For you, this means interest rates are low for credit cards, loans and lines of credit, and even fixed-rate mortgages. Consider taking advantage of these low rates if you need extra help paying your bills, keeping your business running or withstanding a period of unemployment.\n\n**• Spend on small businesses**\n\n**5** Looking to make a positive impact? Supporting small businesses is an easy and powerful way to help. You can order takeout, tip generously or donate to your local brick-and-mortar retail store, if they provide that option. Your support makes a big impact for struggling business owners.\n\n**• Prior economic strength may help us bounce back**\n\n**6** The thriving economy of 2019 isn’t just a distant, bittersweet memory. When our health is no longer at risk and social distancing mandates begin to diminish, we’ll slowly start to rebuild. The stability, low unemployment rate and upward-trending market we experienced prior to Covid-19 puts us in a good position to kick-start economic activity and rebound more quickly.\n\n_Available at <https://www.usbank.com/financialiq/manage-your-household/personal-finance/covid-economy-expert-insights.html>. Retrieved on: Jul. 20, 2021. Adapted._",
     "paginasPdf": [
       6
@@ -391,6 +489,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "“Cut” está no **simple past** (“In March, the Federal Reserve cut rates”) e indica uma ação **pontual e concluída** num momento definido do passado (em março), tomada para enfrentar a situação daquele momento.",
+    "explicacaoAlternativas": {
+      "A": "Errada: uma ação habitual seria expressa no presente simples (“cuts”) ou com “used to”; o texto descreve um corte específico, em março.",
+      "B": "Errada: ação futura seria expressa com “will cut” ou “is going to cut”; o corte já aconteceu.",
+      "C": "Errada: uma promessa seria expressa com “will” ou “promised to”; o texto relata algo já realizado.",
+      "E": "Errada: uma ação em curso seria expressa com o presente contínuo (“is cutting”), e a situação não é tratada como permanente."
+    },
     "textoApoio": "**COVID-19 Economy: Expert insights on what you need to know**\n\n**1** As we practice social distancing and businesses struggle to adapt, it’s no secret the unique challenges of Covid-19 are profoundly shaping our economic climate. U.S. Bank financial industry and regulatory affairs expert Robert Schell explains what you need to know in this uncertain time.\n\n**• Don’t panic while things are “on pause”**\n\n**2** Imagine clicking the pause button on your favorite TV show. Whether you stopped to make dinner or put kids to bed, hitting pause gives you time to tackle what matters most. Today’s economy is similar. While we prioritize health and safety, typical activities like driving to work, eating at restaurants, traveling and attending sporting events are on hold. This widespread social distancing takes a toll on our economy, putting strain on businesses and individuals alike.\n\n**3** Keep your financial habits as normal as possible during this time. Make online purchases, order takeout, pay bills and buy groceries. These everyday purchases put money back into the economy and prevent it from dipping further into a recession.\n\n**• Low interest rates could help make ends meet**\n\n**4** In March, the Federal Reserve cut rates drastically to boost economic activity and make borrowing more affordable. For you, this means interest rates are low for credit cards, loans and lines of credit, and even fixed-rate mortgages. Consider taking advantage of these low rates if you need extra help paying your bills, keeping your business running or withstanding a period of unemployment.\n\n**• Spend on small businesses**\n\n**5** Looking to make a positive impact? Supporting small businesses is an easy and powerful way to help. You can order takeout, tip generously or donate to your local brick-and-mortar retail store, if they provide that option. Your support makes a big impact for struggling business owners.\n\n**• Prior economic strength may help us bounce back**\n\n**6** The thriving economy of 2019 isn’t just a distant, bittersweet memory. When our health is no longer at risk and social distancing mandates begin to diminish, we’ll slowly start to rebuild. The stability, low unemployment rate and upward-trending market we experienced prior to Covid-19 puts us in a good position to kick-start economic activity and rebound more quickly.\n\n_Available at <https://www.usbank.com/financialiq/manage-your-household/personal-finance/covid-economy-expert-insights.html>. Retrieved on: Jul. 20, 2021. Adapted._",
     "paginasPdf": [
       6
@@ -417,6 +522,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "A 30 relatórios por hora, cada relatório leva 60/30 = 2 minutos. Um relatório e meio leva 1,5 × 2 = **3 minutos**. Como a pausa vai das 13h às 13h10, o trabalho só recomeça às 13h10 e termina às **13h13**.",
+    "explicacaoAlternativas": {
+      "A": "Errada: 13h02 ignora a pausa e conta só o tempo de um relatório (2 minutos), esquecendo a metade restante.",
+      "B": "Errada: 13h03 soma os 3 minutos de trabalho a partir das 13h, mas o escriturário está em pausa até as 13h10.",
+      "C": "Errada: 13h10 é só o fim da pausa; ainda faltam 3 minutos de trabalho.",
+      "D": "Errada: 13h12 conta apenas um relatório (2 minutos) depois da pausa; falta a metade do outro (mais 1 minuto)."
+    },
     "paginasPdf": [
       7
     ]
@@ -442,6 +554,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Os percentuais seguem a ordem das opções: renda fixa 20%, CDB 10%, fundo de ações 30%, LCI 15% e LCA 25%. Renda fixa: 20% de R$ 400.000,00 = **R$ 80.000,00**.",
+    "explicacaoAlternativas": {
+      "B": "Errada: o CDB recebeu 10% de R$ 400.000,00 = R$ 40.000,00. R$ 60.000,00 corresponde aos 15% da LCI.",
+      "C": "Errada: o fundo de ações recebeu 30% = R$ 120.000,00. R$ 40.000,00 é o valor do CDB.",
+      "D": "Errada: a LCI recebeu 15% = R$ 60.000,00. R$ 100.000,00 é o valor da LCA (25%).",
+      "E": "Errada: a LCA recebeu 25% = R$ 100.000,00. R$ 120.000,00 é o valor do fundo de ações (30%)."
+    },
     "paginasPdf": [
       7
     ]
@@ -468,6 +587,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "A notação matemática (expoentes e índices) se perdeu na extração. O enunciado e as alternativas C (logaritmo de 3 na base b) e D (logaritmo de b na base 3) foram reconstruídos; as alternativas A, B e E estão como no texto extraído — confira no PDF (pág. 7).",
+    "explicacaoCorreta": "A área triplicada é 3A₀. Então A₀ · bᵗ = 3A₀ e, cortando A₀, bᵗ = 3. O expoente que leva b a 3 é, por definição, o logaritmo de 3 na base b: **t = log_b 3**. O resultado não depende da área inicial.",
+    "explicacaoAlternativas": {
+      "A": "Errada: a resposta precisa ser o expoente t tal que bᵗ = 3, ou seja, log_b 3. Expressões como b³ (o fator de crescimento depois de 3 dias) não representam esse número de dias. A notação exata desta alternativa se perdeu na extração.",
+      "B": "Errada: expressões como 3ᵇ ou 3b não resolvem bᵗ = 3; a solução é log_b 3. A notação exata desta alternativa se perdeu na extração.",
+      "D": "Errada: log₃ b inverte base e argumento; resolve 3ᵗ = b, e não bᵗ = 3.",
+      "E": "Errada: a expressão veio incompleta na extração. A única forma correta é log_b 3, que não envolve A₀, porque a área inicial se cancela."
+    },
     "paginasPdf": [
       7
     ]
@@ -493,6 +619,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "O rapaz folga a cada 4 dias (trabalha 3 e folga no 4º). Contando hoje (terça) como dia 0, as folgas caem nos dias 4, 8, 12… e os sábados nos dias 4, 11, 18… As duas coisas coincidem quando o dia é múltiplo de 4 e deixa resto 4 na divisão por 7, isto é, a cada mmc(4, 7) = 28 dias, a partir do dia 4: dias 4, 32, 60, …, 340. Até o dia 365 são **13** folgas no sábado.",
+    "explicacaoAlternativas": {
+      "A": "Errada: 4 coincidências cobririam pouco mais de 100 dias; o período de 365 dias tem bem mais.",
+      "B": "Errada: 8 também é pouco. O padrão se repete a cada 28 dias, e 365 dias comportam 13 ciclos.",
+      "C": "Errada: 12 é o resultado de esquecer a primeira coincidência, que já acontece no dia 4 (o sábado desta semana).",
+      "E": "Errada: 15 coincidências exigiriam pelo menos 4 + 14 × 28 = 396 dias, mais do que os 365 do período."
+    },
     "paginasPdf": [
       7
     ]
@@ -518,6 +651,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Some as velocidades (m² por minuto): André 1/12, Bianca 1/20 e Carol 1/15. Juntos: 5/60 + 3/60 + 4/60 = 12/60 = **1/5 m² por minuto**. Para 50 m²: 50 × 5 = 250 minutos = **4h10min**.",
+    "explicacaoAlternativas": {
+      "A": "Errada: 3h40 (220 min) exigiria pintar 50/220 ≈ 0,227 m² por minuto, mais rápido do que os três juntos conseguem (0,2 m²/min).",
+      "C": "Errada: 5h50 (350 min) corresponde a uma velocidade conjunta menor do que a real; trabalhando juntos, eles levam 250 minutos.",
+      "D": "Errada: 6h (360 min) também subestima a velocidade conjunta; o cálculo correto dá 250 minutos.",
+      "E": "Errada: 6h20 (380 min) está ainda mais longe; o tempo conjunto é 250 minutos (só André, sozinho, levaria 600 minutos)."
+    },
     "paginasPdf": [
       7
     ]
@@ -543,6 +683,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Fintechs são empresas que usam tecnologia de forma intensiva, operando principalmente por plataformas on-line, para oferecer serviços financeiros inovadores (pagamentos, crédito, investimentos, contas digitais) e criar novos modelos de negócio.",
+    "explicacaoAlternativas": {
+      "A": "Errada: o compartilhamento de dados cadastrais entre instituições autorizadas é a proposta do **Open Banking** (Open Finance), e não a definição de fintech.",
+      "B": "Errada: fintechs não são prestadoras de serviço do BCB; quem disponibiliza relatórios de operações ao cidadão é o próprio BCB, pelo Registrato.",
+      "C": "Errada: fintechs atendem clientes no mercado; não existem para criar sistemas de compartilhamento entre reguladores (BCB, CVM, Susep).",
+      "D": "Errada: fintechs não estão livres de regulação. Quando exercem atividades reguladas, como crédito ou pagamentos, precisam de autorização e seguem as regras do BCB."
+    },
     "paginasPdf": [
       8
     ]
@@ -568,6 +715,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "O **Registrato** é o sistema do Banco Central que permite ao cidadão consultar pela internet, gratuitamente, relatórios sobre seus relacionamentos com instituições financeiras, suas operações de crédito, suas operações de câmbio e suas chaves Pix.",
+    "explicacaoAlternativas": {
+      "A": "Errada: o Pix é o arranjo de pagamentos instantâneos do BCB, e não um sistema de consulta de relatórios.",
+      "B": "Errada: blockchain é uma tecnologia de registro distribuído, e não um sistema do BCB para o cidadão.",
+      "D": "Errada: bitcoin é um criptoativo, sem relação com relatórios do BCB.",
+      "E": "Errada: certificação digital é um mecanismo de identidade eletrônica (ICP-Brasil), e não um sistema de relatórios financeiros."
+    },
     "paginasPdf": [
       8
     ]
@@ -593,6 +747,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Entre os objetivos do Pix estão promover a eficiência e a concorrência nos pagamentos e **estimular a eletronização** dos pagamentos de varejo: transferências instantâneas, 24 horas por dia, baratas, reduzindo o uso de dinheiro em espécie e de instrumentos mais caros.",
+    "explicacaoAlternativas": {
+      "A": "Errada: o Pix torna os pagamentos instantâneos; tende a aumentar, e não a reduzir, a velocidade de circulação da moeda.",
+      "B": "Errada: o objetivo é o contrário: aumentar a concorrência, com arranjo aberto a bancos, fintechs e instituições de pagamento.",
+      "C": "Errada: o Pix é uma alternativa aos cartões; não foi criado para aumentar os pagamentos com eles.",
+      "E": "Errada: o Pix liquida pagamentos diretamente entre as contas, reduzindo intermediários."
+    },
     "paginasPdf": [
       8
     ]
@@ -618,6 +779,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "O **Open Banking** (hoje ampliado para Open Finance), regulamentado por CMN e BCB, permite que o cliente autorize o compartilhamento dos seus dados e serviços entre instituições autorizadas, inclusive para iniciar pagamentos e movimentar contas a partir de outras plataformas, e não só pelo app do seu banco.",
+    "explicacaoAlternativas": {
+      "A": "Errada: fintech é um tipo de empresa que usa tecnologia em serviços financeiros, e não a regra de compartilhamento de dados.",
+      "C": "Errada: shadow banking são atividades de intermediação financeira fora da regulação bancária.",
+      "D": "Errada: internet banking é o canal on-line de um banco para os seus próprios clientes; não envolve compartilhamento entre instituições.",
+      "E": "Errada: o Pix é um meio de pagamento instantâneo; não trata do compartilhamento de dados cadastrais."
+    },
     "paginasPdf": [
       8
     ]
@@ -643,6 +811,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Na Idade Média, “todos continuaram calculando o valor de ferramentas e gado na antiga moeda romana, mesmo que ela já não circulasse mais”. A moeda servia como **medida comum de valor** para expressar preços, sem ser usada fisicamente. Essa é a função de **unidade de conta**.",
+    "explicacaoAlternativas": {
+      "A": "Errada: débito não é uma das funções da moeda (as clássicas são meio de troca, unidade de conta e reserva de valor).",
+      "B": "Errada: crédito também não é uma função da moeda.",
+      "C": "Errada: o texto diz que a moeda romana “já não circulava mais”, então não servia como meio de troca.",
+      "E": "Errada: o texto não fala em guardar a moeda para preservar valor no tempo; fala em usá-la para **calcular** valores."
+    },
     "paginasPdf": [
       8
     ]
@@ -668,6 +843,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Some os atendimentos Curto e Médio de cada modelo: A: 1.000 × (10% + 20%) = 300; B: 600 × (20% + 50%) = 420; C: 400 × (40% + 20%) = 240. Total: 960 de 2.000 atendimentos, ou seja, **48%**. É preciso ponderar pelas quantidades, porque cada modelo tem um volume diferente.",
+    "explicacaoAlternativas": {
+      "A": "Errada: 29% é a porcentagem só de tempo **Médio** (200 + 300 + 80 = 580 de 2.000); faltou somar os de tempo Curto.",
+      "C": "Errada: 52% é a porcentagem de tempo **Longo** (700 + 180 + 160 = 1.040 de 2.000), o complemento do que foi pedido.",
+      "D": "Errada: 58% não resulta da ponderação correta pelas quantidades de cada modelo; o resultado certo é 960/2.000 = 48%.",
+      "E": "Errada: 96% divide os 960 atendimentos pelas 1.000 unidades do modelo A, e não pelo total de 2.000."
+    },
     "paginasPdf": [
       9
     ]
@@ -693,6 +875,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "O alarme **não** dispara quando no máximo 1 sensor reage, isto é, quando pelo menos 2 falham. Cada sensor falha com probabilidade 1/5 e funciona com 4/5. P(exatamente 2 falham) = 3 × (1/5)² × (4/5) = 12/125. P(os 3 falham) = (1/5)³ = 1/125. Total: **13/125**.",
+    "explicacaoAlternativas": {
+      "A": "Errada: 1/125 é só a probabilidade de os **três** falharem; esquece os casos em que exatamente dois falham.",
+      "B": "Errada: 5/125 = 1/25 = (1/5)² considera dois sensores específicos falhando, sem multiplicar pelas 3 combinações possíveis nem pela chance de o terceiro funcionar.",
+      "C": "Errada: 12/125 é a probabilidade de **exatamente dois** falharem; falta somar o caso dos três (1/125).",
+      "E": "Errada: 16/125 não corresponde a nenhuma combinação correta; o total é 12/125 + 1/125 = 13/125."
+    },
     "paginasPdf": [
       9
     ]
@@ -719,6 +908,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Nota de digitalização: o sinal de menos da alternativa B se perdeu na extração. Cov(X,Y) = −2 é o único valor coerente com os dados e com o gabarito oficial (B).",
+    "explicacaoCorreta": "Use Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y). Então 9 = 4 + 9 + 2·Cov, logo 2·Cov = −4 e **Cov(X, Y) = −2**. A covariância negativa explica por que a soma varia menos do que Var(X) + Var(Y) = 13. (O sinal de menos da alternativa B se perdeu na extração do PDF.)",
+    "explicacaoAlternativas": {
+      "A": "Errada: 4 é Var(X), e não a covariância.",
+      "C": "Errada: covariância zero (por exemplo, com X e Y independentes) daria Var(X + Y) = 13, e não 9.",
+      "D": "Errada: Cov = 6 exigiria Var(X + Y) = 4 + 9 + 12 = 25.",
+      "E": "Errada: 36 é o produto Var(X) · Var(Y), que não entra na fórmula da variância da soma."
+    },
     "paginasPdf": [
       9
     ]
@@ -771,6 +967,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Queremos P(ter relacionamento **e** ter o motivo “resolver tudo pela internet”). Têm relacionamento 14% dos entrevistados, e, entre eles, 41% citaram esse motivo. Pela regra do produto: 0,14 × 0,41 = 0,0574 ≈ **5,7%**. Os motivos somam mais de 100% porque cada pessoa podia citar vários, mas isso não muda o cálculo.",
+    "explicacaoAlternativas": {
+      "B": "Errada: 6,2% ≈ 14% × 44% usa o motivo errado, “Valores das tarifas” (44%).",
+      "C": "Errada: 6,4% não corresponde a 14% × 41%; resulta de combinar percentuais errados da pesquisa.",
+      "D": "Errada: 7,2% também não corresponde ao produto correto (14% × 41% ≈ 5,7%).",
+      "E": "Errada: 7,8% ≈ 19% × 41% usa o grupo errado, “sabe como funciona” (19%), em vez dos que possuem relacionamento (14%)."
+    },
     "paginasPdf": [
       10
     ]
@@ -796,6 +999,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "A Política de Responsabilidade Socioambiental do Banco do Brasil exige que fornecedores cumpram a legislação trabalhista e socioambiental e repudia práticas como trabalho infantil e trabalho em condições análogas à escravidão. Constatado o ilícito em um fornecedor, a consequência é a **suspensão do vínculo** até que a situação seja regularizada.",
+    "explicacaoAlternativas": {
+      "A": "Errada: manter o contrato como se nada tivesse ocorrido contraria a política, que alcança a cadeia de fornecedores do banco.",
+      "C": "Errada: aumentar juros não é sanção socioambiental e tornaria o banco conivente com o ilícito, mediante pagamento.",
+      "D": "Errada: o tempo de relacionamento e o valor investido não afastam a gravidade do trabalho infantil.",
+      "E": "Errada: priorizar metas comerciais sobre a ilegalidade contraria frontalmente a política socioambiental."
+    },
     "paginasPdf": [
       11
     ]
@@ -821,6 +1031,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Pelo art. 6º da LC nº 105/2001, as autoridades e os agentes fiscais tributários da União, dos estados, do DF e dos municípios só podem examinar documentos, livros e registros de instituições financeiras, inclusive contas de depósitos e aplicações, **quando houver processo administrativo instaurado ou procedimento fiscal em curso** e tais exames forem considerados indispensáveis pela autoridade competente.",
+    "explicacaoAlternativas": {
+      "B": "Errada: a lei não condiciona o exame à autorização do Banco Central.",
+      "C": "Errada: diligências locais não são o requisito legal; o requisito é haver processo ou procedimento fiscal em curso.",
+      "D": "Errada: o acesso não depende de convênios com instituições financeiras privadas.",
+      "E": "Errada: o acesso não é livre; a lei impõe requisitos para proteger o sigilo bancário."
+    },
     "paginasPdf": [
       11
     ]
@@ -846,6 +1063,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "A meta da taxa Selic é definida pelo **Comitê de Política Monetária (Copom)**, órgão do Banco Central, em reuniões periódicas. É o principal instrumento da política monetária para levar a inflação à meta.",
+    "explicacaoAlternativas": {
+      "B": "Errada: o Conselho Monetário Nacional fixa a **meta de inflação** e as diretrizes do sistema financeiro, mas não a Selic.",
+      "C": "Errada: o Ministério da Economia cuida da política fiscal; a política monetária cabe ao Banco Central.",
+      "D": "Errada: o Banco do Brasil é um banco comercial; não define a taxa básica de juros.",
+      "E": "Errada: a taxa Selic efetiva se forma nas operações do mercado, mas em torno da **meta** definida pelo Copom."
+    },
     "paginasPdf": [
       11
     ]
@@ -871,6 +1095,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "O **varejo bancário** é o segmento voltado ao grande número de clientes individuais, as pessoas físicas (e também pequenos negócios), atendidos com produtos padronizados em massa: contas, cartões, crédito pessoal, investimentos.",
+    "explicacaoAlternativas": {
+      "A": "Errada: companhias de grande porte são o público do **atacado** (corporate), com atendimento personalizado.",
+      "B": "Errada: governos formam o segmento de **setor público**, e não o varejo.",
+      "C": "Errada: exportadores são atendidos em produtos de comércio exterior, em geral voltados a empresas.",
+      "D": "Errada: importadores, pelo mesmo motivo, pertencem ao segmento de comércio exterior, e não ao varejo."
+    },
     "paginasPdf": [
       11
     ]
@@ -896,6 +1127,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "A Carta-Circular nº 4.001/2020 do BCB lista operações e situações que podem indicar lavagem de dinheiro e financiamento do terrorismo, organizadas por categorias. Operações para clientes no exterior, sobretudo em paraísos fiscais (países de tributação favorecida), se enquadram nas situações relacionadas a **atividades internacionais**.",
+    "explicacaoAlternativas": {
+      "A": "Errada: “custos de empresas” não é uma categoria da Carta-Circular.",
+      "B": "Errada: a norma trata de operações de crédito em categoria própria (empréstimos e financiamentos), mas o caso descrito, de investidores sediados no exterior, se enquadra em atividades internacionais.",
+      "C": "Errada: “contratos operacionais” não é uma categoria da Carta-Circular.",
+      "E": "Errada: “investimentos mercadológicos” não é uma categoria da Carta-Circular."
+    },
     "paginasPdf": [
       11
     ]
@@ -921,6 +1159,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Acurácia = (VP + VN) / (VP + VN + FP + FN). Com acurácia exatamente 0,9: (14.169 + 15.360) / total = 0,9, então total = 29.529 / 0,9 = 32.810. Logo, FN = 32.810 − (14.169 + 15.360 + 1.501) = 32.810 − 31.030 = **1.780**.",
+    "explicacaoAlternativas": {
+      "A": "Errada: com FN = 1.778, a acurácia seria 29.529 / 32.808 ≈ 90,005%, e não exatamente 90%.",
+      "B": "Errada: com FN = 1.779, a acurácia seria ≈ 90,003%; só FN = 1.780 dá exatamente 90%.",
+      "D": "Errada: com FN = 1.781, a acurácia ficaria um pouco abaixo de 90% (≈ 89,997%).",
+      "E": "Errada: com FN = 1.782, a acurácia seria ≈ 89,995%."
+    },
     "paginasPdf": [
       12
     ]
@@ -947,6 +1192,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Na prova, as chaves primárias aparecem sublinhadas; o sublinhado se perdeu na extração do PDF.",
+    "explicacaoCorreta": "Cada propriedade exige uma estrutura própria na 3FN. (1) codigoRisco → nomeRisco: tabela TipoRisco. (2) CNPJ → nomeEmpresa: tabela Empresa. (3) CPF → nomePessoa: tabela PessoaFisica. (4) {rua, numero} → CNPJ: o CNPJ fica em Terreno. (5) Donos e empresas em relação muitos-para-muitos: tabela associativa Dono(CNPJ, CPF). (6) Um terreno pode ter vários riscos: tabela Risco, que liga o terreno ao tipo de risco e guarda a probabilidade. Só a alternativa A tem as seis tabelas, sem dependências transitivas.",
+    "explicacaoAlternativas": {
+      "B": "Errada: põe codigoRisco e probabilidadeRisco dentro de Terreno, o que permite **um único risco** por terreno e viola a propriedade 6.",
+      "C": "Errada: não tem a tabela Dono e põe o CNPJ dentro de PessoaFisica, de modo que cada pessoa só poderia ser dona de **uma** empresa (viola a propriedade 5).",
+      "D": "Errada: é praticamente o esquema original não normalizado: Terreno mantém dependências transitivas (nomeEmpresa via CNPJ, nomeRisco via codigoRisco), e Empresa mistura dados de pessoas.",
+      "E": "Errada: Terreno ainda guarda nomeEmpresa (dependência transitiva via CNPJ) e um só risco por terreno, e Empresa mistura CPF e nomePessoa, sem tratar a relação muitos-para-muitos."
+    },
     "paginasPdf": [
       12
     ]
@@ -1023,6 +1275,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "A restrição **CHECK** valida uma condição em cada linha inserida ou alterada, por exemplo: `CHECK (data_de_emissao_RG > data_de_nascimento)`. Se a condição for falsa, o SGBD rejeita a operação, e o problema não volta a acontecer.",
+    "explicacaoAlternativas": {
+      "B": "Errada: INSPECT não é um tipo de restrição em SQL.",
+      "C": "Errada: TEST não é um tipo de restrição em SQL.",
+      "D": "Errada: VALIDATE não é um tipo de restrição no padrão SQL (alguns SGBDs usam a palavra em outros comandos, mas não para declarar uma regra como essa).",
+      "E": "Errada: VERIFY não é um tipo de restrição em SQL."
+    },
     "paginasPdf": [
       13
     ]
@@ -1123,6 +1382,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Os terrenos já têm **rótulos** de risco (alto, médio, baixo, nenhum), e o objetivo é aprender a atribuir um desses rótulos a terrenos novos. É uma tarefa de **classificação supervisionada**. O K-NN (k vizinhos mais próximos) classifica cada caso pelos rótulos dos exemplos mais parecidos.",
+    "explicacaoAlternativas": {
+      "A": "Errada: PCA é uma técnica de redução de dimensionalidade e não classifica casos.",
+      "C": "Errada: DBSCAN é um algoritmo de clusterização (não supervisionado) baseado em densidade; não aprende rótulos predefinidos.",
+      "D": "Errada: K-Medoids também é clusterização não supervisionada; forma grupos sem usar os rótulos de risco.",
+      "E": "Errada: redes de Kohonen (mapas auto-organizáveis) são não supervisionadas e usadas para agrupar e visualizar dados."
+    },
     "paginasPdf": [
       14
     ]
@@ -1173,6 +1439,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Uma **VIEW** guarda apenas a consulta, e não uma cópia dos dados: cada vez que é consultada, lê as tabelas originais. Assim, o protótipo vê sempre os dados atualizados, sem replicação e sem custo extra nas operações do sistema corporativo. Como o protótipo só faz consultas, as views bastam.",
+    "explicacaoAlternativas": {
+      "B": "Errada: triggers em cada INSERT de todas as tabelas acrescentariam trabalho a toda operação do sistema original, com alto impacto no desempenho; além disso, não cobririam alterações e exclusões.",
+      "C": "Errada: o PostgreSQL não tem triggers disparados por SELECT; e atualizar cópias a cada consulta seria custoso.",
+      "D": "Errada: particionar as tabelas originais muda a organização física do sistema corporativo e não cria um protótipo sincronizado.",
+      "E": "Errada: fazer DUMP e restaurar a base a cada sessão é pesado para o sistema original, e os dados ficam desatualizados entre uma sessão e outra."
+    },
     "paginasPdf": [
       15
     ]
@@ -1248,6 +1521,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "No modelo estrela, a tabela fato guarda as **chaves estrangeiras das dimensões** (tempo, agência, produto, cliente) e as **medidas numéricas** do fato (valor e prazo do empréstimo). Os atributos descritivos (dia, cidade, nome do cliente…) ficam nas tabelas de dimensão.",
+    "explicacaoAlternativas": {
+      "A": "Errada: copia todos os atributos descritivos para a tabela fato, em vez de referenciar as dimensões por chaves; isso desnormaliza o fato e desperdiça espaço.",
+      "B": "Errada: não tem as chaves das dimensões, então não é possível analisar os empréstimos por tempo, agência, produto ou cliente.",
+      "C": "Errada: tem as chaves das dimensões, mas falta o principal: as **medidas** (valor e prazo do empréstimo).",
+      "D": "Errada: além das chaves, repete na tabela fato os atributos que já estão nas dimensões, uma redundância desnecessária."
+    },
     "paginasPdf": [
       17
     ]
@@ -1352,6 +1632,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "I: o array está ordenado (ainda que de forma decrescente) e permite acesso direto por índice, então a **busca binária** funciona, invertendo o sentido da comparação, em O(log n). II: a lista está desordenada, e só a **sequencial** é possível. III: embora ordenada, a lista encadeada não permite acesso direto ao meio; para chegar ao elemento central é preciso percorrer os nós. Por isso a busca binária perde a vantagem, e o mais eficiente é a **sequencial**, que ainda pode parar ao passar do valor procurado.",
+    "explicacaoAlternativas": {
+      "A": "Errada: no caso I a busca sequencial desperdiça a ordenação do array, e no caso III a busca binária não é eficiente em lista encadeada.",
+      "C": "Errada: acerta I e II, mas no caso III a busca binária não é eficiente, porque a lista encadeada não tem acesso direto por posição.",
+      "D": "Errada: no caso I o array ordenado com acesso por índice permite a busca binária, muito mais eficiente que a sequencial.",
+      "E": "Errada: no caso II a busca binária é impossível, porque a lista está desordenada; e no caso III ela é ineficiente."
+    },
     "paginasPdf": [
       20
     ]
@@ -1402,6 +1689,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Basta olhar a primeira iteração de cada algoritmo. **Algoritmo 1**: o menor elemento (4) foi para a 1ª posição, trocando de lugar com o 81. É a **seleção**, que escolhe o mínimo e o põe no início. **Algoritmo 2**: só o par inicial foi ordenado (15 81), e depois o 4 foi inserido na frente, e assim por diante. É a **inserção**, que vai inserindo cada elemento na parte já ordenada. **Algoritmo 3**: o maior elemento (81) foi parar no fim. É a **bolha**, em que cada passada leva o maior para o final.",
+    "explicacaoAlternativas": {
+      "A": "Errada: a bolha empurra o maior elemento para o **fim**, como no algoritmo 3, e não traz o menor para o início, como no 1.",
+      "B": "Errada: o algoritmo 1 não é a bolha, e o algoritmo 3, que empurra o 81 para o fim, não é a seleção.",
+      "D": "Errada: o algoritmo 2 ordena progressivamente o início do vetor (inserção); a bolha é o algoritmo 3.",
+      "E": "Errada: o algoritmo 1 coloca o mínimo na frente por troca (seleção), e não por inserção."
+    },
     "paginasPdf": [
       21
     ]
@@ -1454,6 +1748,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "A suavização por **compartimentos** (binning) ordena os valores, divide-os em pequenos intervalos (bins) e substitui os valores de cada intervalo por um valor representativo, como a média, a mediana ou os limites do bin. Isso reduz o efeito do ruído.",
+    "explicacaoAlternativas": {
+      "A": "Errada: substituir dados por NULL não suaviza; cria valores ausentes. Clusters podem ajudar a detectar outliers, mas o método descrito não é suavização.",
+      "B": "Errada: cubos de dados são estruturas de análise multidimensional (OLAP) e não servem para tratar ruído na preparação.",
+      "D": "Errada: fundir dados de várias fontes é integração de dados; “criar variáveis” para preencher espaços não é suavização.",
+      "E": "Errada: atributos “fantasmas” não são uma técnica de pré-processamento; a descrição não corresponde a nenhum método reconhecido."
+    },
     "paginasPdf": [
       22
     ]
@@ -1504,6 +1805,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "O **Interface Builder** é o editor visual integrado ao Xcode, em que se montam as telas (storyboards e arquivos XIB) arrastando componentes e configurando o layout e as ligações com o código.",
+    "explicacaoAlternativas": {
+      "B": "Errada: o Bundle Identifier é o identificador único do aplicativo (por exemplo, com.banco.app), e não uma ferramenta de design de telas.",
+      "C": "Errada: o Organizer do Xcode serve para gerenciar arquivos de distribuição e relatórios; não é para programar telas, e “Organizer Interface” não é uma ferramenta.",
+      "D": "Errada: Apple LLVM é o compilador usado pelo Xcode.",
+      "E": "Errada: Instruments é a ferramenta de análise de desempenho (profiling), memória e energia."
+    },
     "paginasPdf": [
       22
     ]
@@ -1529,6 +1837,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "No Ansible, o arquivo YAML que descreve, em ordem, as tarefas a executar nos servidores (hosts) é o **playbook**. Ele contém plays com as tasks, que chamam os módulos.",
+    "explicacaoAlternativas": {
+      "A": "Errada: “Apache-Start” não é um padrão do Ansible.",
+      "B": "Errada: “Nodel” não é um conceito do Ansible.",
+      "D": "Errada: não existe “Taskbook”; as tasks ficam **dentro** dos playbooks.",
+      "E": "Errada: Ansible Tower (hoje AWX/Automation Controller) é uma interface web de gerenciamento, e não o padrão do arquivo YAML."
+    },
     "paginasPdf": [
       22
     ]
@@ -1580,6 +1895,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "As notações de piso (⌊ ⌋), teto (⌈ ⌉) e índices se perderam na extração; as alternativas A, B e C foram reconstruídas a partir das próprias definições. As alternativas D e E estão como no texto extraído — confira no PDF (pág. 23).",
+    "explicacaoCorreta": "A cada iteração, a busca binária descarta metade do vetor. No pior caso, ela continua até restar 1 elemento, o que leva ⌊log₂ N⌋ divisões, mais a comparação final: **1 + ⌊log₂ N⌋** iterações. Exemplos: N = 8 → 4 iterações; N = 1.000 → 10.",
+    "explicacaoAlternativas": {
+      "A": "Errada: ⌊log₂ N⌋ esquece a última comparação. Para N = 1 daria 0, mas é preciso pelo menos uma iteração.",
+      "C": "Errada: 1 + ⌈log₂ N⌉ superestima quando N não é potência de 2. Para N = 5, daria 4, mas o pior caso real é 3.",
+      "D": "Errada: qualquer que seja a notação original (2N ou 2ᴺ), cresce no mínimo linearmente com N, muito acima do custo logarítmico da busca binária.",
+      "E": "Errada: a expressão (algo como 2N − 1 ou 2ᴺ⁻¹; a notação se perdeu na extração) também cresce no mínimo linearmente com N, incompatível com a busca binária."
+    },
     "paginasPdf": [
       23
     ]
@@ -1605,6 +1927,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "A busca sequencial **otimizada**, numa sequência ordenada de forma crescente, pode parar assim que encontra um valor maior que o procurado. Em A: compara 23, 45 e 81; como 81 > 52, a senha 52 não está na fila. São só **3 comparações**.",
+    "explicacaoAlternativas": {
+      "B": "Errada: a senha 52 é encontrada na 5ª posição: 5 comparações (13, 25, 37, 44, 52).",
+      "C": "Errada: a busca só para no 67 (5ª posição), quando conclui que 52 não está: 5 comparações.",
+      "D": "Errada: numa sequência desordenada não dá para parar antes; o 52 está na última posição, então são 7 comparações.",
+      "E": "Errada: desordenada e sem o 52, a busca precisa percorrer as 7 senhas para concluir que ele não está: 7 comparações."
+    },
     "paginasPdf": [
       24
     ]
@@ -1630,6 +1959,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "O melhor caso da ordenação por inserção é o vetor **já ordenado**: cada elemento é comparado uma única vez com o anterior e já fica no lugar. São n − 1 comparações, um tempo proporcional a **n**.",
+    "explicacaoAlternativas": {
+      "A": "Errada: n log n é o custo típico de algoritmos como merge sort e heap sort, e não o melhor caso da inserção.",
+      "B": "Errada: nenhum algoritmo de ordenação pode levar log n, porque é preciso ao menos examinar os n elementos.",
+      "C": "Errada: n² é o custo da inserção no **pior caso** (vetor em ordem inversa) e no caso médio.",
+      "E": "Errada: tempo constante é impossível, porque o algoritmo precisa percorrer os n elementos."
+    },
     "paginasPdf": [
       24
     ]
@@ -1655,6 +1991,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Os dados são **vértices** (usuários, escolas) ligados por **arestas** com significado (“Estudaem”, “Amigode”). Esse é exatamente o modelo de banco de dados **orientado a grafos** (como o Neo4j), feito para armazenar e percorrer relacionamentos.",
+    "explicacaoAlternativas": {
+      "A": "Errada: hashing distribuído é uma técnica para repartir dados entre servidores, e não um modelo de dados.",
+      "B": "Errada: consistent hashing é uma técnica de particionamento e balanceamento entre nós de um cluster, e não um modelo de dados.",
+      "C": "Errada: o modelo de documentos armazena agregados autocontidos (como JSON) e não é voltado a percorrer relações entre objetos.",
+      "E": "Errada: vector clock é um mecanismo de controle de versões e concorrência em sistemas distribuídos, e não um modelo de dados."
+    },
     "paginasPdf": [
       24
     ]
@@ -1705,6 +2048,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Na modelagem dimensional, um **fato** (como a compra de um insumo) é analisado segundo suas **dimensões** (insumo, fornecedor, tempo). Essa organização é o **cubo de dados**, em que cada célula guarda as medidas do fato para uma combinação de valores das dimensões.",
+    "explicacaoAlternativas": {
+      "B": "Errada: “tuplas estáticas” não é uma forma de organização de dados para fatos e dimensões.",
+      "C": "Errada: “matriz de ocorrência” não é o conceito da modelagem dimensional para fatos analisados por várias dimensões.",
+      "D": "Errada: documentos são a unidade dos bancos NoSQL orientados a documentos, e não a estrutura de fatos e dimensões.",
+      "E": "Errada: selecionar um subconjunto de atributos é uma técnica de redução de dados, e não uma forma de organizar fatos."
+    },
     "paginasPdf": [
       25
     ]
@@ -1730,6 +2080,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "As fichas saem de P1 na ordem Apolo, Cibele, Hades, Zeus (do topo para a base) e passam para P2, de onde são impressas. Para obter **Cibele, Hades, Apolo, Zeus**: passa Apolo e Cibele, imprime Cibele; passa Hades e imprime Hades; imprime Apolo (que estava sob eles em P2); passa Zeus e imprime Zeus. É a única sequência que respeita a pilha.",
+    "explicacaoAlternativas": {
+      "A": "Errada: depois de imprimir Apolo, para chegar a Zeus é preciso empilhar Cibele e Hades em P2. Impresso Zeus, o topo de P2 é Hades, e não Cibele.",
+      "B": "Errada: para imprimir Hades primeiro, Apolo e Cibele ficam em P2 com Cibele no topo; Apolo não pode sair antes de Cibele.",
+      "C": "Errada: imprimir Zeus primeiro exige empilhar todas as fichas em P2; depois a ordem forçada é Hades, Cibele, Apolo, e não Cibele em seguida.",
+      "D": "Errada: como em B, depois de Hades o topo de P2 é Cibele, e não Apolo."
+    },
     "paginasPdf": [
       25
     ]
@@ -1755,6 +2112,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "No Bubble Sort, cada troca de vizinhos desfaz exatamente uma **inversão** (um par fora de ordem). Logo, o total de trocas é o número de inversões do vetor: 77 está à frente de 6 números menores; 51, de 5; 11, de nenhum; 37, de 3 (29, 13, 21); 29, de 2 (13, 21); 13 e 21, de nenhum. Total: 6 + 5 + 0 + 3 + 2 = **16** trocas.",
+    "explicacaoAlternativas": {
+      "A": "Errada: 14 trocas deixariam 2 inversões sem corrigir; o vetor tem 16.",
+      "B": "Errada: 15 trocas não bastam; o vetor tem 16 pares fora de ordem.",
+      "D": "Errada: 17 trocas excedem o número de inversões; o Bubble Sort só troca pares fora de ordem.",
+      "E": "Errada: 18 trocas também excedem as 16 inversões do vetor."
+    },
     "paginasPdf": [
       26
     ]
@@ -1780,6 +2144,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Acompanhando a FILA (o primeiro da esquerda é o mais antigo): ENF(8) → [8]; ENF(9) → [8, 9]; DES → sai 8 → [9]; ENF(10) → [9, 10]; ENF(11) → [9, 10, 11]; ENF(DES()) → sai 9 e volta ao fim → [10, 11, 9]; ENF(12) → [10, 11, 9, 12]; DES → sai 10 → [11, 9, 12]; ENF(13) → [11, 9, 12, 13]; DES → sai 11 → **[9, 12, 13]**.",
+    "explicacaoAlternativas": {
+      "A": "Errada: 10 e 11 já saíram nas duas últimas retiradas; e 9 voltou para o fim da fila ao ser desenfileirado e enfileirado de novo.",
+      "C": "Errada: ignora as últimas operações; 10 e 11 foram retirados, e 12 e 13 entraram.",
+      "D": "Errada: o 8 é o primeiro a sair (FIFO); não pode estar na fila no final.",
+      "E": "Errada: 8 já saiu logo na primeira retirada, e 10 também saiu depois."
+    },
     "paginasPdf": [
       26
     ]
