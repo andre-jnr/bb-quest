@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="style.css">
 <script src="questoes.js" defer></script>
 <script src="app.js" defer></script>
+<script src="revisao.js" defer></script>
 <script src="simulado.js" defer></script>
 </head>
 <body>
@@ -47,6 +48,17 @@
         <div class="stat"><b id="stDone">0</b><span>respondidas</span></div>
         <div class="stat"><b id="stRate">–</b><span>de acerto</span></div>
       </div>
+    </div>
+
+    <div class="card srs-card" id="srsCard">
+      <div class="card-row">
+        <div class="srs-info">
+          <h2 style="margin-bottom:4px">🔁 Revisão espaçada</h2>
+          <p class="srs-txt" id="srsTxt"></p>
+        </div>
+        <button class="btn btn-primary" id="srsStartBtn" hidden>Começar revisão →</button>
+      </div>
+      <div class="srs-levels" id="srsLevels"></div>
     </div>
 
     <div class="card">

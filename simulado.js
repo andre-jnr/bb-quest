@@ -380,6 +380,7 @@ function simIntegrar(sim, rec) {
     const e = CADERNO[q.id];
     if (!ok) registrarErro(q, m, rec.fim);
     else if (e && !e.dominada) e.acertosDepois = (e.acertosDepois || 0) + 1;
+    if (typeof srsResponder === 'function') srsResponder(q, ok);
   });
   store.set('bbq.stats', STATS);
   saveCaderno(); updateErrosBadge();

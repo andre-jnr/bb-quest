@@ -274,6 +274,7 @@ function renderHome() {
     : (dom ? `Tudo revisado! ${dom} questão(ões) dominada(s). 🎉` : 'Vazio por enquanto. As questões que você errar aparecem aqui.');
   updateErrosBadge();
   if (typeof renderSimHomeCard === 'function') renderSimHomeCard();
+  if (typeof renderSrsCard === 'function') renderSrsCard();
 }
 function updateErrosBadge() {
   const n = pendentesCaderno().length;
@@ -339,7 +340,8 @@ function renderQuestion() {
     `<span class="chip" title="Peso da disciplina no edital">peso ${fmtPts(pesoDe(q.disciplina))}</span>`,
     q.dificuldade && `<span class="chip ${esc(q.dificuldade)}">${esc(DIF_LABEL[q.dificuldade] || q.dificuldade)}</span>`,
     q.fonte && `<span class="chip" style="background:var(--surface-2);color:var(--muted)">${esc(q.fonte)}</span>`,
-    st && `<span class="chip" style="background:var(--surface-2);color:var(--muted)">já respondida ${st.t}× · ${st.a} acerto${st.a === 1 ? '' : 's'}</span>`
+    st && `<span class="chip" style="background:var(--surface-2);color:var(--muted)">já respondida ${st.t}× · ${st.a} acerto${st.a === 1 ? '' : 's'}</span>`,
+    typeof srsChip === 'function' && srsChip(q.id)
   ].filter(Boolean).join('');
 
   $('qEnunciado').innerHTML = rich(q.enunciado);
@@ -411,6 +413,9 @@ function answer() {
   saveCaderno(); updateErrosBadge();
   const sugerirDominei = ok && noCaderno && !noCaderno.dominada;
 
+  // Revisão espaçada (revisao.js): errou → 1 dia; acertou revisão vencida → sobe de nível
+  const srsInfo = typeof srsResponder === 'function' ? srsResponder(q, ok) : null;
+
   // Feedback
   const exp = q.explicacaoAlternativas || {};
   const others = LETTERS.filter((L) => L !== correct && exp[L]);
@@ -422,6 +427,7 @@ function answer() {
       </div>
       <div class="fb-body">
         ${!ok ? `<div class="block muted" style="font-size:13.5px">📕 Questão adicionada ao Caderno de Erros.</div>` : ''}
+        ${srsInfo ? `<div class="block srs-fb srs-${srsInfo.tipo}">${esc(srsInfo.msg)}</div>` : ''}
         ${sugerirDominei ? `<div class="block fb-dominei">
             <span>📕 Esta questão está no seu Caderno de Erros${noCaderno.acertosDepois > 1 ? ` (acertou ${noCaderno.acertosDepois}× na revisão)` : ''}.</span>
             <button class="btn btn-ok btn-sm" data-dominei="${esc(q.id)}">✓ Dominei, tirar do caderno</button>
@@ -643,7 +649,7 @@ function renderPerf() {
     return `<li class="res-item">
       <span class="ic ${pct >= LIMITE_FRACO ? 'ok' : 'err'}" style="font-size:11px;width:40px;height:40px">${pct}%</span>
       <div class="info">
-        <div>${esc(data)}${s.tipo === 'simulado' ? '<span class="chip chip-sim">simulado</span>' : ''}${s.completa ? '' : '<span class="chip chip-inc">incompleta</span>'}</div>
+        <div>${esc(data)}${s.tipo === 'simulado' ? '<span class="chip chip-sim">simulado</span>' : ''}${s.tipo === 'revisao' ? '<span class="chip chip-sim">revisão</span>' : ''}${s.completa ? '' : '<span class="chip chip-inc">incompleta</span>'}</div>
         <div>${r.total} questão(ões) · ${r.acertos} ✓ ${r.erros} ✕ · ${fmtPts(r.pontos)}/${fmtPts(r.pontosMax)} pts · ${esc(discs.join(', '))}</div>
       </div>
     </li>`;
@@ -744,6 +750,7 @@ function erroCardHTML(e) {
         <span class="chip">${esc(q.disciplina || 'Sem disciplina')}</span>
         ${q.assunto ? `<span class="chip" style="background:var(--surface-2);color:var(--muted)">${esc(q.assunto)}</span>` : ''}
         <span class="chip chip-err">errou ${e.erros}×</span>
+        ${typeof srsChip === 'function' ? srsChip(e.qid) : ''}
         ${e.acertosDepois ? `<span class="chip chip-ok">acertou ${e.acertosDepois}× depois</span>` : ''}
       </div>
       <span class="erro-date">${e.dominada ? 'dominada em ' + esc(fmtData(e.dominadaEm)) : 'último erro ' + esc(fmtData(e.ultimaVez))}</span>
