@@ -11,8 +11,9 @@ App/
 ├── data/                 Bancos de questões (cada arquivo soma suas questões)
 │   ├── questoes.js       Questões inéditas no estilo Cesgranrio
 │   ├── prova-2023.js     Prova oficial BB 2023 (70 questões + gabarito) — gerado
-│   └── fontes/
-│       └── prova_2023.json   Extração original do PDF (não é carregada pelo app)
+│   └── fontes/               (não são carregados pelo app)
+│       ├── prova_2023.json         Extração original do PDF
+│       └── explicacoes-2023.json   Explicações por número de questão
 ├── js/                   Carregados nesta ordem pelo index.html
 │   ├── app.js            Núcleo: estado, pesos/tempo-alvo, treino, resultado,
 │   │                     Meu desempenho, Caderno de Erros, importar/exportar banco
@@ -50,8 +51,9 @@ figura que não está no texto), `ano`, `numero` e `paginasPdf`.
 ## Prova 2023
 
 `data/prova-2023.js` é gerado — não edite à mão. Para corrigir algo, ajuste
-`data/fontes/prova_2023.json` ou as correções em `tools/converter-prova-2023.js`
-e rode, na pasta `App`:
+`data/fontes/prova_2023.json`, as explicações em `data/fontes/explicacoes-2023.json`
+(chave = número da questão; explique a correta e as 4 erradas) ou as correções em
+`tools/converter-prova-2023.js`, e rode, na pasta `App`:
 
 ```
 node tools/converter-prova-2023.js data/fontes/prova_2023.json data/prova-2023.js

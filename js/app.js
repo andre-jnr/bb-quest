@@ -794,7 +794,7 @@ function erroCardHTML(e) {
     <div class="ans ans-wrong">
       <div class="ans-label">Você marcou</div>
       <div class="ans-alt"><span class="letter-badge">${esc(m)}</span><span>${rich(alts[m] ?? '')}</span></div>
-      <p><b>Por que está errada:</b> ${rich(exps[m] || 'Sem explicação cadastrada para esta alternativa.')}</p>
+      <p><b>Por que está errada:</b> ${rich(String(exps[m] || 'Sem explicação cadastrada para esta alternativa.').replace(/^errada\s*[:,.-]\s*/i, ''))}</p>
     </div>
     <div class="ans ans-ok">
       <div class="ans-label">Resposta correta</div>

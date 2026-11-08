@@ -1,8 +1,14 @@
 // Converte data/fontes/prova_2023.json (extração do PDF) para data/prova-2023.js no formato do BB Quest.
 // Uso (na pasta App): node tools/converter-prova-2023.js data/fontes/prova_2023.json data/prova-2023.js
 const fs = require('fs');
+const path = require('path');
 const [entrada, saida] = process.argv.slice(2);
 const prova = JSON.parse(fs.readFileSync(entrada, 'utf8'));
+
+// Explicações escritas à parte (mesma pasta da fonte), por número da questão:
+// { "12": { "correta": "...", "alternativas": { "A": "...", ... } } }
+const arqExp = path.join(path.dirname(entrada), 'explicacoes-2023.json');
+const EXPLICACOES = fs.existsSync(arqExp) ? JSON.parse(fs.readFileSync(arqExp, 'utf8')) : {};
 
 /* ---------- Nomes de disciplina padronizados (iguais aos de PESOS_EDITAL) ---------- */
 const DISC = {
@@ -172,6 +178,16 @@ const saidaQs = prova.map((p) => {
     tags: ['prova-2023', 'cesgranrio', 'oficial']
   };
   if (FIX[n]) FIX[n](q);
+  const ex = EXPLICACOES[n];
+  if (ex) {
+    const erradas = 'ABCDE'.split('').filter((L) => L !== q.correta);
+    const faltam = erradas.filter((L) => !ex.alternativas || !ex.alternativas[L]);
+    if (!ex.correta || faltam.length || (ex.alternativas && ex.alternativas[q.correta])) {
+      throw new Error(`explicações da questão ${n} inconsistentes com o gabarito ${q.correta}`);
+    }
+    q.explicacaoCorreta = ex.correta;
+    q.explicacaoAlternativas = ex.alternativas;
+  }
   // alternativas de código: fonte monoespaçada (várias linhas → bloco; uma linha → inline)
   for (const L in q.alternativas) {
     const a = q.alternativas[L];
@@ -195,7 +211,7 @@ saidaQs.forEach((q) => {
 
 const cab = `/* Prova oficial do Banco do Brasil 2023 — Agente de Tecnologia (Cesgranrio).
    70 questões com gabarito, convertidas de prova_2023.json (extraído do PDF).
-   As questões ainda não têm explicações (explicacaoCorreta/explicacaoAlternativas).
+   Explicações vêm de data/fontes/explicacoes-2023.json (questões sem código).
    O conteúdo entre os colchetes é JSON puro. */
 `;
 fs.writeFileSync(saida, cab + 'window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat(' + JSON.stringify(saidaQs, null, 2) + ');\n');
