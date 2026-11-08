@@ -147,6 +147,7 @@ function setDominada(qid, valor) {
   const e = CADERNO[qid]; if (!e) return;
   e.dominada = valor; e.dominadaEm = valor ? new Date().toISOString() : null;
   saveCaderno(); updateErrosBadge();
+  if (valor && typeof gameRechecar === 'function') gameRechecar(); // conquista "Caderno limpo"
 }
 
 function saveSession(sess) {
@@ -275,6 +276,7 @@ function renderHome() {
   updateErrosBadge();
   if (typeof renderSimHomeCard === 'function') renderSimHomeCard();
   if (typeof renderSrsCard === 'function') renderSrsCard();
+  if (typeof renderGamePill === 'function') renderGamePill();
 }
 function updateErrosBadge() {
   const n = pendentesCaderno().length;
@@ -416,6 +418,9 @@ function answer() {
   // Revisão espaçada (revisao.js): errou → 1 dia; acertou revisão vencida → sobe de nível
   const srsInfo = typeof srsResponder === 'function' ? srsResponder(q, ok) : null;
 
+  // Gamificação (gamificacao.js): XP, streak e conquistas
+  const gameInfo = typeof gameResponder === 'function' ? gameResponder({ q, ok, tempo: S.elapsed, alvo: target }) : null;
+
   // Feedback
   const exp = q.explicacaoAlternativas || {};
   const others = LETTERS.filter((L) => L !== correct && exp[L]);
@@ -423,6 +428,7 @@ function answer() {
     <div class="feedback ${ok ? 'ok' : 'err'}">
       <div class="fb-head">
         ${ok ? '✅ Você acertou!' : `❌ Você errou. Resposta correta: ${esc(correct)}`}
+        ${gameInfo && gameInfo.xp ? `<span class="xp-gain" title="${gameInfo.bonus ? 'Inclui bônus de tempo' : 'XP por acerto'}">+${gameInfo.xp} XP${gameInfo.bonus ? ' ⚡' : ''}</span>` : ''}
         <span class="t" title="${esc(SEM_LABEL[cor])}">${semDot(cor)} ${fmtTime(S.elapsed)} de ${fmtTime(target)}</span>
       </div>
       <div class="fb-body">
@@ -450,6 +456,7 @@ function answer() {
   setAction(last ? 'Ver resultado' : 'Próxima questão →', false);
   $('hint').textContent = 'Enter para ' + (last ? 'ver o resultado' : 'avançar');
   setTimeout(() => $('qFeedback').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+  if (gameInfo) gameCelebrar(gameInfo);
 }
 $('qFeedback').addEventListener('click', (e) => {
   const b = e.target.closest('[data-dominei]'); if (!b) return;
@@ -487,6 +494,7 @@ document.addEventListener('keydown', (e) => {
 function finish() {
   clearInterval(S.timerId);
   S.session.completa = true;
+  if (typeof gameFimSessao === 'function') setTimeout(() => gameCelebrar(gameFimSessao(S.session)), 300);
   S.session.fim = new Date().toISOString();
   saveSession(S.session);
 

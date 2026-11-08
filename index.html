@@ -12,6 +12,7 @@
 <script src="questoes.js" defer></script>
 <script src="app.js" defer></script>
 <script src="revisao.js" defer></script>
+<script src="gamificacao.js" defer></script>
 <script src="simulado.js" defer></script>
 </head>
 <body>
@@ -26,6 +27,11 @@
       </div>
     </div>
     <div class="spacer"></div>
+    <button class="game-pill" id="gameBtn" type="button" aria-label="Perfil, nível e conquistas">
+      <span class="gp-ic" id="gpIc">📝</span>
+      <span class="gp-txt"><b id="gpNome">Candidato</b><small id="gpXp">0 XP</small></span>
+      <span class="gp-streak" id="gpStreak">🔥 0</span>
+    </button>
     <button class="icon-btn has-badge" id="errosBtn" aria-label="Caderno de Erros" title="Caderno de Erros">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/><path d="M10 8l4 4M14 8l-4 4"/></svg>
       <span class="badge" id="errosBadge" hidden>0</span>
@@ -43,6 +49,15 @@
     <div class="card hero">
       <h2>Bora treinar? 🚀</h2>
       <p>Questões no estilo Cesgranrio para o cargo de Agente de Tecnologia. Filtre por disciplina e assunto e pratique com explicação de cada alternativa.</p>
+      <button class="player" id="playerCard" type="button" aria-label="Ver perfil e conquistas">
+        <span class="player-ic" id="plIc">📝</span>
+        <span class="player-main">
+          <span class="player-top"><b id="plNome">Candidato</b><span id="plXp">0 XP</span></span>
+          <span class="player-bar"><i id="plBar"></i></span>
+          <span class="player-next" id="plNext"></span>
+        </span>
+        <span class="player-streak" id="plStreak"></span>
+      </button>
       <div class="stats">
         <div class="stat"><b id="stTotal">0</b><span>no banco</span></div>
         <div class="stat"><b id="stDone">0</b><span>respondidas</span></div>
@@ -334,6 +349,58 @@
     </div>
   </section>
 
+  <!-- ===================== PERFIL E CONQUISTAS ===================== -->
+  <section id="game" class="screen" hidden>
+    <div class="page-head">
+      <button class="btn btn-ghost btn-sm" id="gameBack">← Início</button>
+      <h2>Perfil e conquistas</h2>
+    </div>
+
+    <div class="card hero game-level">
+      <div class="gl-top">
+        <span class="gl-ic" id="glIc">📝</span>
+        <div>
+          <small>Seu nível</small>
+          <h2 id="glNome">Candidato</h2>
+          <span id="glXp"></span>
+        </div>
+      </div>
+      <div class="player-bar big"><i id="glBar"></i></div>
+      <p class="gl-next" id="glNext"></p>
+      <ol class="ladder" id="glLadder"></ol>
+    </div>
+
+    <div class="card">
+      <h2>🔥 Sequência de estudos</h2>
+      <div class="streak-row">
+        <div class="streak-num"><b id="gsAtual">0</b><span>dias seguidos</span></div>
+        <div class="streak-num"><b id="gsMelhor">0</b><span>melhor sequência</span></div>
+      </div>
+      <p class="muted small-note" id="gsHoje"></p>
+      <div class="days" id="gDays" aria-label="Últimos 28 dias"></div>
+      <p class="muted small-note" style="margin-top:6px">Últimos 28 dias. Cada quadrado aceso é um dia com pelo menos uma questão respondida.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-row" style="margin-bottom:14px">
+        <h2 style="margin:0">🏆 Conquistas</h2>
+        <span class="chip" id="achCount"></span>
+      </div>
+      <div class="ach-grid" id="achGrid"></div>
+    </div>
+
+    <div class="card">
+      <h2>Como ganhar XP</h2>
+      <ul class="xp-rules">
+        <li><b>+10 XP</b> por acerto</li>
+        <li><b>+5 XP</b> de bônus ⚡ se acertar dentro do tempo-alvo</li>
+        <li><b>+25 XP</b> por simulado entregue</li>
+        <li><b>+20 a +400 XP</b> por conquista desbloqueada</li>
+        <li>Níveis: Candidato (0) → Escriturário (500) → Agente de TI (1.500) → Analista (4.000) → Gerente de TI (10.000)</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ===================== MEU DESEMPENHO ===================== -->
   <section id="perf" class="screen" hidden>
     <div class="page-head">
@@ -419,6 +486,19 @@
     </div>
   </div>
 </div>
+
+<div class="modal levelup" id="levelUp" hidden role="dialog" aria-modal="true" aria-labelledby="luTitle">
+  <div class="lu-card">
+    <div class="lu-confetti" id="luConfetti" aria-hidden="true"></div>
+    <div class="lu-badge" id="luIc">💻</div>
+    <p class="lu-kicker">Você subiu de nível!</p>
+    <h2 id="luTitle">Agente de TI</h2>
+    <p class="muted" id="luSub"></p>
+    <button class="btn btn-primary" id="luOk">Continuar</button>
+  </div>
+</div>
+<div class="ach-stack" id="achStack" aria-live="polite"></div>
+<div class="xp-layer" id="xpLayer" aria-hidden="true"></div>
 
 <div class="toast" id="toast"></div>
 

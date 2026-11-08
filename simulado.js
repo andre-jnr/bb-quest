@@ -366,7 +366,7 @@ function simCalcular(sim) {
 }
 // Leva as respostas para estatísticas, histórico de sessões e Caderno de Erros
 function simIntegrar(sim, rec) {
-  const respostas = [];
+  const respostas = [], ganhos = [];
   sim.questoes.forEach((q, i) => {
     const m = sim.respostas[i]; if (!m) return;
     const c = up(q.correta), ok = m === c;
@@ -381,13 +381,17 @@ function simIntegrar(sim, rec) {
     if (!ok) registrarErro(q, m, rec.fim);
     else if (e && !e.dominada) e.acertosDepois = (e.acertosDepois || 0) + 1;
     if (typeof srsResponder === 'function') srsResponder(q, ok);
+    if (typeof gameResponder === 'function') ganhos.push(gameResponder({ q, ok, tempo: sim.tempos[i] || 0, alvo: alvoDe(q) }));
   });
+  // Questões em branco não dão XP (são puladas acima); o simulado entregue rende +25 XP
+  if (typeof gameSimulado === 'function') ganhos.push(gameSimulado(rec));
   store.set('bbq.stats', STATS);
   saveCaderno(); updateErrosBadge();
   if (respostas.length) {
     saveSession({ id: 'sess-' + rec.id, tipo: 'simulado', inicio: rec.inicio, fim: rec.fim,
                   completa: true, planejadas: sim.questoes.length, respostas });
   }
+  return typeof gameMerge === 'function' ? gameMerge(ganhos) : null;
 }
 function simEntregar(auto) {
   if (!SIM || SIM.modo !== 'prova') return;
@@ -403,12 +407,13 @@ function simEntregar(auto) {
   SIMULADOS.push(rec);
   if (SIMULADOS.length > MAX_SIMULADOS) SIMULADOS = SIMULADOS.slice(-MAX_SIMULADOS);
   store.set('bbq.simulados', SIMULADOS);
-  simIntegrar(SIM, rec);
+  const ganho = simIntegrar(SIM, rec);
   store.del('bbq.simAtual');
   SIM.modo = 'revisao'; SIM.record = rec;
   renderSimResultado(rec);
   show('simResult');
   if (auto) toast('⏰ Tempo esgotado! Simulado entregue automaticamente.');
+  if (ganho) setTimeout(() => gameCelebrar(ganho), 400);
 }
 
 /* ---------------------------------------------------------------------
