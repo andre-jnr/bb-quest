@@ -1,0 +1,30 @@
+/* ---------- Questões de provas oficiais ---------- */
+/* Texto de apoio (texto da prova compartilhado por várias questões) */
+.texto-apoio {
+  margin: 0 0 16px; border: 1px solid var(--border); border-left: 4px solid var(--accent);
+  border-radius: 12px; background: var(--surface-2); overflow: hidden;
+}
+.texto-apoio summary {
+  cursor: pointer; padding: 10px 14px; font-size: 13px; font-weight: 750; color: var(--accent);
+  text-transform: uppercase; letter-spacing: .4px; list-style: none;
+}
+.texto-apoio summary::-webkit-details-marker { display: none; }
+.texto-apoio summary::before { content: "▸ "; }
+.texto-apoio[open] summary::before { content: "▾ "; }
+.ta-corpo {
+  padding: 0 16px 14px; font-size: 15px; line-height: 1.65;
+  max-height: 46vh; overflow-y: auto; overscroll-behavior: contain;
+}
+.ta-corpo ul { margin: 6px 0; padding-left: 20px; }
+
+/* Aviso de digitalização / figura ausente */
+.q-aviso {
+  margin: 0 0 14px; padding: 10px 12px; border-radius: 12px; font-size: 13.5px; line-height: 1.5;
+  background: var(--accent-soft); color: var(--text); border: 1px solid var(--border);
+}
+.q-aviso.grave { background: rgba(255, 214, 10, .16); border-color: var(--yellow-600); }
+
+.sim-provas { border-left: 4px solid var(--accent); }
+@media (max-width: 600px) {
+  .ta-corpo { max-height: 40vh; font-size: 14.5px; }
+}

@@ -128,9 +128,30 @@ let CADERNO = store.get('bbq.erros', null);
 
 function snapshotQ(q) {
   const { id, disciplina, assunto, dificuldade, fonte, tempoAlvoSeg, enunciado, alternativas,
-          correta, explicacaoCorreta, explicacaoAlternativas, tags } = q;
+          correta, explicacaoCorreta, explicacaoAlternativas, tags,
+          textoApoio, aviso, incompleta, ano, numero, paginasPdf } = q;
   return { id, disciplina, assunto, dificuldade, fonte, tempoAlvoSeg, enunciado, alternativas,
-           correta, explicacaoCorreta, explicacaoAlternativas, tags };
+           correta, explicacaoCorreta, explicacaoAlternativas, tags,
+           textoApoio, aviso, incompleta, ano, numero, paginasPdf };
+}
+
+// Questão de prova oficial (tag "oficial")
+const ehOficial = (q) => Array.isArray(q.tags) && q.tags.includes('oficial');
+function explicacaoDe(q) {
+  if (q.explicacaoCorreta) return q.explicacaoCorreta;
+  return ehOficial(q)
+    ? `Gabarito oficial: **${String(q.correta || '').toUpperCase()}**. A explicação desta questão da prova ainda não foi cadastrada.`
+    : 'Sem explicação cadastrada.';
+}
+
+// Blocos que antecedem o enunciado: aviso (digitalização/figura ausente) e texto de apoio
+function apoioHTML(q, { aberto = true } = {}) {
+  let h = '';
+  if (q.aviso) h += `<div class="q-aviso${q.incompleta ? ' grave' : ''}">${q.incompleta ? '⚠️' : 'ℹ️'} ${rich(q.aviso)}</div>`;
+  if (q.textoApoio) {
+    h += `<details class="texto-apoio"${aberto ? ' open' : ''}><summary>Texto de apoio</summary><div class="ta-corpo">${rich(q.textoApoio)}</div></details>`;
+  }
+  return h;
 }
 function saveCaderno() { store.set('bbq.erros', CADERNO); }
 function registrarErro(q, marcada, quando = new Date().toISOString()) {
@@ -170,6 +191,7 @@ function rich(s) {
     if (idx % 2 === 1) return '<pre><code>' + p.replace(/\n$/, '') + '</code></pre>';
     return p.replace(/`([^`]+)`/g, '<code>$1</code>')
             .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+            .replace(/(^|[\s(])_([^_<>\n]+)_(?=[\s.,;:)!?]|$)/g, '$1<em>$2</em>')
             .replace(/^\n+|\n+$/g, '')
             .replace(/\n/g, '<br>');
   }).join('');
@@ -228,11 +250,13 @@ function refreshAssuntos() {
   fillSelect($('fAssunto'), assuntos, 'Todos', $('fAssunto').value);
 }
 function filtered() {
-  const d = $('fDisc').value, a = $('fAssunto').value, dif = $('fDif').value, modo = $('fModo').value;
+  const d = $('fDisc').value, a = $('fAssunto').value, dif = $('fDif').value, modo = $('fModo').value, orig = $('fOrigem').value;
   return BANK.filter((q) => {
     if (d && q.disciplina !== d) return false;
     if (a && q.assunto !== a) return false;
     if (dif && q.dificuldade !== dif) return false;
+    if (orig === 'oficial' && !ehOficial(q)) return false;
+    if (orig === 'inedita' && ehOficial(q)) return false;
     const st = STATS[q.id];
     if (modo === 'ineditas' && st) return false;
     if (modo === 'erradas' && !(st && st.last === false)) return false;
@@ -284,7 +308,7 @@ function updateErrosBadge() {
   $('errosBadge').textContent = n > 99 ? '99+' : n;
 }
 $('fDisc').addEventListener('change', () => { refreshAssuntos(); updateCount(); });
-['fAssunto', 'fDif', 'fModo'].forEach((id) => $(id).addEventListener('change', updateCount));
+['fAssunto', 'fDif', 'fModo', 'fOrigem'].forEach((id) => $(id).addEventListener('change', updateCount));
 // Treino em andamento pede confirmação; o simulado é salvo e pausado automaticamente.
 function canLeave() { return $('quiz').hidden || confirmQuit(); }
 $('brand').addEventListener('click', () => { if (canLeave()) goHome(); });
@@ -346,7 +370,7 @@ function renderQuestion() {
     typeof srsChip === 'function' && srsChip(q.id)
   ].filter(Boolean).join('');
 
-  $('qEnunciado').innerHTML = rich(q.enunciado);
+  $('qEnunciado').innerHTML = apoioHTML(q) + rich(q.enunciado);
   $('qAlts').innerHTML = LETTERS.filter((L) => q.alternativas && q.alternativas[L] != null).map((L) =>
     `<button class="alt" data-l="${L}" aria-label="Alternativa ${L}">
        <span class="letter">${L}</span><span class="txt">${rich(q.alternativas[L])}</span>
@@ -440,7 +464,7 @@ function answer() {
           </div>` : ''}
         <div class="block">
           <h4>Por que a ${esc(correct)} está correta</h4>
-          <p>${rich(q.explicacaoCorreta || 'Sem explicação cadastrada.')}</p>
+          <p>${rich(explicacaoDe(q))}</p>
         </div>
         ${!ok && exp[S.selected] ? `<div class="block"><h4>Sobre a sua resposta (${esc(S.selected)})</h4><p>${rich(exp[S.selected])}</p></div>` : ''}
         ${others.length ? `<div class="block"><details class="all-exp"><summary>Ver comentário de todas as alternativas</summary><ul>
@@ -765,7 +789,7 @@ function erroCardHTML(e) {
     </div>
     <details class="enun">
       <summary><span class="lbl">Enunciado</span> <span class="excerpt muted">· ${esc(excerpt(q.enunciado))}</span></summary>
-      <div class="enunciado">${rich(q.enunciado)}</div>
+      <div class="enunciado">${apoioHTML(q, { aberto: false })}${rich(q.enunciado)}</div>
     </details>
     <div class="ans ans-wrong">
       <div class="ans-label">Você marcou</div>
@@ -775,7 +799,7 @@ function erroCardHTML(e) {
     <div class="ans ans-ok">
       <div class="ans-label">Resposta correta</div>
       <div class="ans-alt"><span class="letter-badge">${esc(correta)}</span><span>${rich(alts[correta] ?? '')}</span></div>
-      <p><b>Por que está certa:</b> ${rich(q.explicacaoCorreta || 'Sem explicação cadastrada.')}</p>
+      <p><b>Por que está certa:</b> ${rich(explicacaoDe(q))}</p>
     </div>
     <div class="erro-actions">${acoes}</div>
   </article>`;

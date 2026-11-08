@@ -1,8 +1,9 @@
-/* Banco de questões do BB Quest.
-   O conteúdo após "window.BBQ_QUESTOES =" é JSON puro: edite à vontade,
-   mantendo o formato de cada questão. Fica em .js e não em .json porque o
-   navegador bloqueia a leitura de .json ao abrir o index.html direto do disco. */
-window.BBQ_QUESTOES = [
+/* Questões inéditas no estilo Cesgranrio (escritas para o BB Quest).
+   Cada arquivo em data/ soma suas questões a window.BBQ_QUESTOES.
+   O conteúdo entre os colchetes é JSON puro: edite à vontade, mantendo o
+   formato de cada questão. Fica em .js e não em .json porque o navegador
+   bloqueia a leitura de .json ao abrir o index.html direto do disco. */
+window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
   {
     "id": "ti-python-0001",
     "disciplina": "Tecnologia da Informação",
@@ -601,4 +602,4 @@ window.BBQ_QUESTOES = [
       "cumsum"
     ]
   }
-];
+]);

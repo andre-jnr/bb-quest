@@ -17,9 +17,11 @@
 <link rel="stylesheet" href="css/revisao.css">
 <link rel="stylesheet" href="css/gamificacao.css">
 <link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/provas.css">
 
 <!-- Scripts: a ordem importa (dados → núcleo → módulos que dependem dele) -->
 <script src="data/questoes.js" defer></script>
+<script src="data/prova-2023.js" defer></script>
 <script src="js/app.js" defer></script>
 <script src="js/revisao.js" defer></script>
 <script src="js/gamificacao.js" defer></script>
@@ -113,6 +115,14 @@
             <option value="todas">Todas</option>
             <option value="ineditas">Nunca respondidas</option>
             <option value="erradas">Que errei da última vez</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fOrigem">Origem</label>
+          <select id="fOrigem">
+            <option value="">Todas</option>
+            <option value="oficial">Provas oficiais (2023)</option>
+            <option value="inedita">Inéditas (estilo Cesgranrio)</option>
           </select>
         </div>
         <div class="field">
@@ -282,6 +292,16 @@
           <button class="btn btn-ghost btn-sm" id="simDescartarBtn">Descartar</button>
           <button class="btn btn-primary" id="simContinuarBtn">Continuar →</button>
         </div>
+      </div>
+    </div>
+
+    <div class="card sim-provas" id="simProvasBox" hidden>
+      <div class="card-row">
+        <div>
+          <h2 style="margin-bottom:4px">📄 Provas anteriores</h2>
+          <p class="muted" style="margin:0;font-size:14px">Refaça a prova oficial completa, com as 70 questões na ordem original, 4 horas e a mesma correção com pesos.</p>
+        </div>
+        <div class="bank-actions" id="simProvasBtns"></div>
       </div>
     </div>
 

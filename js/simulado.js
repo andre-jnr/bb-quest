@@ -46,19 +46,25 @@ function disponibilidade() {
     return { ...c, peso: pesoDe(c.nome), pool, disponiveis: pool.length };
   });
 }
-function simIniciar() {
+// Provas oficiais disponíveis no banco (ex.: [2023])
+const anosDeProva = () => [...new Set(BANK.filter((q) => q.ano && ehOficial(q)).map((q) => q.ano))].sort();
+
+// ano = null → sorteio na proporção do edital; ano = 2023 → a prova original, na ordem
+function simIniciar(ano = null) {
   const atual = store.get('bbq.simAtual', null);
   if (atual && !confirm('Já existe um simulado em andamento. Descartá-lo e começar outro?')) return;
   const questoes = [], grupos = [];
   disponibilidade().forEach((c) => {
-    const sel = shuffle(c.pool).slice(0, c.qtd);
+    const sel = ano
+      ? c.pool.filter((q) => q.ano === ano && ehOficial(q)).sort((a, b) => a.numero - b.numero).slice(0, c.qtd)
+      : shuffle(c.pool).slice(0, c.qtd);
     grupos.push({ nome: c.nome, bloco: c.bloco, peso: c.peso, exigidas: c.qtd, aplicadas: sel.length, inicio: questoes.length });
     sel.forEach((q) => questoes.push(snapshotQ(q)));
   });
   if (!questoes.length) return toast('Não há questões das disciplinas do edital no banco.');
   const n = questoes.length;
   SIM = {
-    id: 'sim-' + Date.now(), inicio: new Date().toISOString(), modo: 'prova',
+    id: 'sim-' + Date.now(), inicio: new Date().toISOString(), modo: 'prova', origem: ano ? `Prova ${ano}` : null,
     gasto: 0, duracao: SIMULADO.duracaoSeg, parcial: n < totalExigido(),
     questoes, grupos, atual: 0,
     respostas: Array(n).fill(null), marcadas: Array(n).fill(false), tempos: Array(n).fill(0)
@@ -183,7 +189,7 @@ function renderSimQuestao(scroll = true) {
     status
   ].filter(Boolean).join('');
 
-  $('simEnunciado').innerHTML = rich(q.enunciado);
+  $('simEnunciado').innerHTML = apoioHTML(q) + rich(q.enunciado);
   $('simAlts').innerHTML = LETTERS.filter((L) => q.alternativas && q.alternativas[L] != null).map((L) => {
     let cls = '';
     if (rev) cls = L === correta ? 'correct' : L === resp ? 'wrong' : 'dim';
@@ -208,7 +214,7 @@ function renderSimQuestao(scroll = true) {
           <span class="t">${semDot(cor)} ${fmtTime(tempo)} de ${fmtTime(alvo)}</span>
         </div>
         <div class="fb-body">
-          <div class="block"><h4>Por que a ${esc(correta)} está correta</h4><p>${rich(q.explicacaoCorreta || 'Sem explicação cadastrada.')}</p></div>
+          <div class="block"><h4>Por que a ${esc(correta)} está correta</h4><p>${rich(explicacaoDe(q))}</p></div>
           ${resp && resp !== correta && exp[resp] ? `<div class="block"><h4>Por que a ${esc(resp)} está errada</h4><p>${rich(exp[resp])}</p></div>` : ''}
         </div>
       </div>`;
@@ -352,7 +358,7 @@ function simCalcular(sim) {
     { nome: 'Nenhuma disciplina zerada', zeradas, ok: zeradas.length === 0 }
   ];
   return {
-    id: sim.id, inicio: sim.inicio, fim: new Date().toISOString(),
+    id: sim.id, inicio: sim.inicio, fim: new Date().toISOString(), origem: sim.origem || null,
     gasto: Math.round(sim.gasto), duracao: sim.duracao,
     esperado: totalExigido(), aplicadas: sim.questoes.length, parcial: !!sim.parcial,
     nota, pontos: tot.pontos, pontosMax: tot.max, acertos: tot.acertos,
@@ -424,7 +430,7 @@ function renderSimResultado(rec) {
   $('srStatus').textContent = rec.aprovado ? '✓ APROVADO' : '✕ ELIMINADO';
   $('srStatus').className = 'sim-status ' + (rec.aprovado ? 'ok' : 'err');
   const data = new Date(rec.inicio).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
-  $('srSub').textContent = `${data} · ${rec.acertos} acerto(s) em ${rec.aplicadas} questões · ${fmtPts(rec.pontos)} de ${fmtPts(rec.pontosMax)} pontos · tempo ${fmtHMS(rec.gasto)} de ${fmtHMS(rec.duracao)}`;
+  $('srSub').textContent = `${rec.origem ? rec.origem + ' · ' : ''}${data} · ${rec.acertos} acerto(s) em ${rec.aplicadas} questões · ${fmtPts(rec.pontos)} de ${fmtPts(rec.pontosMax)} pontos · tempo ${fmtHMS(rec.gasto)} de ${fmtHMS(rec.duracao)}`;
   $('srParcial').hidden = !rec.parcial;
   $('srParcial').textContent = rec.parcial
     ? `⚠ Simulado parcial: ${rec.aplicadas} de ${rec.esperado} questões (faltam questões no banco). A nota foi calculada proporcionalmente, em escala de 0 a 100.`
@@ -522,7 +528,10 @@ function renderSimHome() {
     ? `<span class="c-vermelho"><b>Faltam ${faltam} questões no banco</b></span> para um simulado completo. Você pode fazer um simulado parcial com as ${aplicaveis} disponíveis (nota proporcional) ou importar mais questões.`
     : '<span class="c-verde"><b>Banco completo para o simulado.</b></span> Cada simulado sorteia novas questões em cada disciplina.';
   $('simStartBtn').disabled = !aplicaveis;
-  $('simStartBtn').textContent = faltam && aplicaveis ? `Iniciar simulado parcial (${aplicaveis} questões) →` : 'Iniciar simulado →';
+  $('simStartBtn').textContent = faltam && aplicaveis ? `Sortear simulado parcial (${aplicaveis} questões) →` : 'Sortear simulado →';
+  const anos = anosDeProva();
+  $('simProvasBox').hidden = !anos.length;
+  $('simProvasBtns').innerHTML = anos.map((a) => `<button class="btn btn-blue" data-ano="${a}">📄 Fazer a prova de ${a} →</button>`).join('');
 
   const atual = store.get('bbq.simAtual', null);
   $('simAndamento').hidden = !atual;
@@ -538,7 +547,7 @@ function renderSimHome() {
       <div class="info">
         <div>${esc(new Date(r.inicio).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }))}
           <span class="chip ${r.aprovado ? 'chip-ok' : 'chip-err'}" style="font-size:11px;padding:1px 7px;margin-left:6px">${r.aprovado ? 'aprovado' : 'eliminado'}</span>
-          ${r.parcial ? '<span class="chip chip-inc">parcial</span>' : ''}</div>
+          ${r.parcial ? '<span class="chip chip-inc">parcial</span>' : ''}${r.origem ? '<span class="chip chip-sim">' + esc(r.origem) + '</span>' : ''}</div>
         <div>${r.acertos}/${r.aplicadas} acertos · ${fmtPts(r.pontos)}/${fmtPts(r.pontosMax)} pts · Básicos ${pctTxt(r.criterios[1].valor)} · Específicos ${pctTxt(r.criterios[2].valor)} · ${fmtHMS(r.gasto)}</div>
       </div>
       <span class="muted" aria-hidden="true">›</span>
@@ -565,7 +574,8 @@ function renderSimHomeCard() {
 
 $('homeSimBtn').addEventListener('click', () => (store.get('bbq.simAtual', null) ? simContinuar() : openSimHome()));
 $('simHomeBack').addEventListener('click', goHome);
-$('simStartBtn').addEventListener('click', simIniciar);
+$('simStartBtn').addEventListener('click', () => simIniciar());
+$('simProvasBtns').addEventListener('click', (e) => { const b = e.target.closest('[data-ano]'); if (b) simIniciar(+b.dataset.ano); });
 $('simContinuarBtn').addEventListener('click', simContinuar);
 $('simDescartarBtn').addEventListener('click', simDescartar);
 
