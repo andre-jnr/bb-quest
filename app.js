@@ -302,8 +302,11 @@ function toast(msg) {
   clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2400);
 }
 function show(id) {
-  ['home', 'quiz', 'result', 'perf', 'erros'].forEach((s) => { $(s).hidden = s !== id; });
+  // Saindo da prova do simulado: pausa o cronômetro geral (definido em simulado.js)
+  if (id !== 'sim' && typeof simPausar === 'function') simPausar();
+  document.querySelectorAll('main > .screen').forEach((s) => { s.hidden = s.id !== id; });
   $('actionbar').hidden = id !== 'quiz';
+  if ($('simbar')) $('simbar').hidden = id !== 'sim';
   window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
 }
 
@@ -387,6 +390,7 @@ function renderHome() {
     ? `${pend} questão(ões) para revisar` + (dom ? ` · ${dom} dominada(s)` : '')
     : (dom ? `Tudo revisado! ${dom} questão(ões) dominada(s). 🎉` : 'Vazio por enquanto. As questões que você errar aparecem aqui.');
   updateErrosBadge();
+  if (typeof renderSimHomeCard === 'function') renderSimHomeCard();
 }
 function updateErrosBadge() {
   const n = pendentesCaderno().length;
@@ -395,7 +399,9 @@ function updateErrosBadge() {
 }
 $('fDisc').addEventListener('change', () => { refreshAssuntos(); updateCount(); });
 ['fAssunto', 'fDif', 'fModo'].forEach((id) => $(id).addEventListener('change', updateCount));
-$('brand').addEventListener('click', () => { if ($('quiz').hidden || confirmQuit()) goHome(); });
+// Treino em andamento pede confirmação; o simulado é salvo e pausado automaticamente.
+function canLeave() { return $('quiz').hidden || confirmQuit(); }
+$('brand').addEventListener('click', () => { if (canLeave()) goHome(); });
 
 $('startBtn').addEventListener('click', () => {
   let list = filtered();
@@ -754,7 +760,7 @@ function renderPerf() {
     return `<li class="res-item">
       <span class="ic ${pct >= LIMITE_FRACO ? 'ok' : 'err'}" style="font-size:11px;width:40px;height:40px">${pct}%</span>
       <div class="info">
-        <div>${esc(data)}${s.completa ? '' : '<span class="chip chip-inc">incompleta</span>'}</div>
+        <div>${esc(data)}${s.tipo === 'simulado' ? '<span class="chip chip-sim">simulado</span>' : ''}${s.completa ? '' : '<span class="chip chip-inc">incompleta</span>'}</div>
         <div>${r.total} questão(ões) · ${r.acertos} ✓ ${r.erros} ✕ · ${fmtPts(r.pontos)}/${fmtPts(r.pontosMax)} pts · ${esc(discs.join(', '))}</div>
       </div>
     </li>`;
@@ -763,7 +769,7 @@ function renderPerf() {
 }
 function openPerf() { clearInterval(S.timerId); renderPerf(); show('perf'); }
 
-$('perfBtn').addEventListener('click', () => { if ($('quiz').hidden || confirmQuit()) openPerf(); });
+$('perfBtn').addEventListener('click', () => { if (canLeave()) openPerf(); });
 $('homePerfBtn').addEventListener('click', openPerf);
 $('perfBackBtn').addEventListener('click', goHome);
 $('perfPeriodo').addEventListener('change', renderPerf);
@@ -895,7 +901,7 @@ function renderErros() {
 }
 function openErros() { clearInterval(S.timerId); renderErros(); show('erros'); }
 
-$('errosBtn').addEventListener('click', () => { if ($('quiz').hidden || confirmQuit()) openErros(); });
+$('errosBtn').addEventListener('click', () => { if (canLeave()) openErros(); });
 $('homeErrosBtn').addEventListener('click', openErros);
 $('errosBackBtn').addEventListener('click', goHome);
 $('eDisc').addEventListener('change', renderErros);

@@ -7,6 +7,7 @@
 <title>BB Quest</title>
 <link rel="stylesheet" href="style.css">
 <script src="app.js" defer></script>
+<script src="simulado.js" defer></script>
 </head>
 <body>
 
@@ -112,6 +113,16 @@
       </div>
     </div>
 
+    <div class="card sim-home-card">
+      <div class="card-row">
+        <div>
+          <h2 style="margin-bottom:4px">📝 Modo Simulado</h2>
+          <p class="muted" id="homeSimTxt" style="margin:0;font-size:14px">70 questões na proporção do edital · 4 horas</p>
+        </div>
+        <button class="btn btn-primary" id="homeSimBtn">Abrir simulado →</button>
+      </div>
+    </div>
+
     <div class="card">
       <h2>Banco de questões</h2>
       <p class="muted" style="margin:0 0 12px;font-size:14px">Importe um arquivo <code>.json</code> com um array de questões no formato do BB Quest. Questões com o mesmo <code>id</code> são atualizadas.</p>
@@ -204,6 +215,109 @@
     <div id="eList" class="erro-list"></div>
   </section>
 
+  <!-- ===================== SIMULADO: INÍCIO ===================== -->
+  <section id="simHome" class="screen" hidden>
+    <div class="page-head">
+      <button class="btn btn-ghost btn-sm" id="simHomeBack">← Início</button>
+      <h2>Modo Simulado</h2>
+    </div>
+
+    <div class="card hero">
+      <h2>Simulado · Agente de Tecnologia</h2>
+      <p>70 questões sorteadas na proporção do edital, 4 horas para as objetivas (a redação fica fora), navegação livre, marcação para revisar e cartão-resposta. Nota de 0 a 100 com os pesos do edital.</p>
+    </div>
+
+    <div class="card sim-andamento" id="simAndamento" hidden>
+      <div class="card-row">
+        <div>
+          <h2 style="margin-bottom:4px">⏸ Simulado em andamento</h2>
+          <p class="muted" id="simAndamentoTxt" style="margin:0;font-size:14px"></p>
+        </div>
+        <div class="bank-actions">
+          <button class="btn btn-ghost btn-sm" id="simDescartarBtn">Descartar</button>
+          <button class="btn btn-primary" id="simContinuarBtn">Continuar →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Composição da prova</h2>
+      <div class="table-wrap"><table class="sim-table" id="simComp"></table></div>
+      <p class="small-note" id="simCompNote"></p>
+      <ul class="crit-rules">
+        <li>Nota total ≥ 50 pontos (50%)</li>
+        <li>≥ 50% dos pontos em Conhecimentos Básicos</li>
+        <li>≥ 50% dos pontos em Conhecimentos Específicos</li>
+        <li>Nenhuma disciplina com nota zero</li>
+      </ul>
+      <div class="start-row">
+        <span class="muted" style="font-size:13px">O tempo só corre com o simulado aberto na tela.</span>
+        <button class="btn btn-primary" id="simStartBtn">Iniciar simulado</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Histórico de simulados</h2>
+      <ul class="res-list" id="simHist"></ul>
+    </div>
+  </section>
+
+  <!-- ===================== SIMULADO: PROVA / REVISÃO ===================== -->
+  <section id="sim" class="screen" hidden>
+    <div class="quiz-head">
+      <button class="btn btn-ghost btn-sm" id="simExitBtn" title="Pausar e sair">⏸</button>
+      <div class="progress">
+        <div class="progress-label"><span id="simPos">Questão 1 de 70</span><span id="simCount"></span></div>
+        <div class="bar"><i id="simBar" style="width:0"></i></div>
+      </div>
+      <button class="btn btn-primary btn-sm" id="simEntregarBtn">Entregar</button>
+    </div>
+
+    <div class="card">
+      <div class="meta" id="simMeta"></div>
+      <div class="enunciado" id="simEnunciado"></div>
+      <div class="alts" id="simAlts"></div>
+      <div class="sim-tools" id="simTools">
+        <button class="btn btn-ghost btn-sm" id="simFlagBtn">🚩 Marcar para revisar</button>
+        <button class="btn btn-ghost btn-sm" id="simClearBtn">Limpar resposta</button>
+        <span class="hint muted">A–E responde · ← → navega · M marca · C cartão</span>
+      </div>
+      <div id="simFeedback"></div>
+    </div>
+  </section>
+
+  <!-- ===================== SIMULADO: RESULTADO ===================== -->
+  <section id="simResult" class="screen" hidden>
+    <div class="page-head">
+      <button class="btn btn-ghost btn-sm" id="srBack">← Simulados</button>
+      <h2>Resultado do simulado</h2>
+    </div>
+
+    <div class="card sim-score">
+      <div class="sim-nota"><b id="srNota">0,0</b><span>/ 100</span></div>
+      <div class="sim-status" id="srStatus"></div>
+      <p class="muted" id="srSub" style="margin:10px 0 0"></p>
+      <p class="sim-parcial" id="srParcial" hidden></p>
+    </div>
+
+    <div class="card">
+      <h2>Critérios de eliminação</h2>
+      <ul class="crit-list" id="srCrit"></ul>
+      <p class="small-note muted">"Aprovado" aqui significa não eliminado pelos critérios das objetivas. A classificação final também depende da redação e da nota de corte.</p>
+    </div>
+
+    <div class="card">
+      <h2>Por bloco e disciplina</h2>
+      <div class="table-wrap"><table class="sim-table" id="srTable"></table></div>
+    </div>
+
+    <div class="res-actions">
+      <button class="btn btn-blue" id="srRevisarBtn">Revisar questões</button>
+      <button class="btn btn-primary" id="srNovoBtn">Novo simulado</button>
+      <button class="btn btn-ghost" id="srHomeBtn">Início</button>
+    </div>
+  </section>
+
   <!-- ===================== MEU DESEMPENHO ===================== -->
   <section id="perf" class="screen" hidden>
     <div class="page-head">
@@ -260,6 +374,33 @@
   <div class="actionbar-inner">
     <span class="hint" id="hint">Atalhos: teclas A–E para escolher · Enter para confirmar</span>
     <button class="btn btn-primary" id="actionBtn" disabled>Confirmar resposta</button>
+  </div>
+</div>
+
+<div class="actionbar" id="simbar" hidden>
+  <div class="actionbar-inner sim-bar">
+    <button class="btn btn-ghost" id="simPrevBtn" aria-label="Questão anterior">‹ <span class="lbl">Anterior</span></button>
+    <div class="timer t-verde" id="simClock" title="Tempo restante">
+      <span class="sem" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span id="simClockTxt">4:00:00</span>
+    </div>
+    <button class="btn btn-ghost" id="simCartaoBtn" aria-label="Abrir cartão-resposta">▦ <span class="lbl">Cartão</span> <b id="simCartaoCount">0/70</b></button>
+    <button class="btn btn-primary" id="simNextBtn"><span class="lbl">Próxima</span> ›</button>
+  </div>
+</div>
+
+<div class="modal" id="cartao" hidden role="dialog" aria-modal="true" aria-labelledby="cartaoTitle">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <h2 id="cartaoTitle">Cartão-resposta</h2>
+      <button class="btn btn-ghost btn-sm" id="cartaoClose" aria-label="Fechar">✕</button>
+    </div>
+    <div class="ct-legend" id="ctLegend"></div>
+    <div class="modal-body" id="ctBody"></div>
+    <div class="modal-foot">
+      <span class="muted" id="ctResumo"></span>
+      <button class="btn btn-primary" id="ctEntregar">Entregar simulado</button>
+    </div>
   </div>
 </div>
 
