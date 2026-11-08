@@ -1,11 +1,11 @@
 /* =====================================================================
    QUESTÕES
-   Ficam em questoes.js (window.BBQ_QUESTOES), carregado antes deste arquivo.
+   Ficam em data/questoes.js (window.BBQ_QUESTOES), carregado antes deste arquivo.
    Questões importadas pelo botão "Importar JSON" ficam no navegador
    (bbq.bank) e são somadas às do arquivo.
    ===================================================================== */
 const FILE_QUESTIONS = Array.isArray(window.BBQ_QUESTOES) ? window.BBQ_QUESTOES : [];
-if (!FILE_QUESTIONS.length) console.warn('BB Quest: questoes.js não carregou ou está vazio.');
+if (!FILE_QUESTIONS.length) console.warn('BB Quest: data/questoes.js não carregou ou está vazio.');
 
 /* =====================================================================
    ESTADO E PERSISTÊNCIA
@@ -16,8 +16,8 @@ const store = {
   del(k) { try { localStorage.removeItem(k); } catch (e) {} }
 };
 
-// Banco = questões salvas no navegador (importadas) + as do questoes.js.
-// Para o mesmo id, vale a versão do arquivo, então editar questoes.js sempre tem efeito.
+// Banco = questões salvas no navegador (importadas) + as do data/questoes.js.
+// Para o mesmo id, vale a versão do arquivo, então editar data/questoes.js sempre tem efeito.
 function montarBanco() {
   const map = new Map((store.get('bbq.bank', null) || []).map((q) => [q.id, q]));
   FILE_QUESTIONS.forEach((q) => map.set(q.id, q));
@@ -722,7 +722,7 @@ $('exportBtn').addEventListener('click', () => {
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 });
 $('resetBankBtn').addEventListener('click', () => {
-  if (!confirm(`Remover as questões importadas e manter só as ${FILE_QUESTIONS.length} do arquivo questoes.js?`)) return;
+  if (!confirm(`Remover as questões importadas e manter só as ${FILE_QUESTIONS.length} do arquivo data/questoes.js?`)) return;
   store.del('bbq.bank'); BANK = montarBanco(); renderHome(); toast('Banco restaurado.');
 });
 /* =====================================================================

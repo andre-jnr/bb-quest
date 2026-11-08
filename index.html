@@ -5,16 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b3aa8">
 <title>BB Quest</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css">
-<script src="questoes.js" defer></script>
-<script src="app.js" defer></script>
-<script src="revisao.js" defer></script>
-<script src="gamificacao.js" defer></script>
-<script src="dashboard.js" defer></script>
-<script src="simulado.js" defer></script>
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icons/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+<!-- Estilos: a ordem importa (base primeiro, depois cada funcionalidade) -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/caderno.css">
+<link rel="stylesheet" href="css/tempo.css">
+<link rel="stylesheet" href="css/simulado.css">
+<link rel="stylesheet" href="css/revisao.css">
+<link rel="stylesheet" href="css/gamificacao.css">
+<link rel="stylesheet" href="css/dashboard.css">
+
+<!-- Scripts: a ordem importa (dados → núcleo → módulos que dependem dele) -->
+<script src="data/questoes.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/revisao.js" defer></script>
+<script src="js/gamificacao.js" defer></script>
+<script src="js/dashboard.js" defer></script>
+<script src="js/simulado.js" defer></script>
 </head>
 <body>
 
