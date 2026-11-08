@@ -310,3 +310,60 @@ details.all-exp li b { color: var(--muted); }
   pre { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---------- Placar da sessão ---------- */
+.scoreboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+#quiz .scoreboard { margin-bottom: 14px; }
+.result-summary .scoreboard { margin-top: 18px; }
+.sb {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 8px 10px; text-align: center; min-width: 0;
+}
+.card .sb { background: var(--surface-2); border-color: transparent; }
+.sb b { display: block; font-size: 21px; line-height: 1.25; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sb b small { font-size: 12px; color: var(--muted); font-weight: 600; }
+.sb span { display: block; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb b.ok { color: var(--ok); }
+.sb b.err { color: var(--err); }
+.sb b.pts { color: var(--accent); }
+.sb b.low { color: var(--err); }
+
+/* ---------- Meu desempenho ---------- */
+.page-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.page-head h2 { margin: 0; font-size: 20px; flex: 1; letter-spacing: -.2px; }
+.select-sm {
+  padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font-size: 14px;
+}
+.card-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.small-note { font-size: 13px; margin: 12px 0 0; }
+.legend-low { font-size: 12.5px; font-weight: 650; color: var(--err); display: inline-flex; align-items: center; gap: 6px; }
+.legend-low::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--err); }
+
+.topic .name { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.topic .right { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13.5px; white-space: nowrap; }
+.topic .right strong { color: var(--text); font-variant-numeric: tabular-nums; }
+.topic.low .name, .topic.low .right strong { color: var(--err); }
+.topic.low .bar i { background: var(--err); }
+.topic.low { padding: 10px 12px; margin: 0 -12px; border-radius: 12px; background: var(--err-bg); }
+.topic.low .bar { background: rgba(207, 52, 52, .15); }
+.chip-peso { background: var(--surface-2); color: var(--muted); font-size: 11.5px; padding: 2px 8px; margin-left: 6px; }
+.btn-train { padding: 4px 10px; min-height: 0; font-size: 12.5px; border-radius: 8px; }
+
+.group + .group { margin-top: 20px; }
+.group h3 {
+  font-size: 12.5px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted);
+  margin: 0 0 10px; display: flex; justify-content: space-between; gap: 8px;
+}
+.empty { text-align: center; color: var(--muted); padding: 8px 0; margin: 0; font-size: 14.5px; }
+.chip-inc { background: rgba(255, 214, 10, .2); color: var(--warn); font-size: 11px; padding: 1px 7px; margin-left: 6px; vertical-align: 1px; }
+
+@media (max-width: 600px) {
+  .scoreboard { gap: 6px; }
+  .sb { padding: 7px 4px; border-radius: 12px; }
+  .sb b { font-size: 17px; }
+  .sb b small { font-size: 10.5px; }
+  .sb span { font-size: 10.5px; }
+  .topic { grid-template-columns: 1fr; }
+  .topic .right { white-space: normal; flex-wrap: wrap; }
+}

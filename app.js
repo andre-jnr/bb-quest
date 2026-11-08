@@ -150,6 +150,65 @@ const DIF_LABEL = { facil: 'Fácil', media: 'Média', dificil: 'Difícil' };
 const $ = (id) => document.getElementById(id);
 
 /* =====================================================================
+   PESOS DO EDITAL E PLACAR
+   Pontuação ponderada = soma dos pesos das questões acertadas.
+   ===================================================================== */
+const PESOS_EDITAL = [
+  { nome: 'Língua Portuguesa',                 peso: 1.5, chaves: ['portugues'] },
+  { nome: 'Matemática',                        peso: 1.5, chaves: ['matematica'] },
+  { nome: 'Probabilidade e Estatística',       peso: 1.5, chaves: ['probabilidade', 'estatistica', '=p&e', '=pe'] },
+  { nome: 'Conhecimentos Bancários',           peso: 1.5, chaves: ['bancari'] },
+  { nome: 'Tecnologia da Informação',          peso: 1.5, chaves: ['tecnologia', 'informatica', '=ti'] },
+  { nome: 'Língua Inglesa',                    peso: 1.0, chaves: ['ingles'] },
+  { nome: 'Atualidades do Mercado Financeiro', peso: 1.0, chaves: ['atualidades'] }
+];
+const PESO_PADRAO = 1.0;
+
+function norm(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); }
+// Chaves com "=" exigem nome exato (ex.: "TI"); as demais casam por trecho do nome.
+function pesoDe(disciplina) {
+  const n = norm(disciplina);
+  const hit = PESOS_EDITAL.find((p) => p.chaves.some((k) => (k[0] === '=' ? n === k.slice(1) : n.includes(k))));
+  return hit ? hit.peso : PESO_PADRAO;
+}
+function fmtPts(n) { return (+n || 0).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+function pctOf(a, t) { return t ? Math.round((a / t) * 100) : 0; }
+
+// respostas: [{ ok, peso, tempo }] → resumo
+function summarize(respostas) {
+  const s = { total: 0, acertos: 0, erros: 0, pontos: 0, pontosMax: 0, tempo: 0 };
+  respostas.forEach((r) => {
+    s.total++; s.pontosMax += r.peso; s.tempo += r.tempo || 0;
+    if (r.ok) { s.acertos++; s.pontos += r.peso; } else s.erros++;
+  });
+  return s;
+}
+function scoreboardHTML(s) {
+  const pct = pctOf(s.acertos, s.total);
+  return `
+    <div class="sb"><b class="ok">${s.acertos}</b><span>Acertos</span></div>
+    <div class="sb"><b class="err">${s.erros}</b><span>Erros</span></div>
+    <div class="sb"><b class="${s.total && pct < 60 ? 'low' : ''}">${s.total ? pct + '%' : '–'}</b><span>% de acertos</span></div>
+    <div class="sb" title="Soma dos pesos do edital das questões acertadas"><b class="pts">${fmtPts(s.pontos)}<small> / ${fmtPts(s.pontosMax)}</small></b><span>Pontos ponderados</span></div>`;
+}
+
+/* =====================================================================
+   HISTÓRICO DE SESSÕES (localStorage: bbq.sessions)
+   Cada sessão: { id, inicio, fim, completa, planejadas, respostas: [...] }
+   A sessão é salva a cada resposta, então nada se perde se a aba fechar.
+   ===================================================================== */
+const MAX_SESSOES = 300;
+let SESSIONS = store.get('bbq.sessions', []);
+if (!Array.isArray(SESSIONS)) SESSIONS = [];
+
+function saveSession(sess) {
+  const i = SESSIONS.findIndex((s) => s.id === sess.id);
+  if (i >= 0) SESSIONS[i] = sess; else SESSIONS.push(sess);
+  if (SESSIONS.length > MAX_SESSOES) SESSIONS = SESSIONS.slice(-MAX_SESSOES);
+  store.set('bbq.sessions', SESSIONS);
+}
+
+/* =====================================================================
    UTILITÁRIOS
    ===================================================================== */
 function esc(s) {
@@ -178,7 +237,7 @@ function toast(msg) {
   clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2400);
 }
 function show(id) {
-  ['home', 'quiz', 'result'].forEach((s) => { $(s).hidden = s !== id; });
+  ['home', 'quiz', 'result', 'perf'].forEach((s) => { $(s).hidden = s !== id; });
   $('actionbar').hidden = id !== 'quiz';
   window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
 }
@@ -246,22 +305,16 @@ function renderHome() {
   $('stDone').textContent = done;
   $('stRate').textContent = t ? Math.round((a / t) * 100) + '%' : '–';
 
-  // Por assunto
-  const by = {};
-  BANK.forEach((q) => {
-    const k = q.assunto || 'Sem assunto';
-    by[k] = by[k] || { total: 0, t: 0, a: 0 };
-    by[k].total++;
-    const s = STATS[q.id]; if (s) { by[k].t += s.t; by[k].a += s.a; }
-  });
-  $('topicList').innerHTML = Object.keys(by).sort((x, y) => x.localeCompare(y, 'pt-BR')).map((k) => {
-    const v = by[k], pct = v.t ? Math.round((v.a / v.t) * 100) : 0;
-    return `<div class="topic">
-      <span>${esc(k)} <span class="muted">· ${v.total} questão${v.total > 1 ? 'ões' : ''}</span></span>
-      <span class="muted">${v.t ? pct + '% (' + v.a + '/' + v.t + ')' : 'sem respostas'}</span>
-      <div class="bar"><i style="width:${pct}%"></i></div>
-    </div>`;
-  }).join('') || '<p class="muted" style="margin:0">Nenhuma questão no banco.</p>';
+  // Resumo do histórico de sessões
+  const last = SESSIONS[SESSIONS.length - 1];
+  if (!last) {
+    $('homePerfTxt').textContent = 'Nenhuma sessão ainda. Faça um treino para começar seu histórico.';
+  } else {
+    const s = summarize(last.respostas);
+    const fracos = assuntosFracos().length;
+    $('homePerfTxt').textContent = `${SESSIONS.length} sessão(ões) · última: ${s.acertos}/${s.total} (${pctOf(s.acertos, s.total)}%), ${fmtPts(s.pontos)} pts`
+      + (fracos ? ` · ${fracos} assunto(s) abaixo de 60%` : '');
+  }
 }
 $('fDisc').addEventListener('change', () => { refreshAssuntos(); updateCount(); });
 ['fAssunto', 'fDif', 'fModo'].forEach((id) => $(id).addEventListener('change', updateCount));
@@ -281,6 +334,11 @@ $('startBtn').addEventListener('click', () => {
 function startQuiz(list) {
   if (!list.length) return toast('Nenhuma questão para os filtros escolhidos.');
   S.queue = list; S.i = 0; S.results = [];
+  S.session = {
+    id: 'sess-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+    inicio: new Date().toISOString(), fim: null, completa: false,
+    planejadas: list.length, respostas: []
+  };
   show('quiz');
   renderQuestion();
 }
@@ -300,14 +358,14 @@ function renderQuestion() {
   const q = S.queue[S.i];
   S.selected = null; S.answered = false;
 
-  const hits = S.results.filter((r) => r.ok).length;
   $('qPos').textContent = `Questão ${S.i + 1} de ${S.queue.length}`;
-  $('qScore').textContent = `${hits} acerto${hits === 1 ? '' : 's'}`;
+  $('qBoard').innerHTML = scoreboardHTML(summarize(S.session.respostas));
   $('qBar').style.width = (S.i / S.queue.length) * 100 + '%';
 
   const st = STATS[q.id];
   $('qMeta').innerHTML = [
     q.assunto && `<span class="chip">${esc(q.assunto)}</span>`,
+    `<span class="chip" title="Peso da disciplina no edital">peso ${fmtPts(pesoDe(q.disciplina))}</span>`,
     q.dificuldade && `<span class="chip ${esc(q.dificuldade)}">${esc(DIF_LABEL[q.dificuldade] || q.dificuldade)}</span>`,
     q.fonte && `<span class="chip" style="background:var(--surface-2);color:var(--muted)">${esc(q.fonte)}</span>`,
     st && `<span class="chip" style="background:var(--surface-2);color:var(--muted)">já respondida ${st.t}× · ${st.a} acerto${st.a === 1 ? '' : 's'}</span>`
@@ -363,6 +421,15 @@ function answer() {
   STATS[q.id] = s; store.set('bbq.stats', STATS);
   S.results.push({ q, chosen: S.selected, ok, time: S.elapsed });
 
+  // Histórico da sessão (salvo a cada resposta)
+  S.session.respostas.push({
+    qid: q.id, disciplina: q.disciplina || 'Sem disciplina', assunto: q.assunto || 'Sem assunto',
+    peso: pesoDe(q.disciplina), ok, marcada: S.selected, correta: correct,
+    tempo: Math.round(S.elapsed), em: new Date().toISOString()
+  });
+  S.session.fim = new Date().toISOString();
+  saveSession(S.session);
+
   // Feedback
   const exp = q.explicacaoAlternativas || {};
   const others = LETTERS.filter((L) => L !== correct && exp[L]);
@@ -386,8 +453,7 @@ function answer() {
       </div>
     </div>`;
 
-  const hits = S.results.filter((r) => r.ok).length;
-  $('qScore').textContent = `${hits} acerto${hits === 1 ? '' : 's'}`;
+  $('qBoard').innerHTML = scoreboardHTML(summarize(S.session.respostas));
   $('qBar').style.width = ((S.i + 1) / S.queue.length) * 100 + '%';
   const last = S.i === S.queue.length - 1;
   setAction(last ? 'Ver resultado' : 'Próxima questão →', false);
@@ -401,7 +467,7 @@ function next() {
 $('actionBtn').addEventListener('click', () => (S.answered ? next() : answer()));
 
 function confirmQuit() {
-  return S.results.length === S.queue.length || confirm('Sair do treino? As respostas já dadas ficam salvas nas estatísticas.');
+  return S.results.length === S.queue.length || confirm('Sair do treino? As respostas já dadas ficam salvas no seu histórico como sessão incompleta.');
 }
 function goHome() { clearInterval(S.timerId); renderHome(); show('home'); }
 $('quitBtn').addEventListener('click', () => { if (confirmQuit()) goHome(); });
@@ -424,9 +490,14 @@ document.addEventListener('keydown', (e) => {
    ===================================================================== */
 function finish() {
   clearInterval(S.timerId);
+  S.session.completa = true;
+  S.session.fim = new Date().toISOString();
+  saveSession(S.session);
+
   const total = S.results.length, hits = S.results.filter((r) => r.ok).length;
   const pct = total ? Math.round((hits / total) * 100) : 0;
   const time = S.results.reduce((acc, r) => acc + r.time, 0);
+  $('rBoard').innerHTML = scoreboardHTML(summarize(S.session.respostas));
 
   $('rPct').textContent = pct + '%';
   $('rFrac').textContent = `${hits} de ${total}`;
@@ -442,7 +513,7 @@ function finish() {
       <span class="ic ${r.ok ? 'ok' : 'err'}">${r.ok ? '✓' : '✕'}</span>
       <div class="info">
         <div>${esc(r.q.assunto || r.q.id)}</div>
-        <div>Sua: ${esc(r.chosen)} · Correta: ${esc(r.q.correta)} · ${fmtTime(r.time)}</div>
+        <div>Sua: ${esc(r.chosen)} · Correta: ${esc(r.q.correta)} · ${fmtTime(r.time)} · ${r.ok ? '+' + fmtPts(pesoDe(r.q.disciplina)) + ' pts' : '0 pts'}</div>
       </div>
     </li>`).join('');
   const wrong = S.results.filter((r) => !r.ok).length;
@@ -452,6 +523,125 @@ function finish() {
 }
 $('retryWrongBtn').addEventListener('click', () => startQuiz(S.results.filter((r) => !r.ok).map((r) => r.q)));
 $('newBtn').addEventListener('click', goHome);
+$('resultPerfBtn').addEventListener('click', openPerf);
+
+/* =====================================================================
+   MEU DESEMPENHO
+   ===================================================================== */
+const LIMITE_FRACO = 60; // % abaixo do qual o assunto é destacado em vermelho
+
+function sessoesNoPeriodo() {
+  const dias = +($('perfPeriodo') ? $('perfPeriodo').value : 0);
+  if (!dias) return SESSIONS;
+  const desde = Date.now() - dias * 86400000;
+  return SESSIONS.filter((s) => new Date(s.fim || s.inicio).getTime() >= desde);
+}
+function respostasNoPeriodo() {
+  return sessoesNoPeriodo().flatMap((s) => s.respostas || []);
+}
+// Agrupa respostas: { chave → { acertos, total, pontos, pontosMax, ... } }
+function agrupar(respostas, keyFn) {
+  const out = {};
+  respostas.forEach((r) => {
+    const k = keyFn(r);
+    const g = out[k] || (out[k] = { respostas: [] });
+    g.respostas.push(r);
+  });
+  Object.values(out).forEach((g) => Object.assign(g, summarize(g.respostas)));
+  return out;
+}
+function assuntosFracos(respostas = SESSIONS.flatMap((s) => s.respostas || [])) {
+  const g = agrupar(respostas, (r) => r.disciplina + '\u0000' + r.assunto);
+  return Object.values(g).filter((v) => pctOf(v.acertos, v.total) < LIMITE_FRACO);
+}
+
+function topicRow({ nome, chipHTML = '', v, trainBtn = '' }) {
+  const pct = pctOf(v.acertos, v.total);
+  const low = pct < LIMITE_FRACO;
+  return `<div class="topic${low ? ' low' : ''}">
+    <span class="name">${esc(nome)}${chipHTML}</span>
+    <span class="right"><strong>${pct}%</strong> ${v.acertos}/${v.total} · ${fmtPts(v.pontos)}/${fmtPts(v.pontosMax)} pts ${trainBtn}</span>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+  </div>`;
+}
+
+function renderPerf() {
+  const sess = sessoesNoPeriodo();
+  const resp = sess.flatMap((s) => s.respostas || []);
+  const tot = summarize(resp);
+
+  $('perfBoard').innerHTML = scoreboardHTML(tot);
+  $('perfInfo').innerHTML = resp.length
+    ? `${sess.length} sessão(ões) · ${tot.total} questões · tempo total ${fmtTime(tot.tempo)}. `
+      + `Pontos = acertos × peso do edital (Português, Matemática, P&amp;E, Bancários e TI = 1,5; Inglês e Atualidades = 1,0).`
+    : 'Sem respostas neste período. Faça um treino para gerar seu histórico.';
+
+  // Por disciplina
+  const byDisc = agrupar(resp, (r) => r.disciplina);
+  const discs = Object.keys(byDisc).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  $('perfDisc').innerHTML = discs.length
+    ? discs.map((d) => topicRow({
+        nome: d, v: byDisc[d],
+        chipHTML: `<span class="chip chip-peso">peso ${fmtPts(pesoDe(d))}</span>`
+      })).join('')
+    : '<p class="empty">Nada por aqui ainda.</p>';
+
+  // Por assunto, agrupado por disciplina (piores primeiro)
+  const bancoAssuntos = new Set(BANK.map((q) => q.disciplina + '\u0000' + q.assunto));
+  $('perfAssunto').innerHTML = discs.length ? discs.map((d) => {
+    const byAss = agrupar(byDisc[d].respostas, (r) => r.assunto);
+    const lista = Object.keys(byAss).sort((a, b) =>
+      pctOf(byAss[a].acertos, byAss[a].total) - pctOf(byAss[b].acertos, byAss[b].total) || a.localeCompare(b, 'pt-BR'));
+    const fracos = lista.filter((a) => pctOf(byAss[a].acertos, byAss[a].total) < LIMITE_FRACO).length;
+    return `<div class="group">
+      <h3><span>${esc(d)}</span>${fracos ? `<span style="color:var(--err)">${fracos} abaixo de ${LIMITE_FRACO}%</span>` : ''}</h3>
+      <div class="topic-list">${lista.map((a) => {
+        const podeTreinar = bancoAssuntos.has(d + '\u0000' + a);
+        const btn = podeTreinar
+          ? `<button class="btn btn-ghost btn-train" data-disc="${esc(d)}" data-assunto="${esc(a)}">Treinar</button>` : '';
+        return topicRow({ nome: a, v: byAss[a], trainBtn: btn });
+      }).join('')}</div>
+    </div>`;
+  }).join('') : '<p class="empty">Nada por aqui ainda.</p>';
+
+  // Histórico de sessões (mais recentes primeiro)
+  const recentes = sess.slice().reverse().slice(0, 30);
+  $('perfSessions').innerHTML = recentes.length ? recentes.map((s) => {
+    const r = summarize(s.respostas || []);
+    const pct = pctOf(r.acertos, r.total);
+    const data = new Date(s.inicio).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+    const discs = uniq((s.respostas || []).map((x) => x.disciplina));
+    return `<li class="res-item">
+      <span class="ic ${pct >= LIMITE_FRACO ? 'ok' : 'err'}" style="font-size:11px;width:40px;height:40px">${pct}%</span>
+      <div class="info">
+        <div>${esc(data)}${s.completa ? '' : '<span class="chip chip-inc">incompleta</span>'}</div>
+        <div>${r.total} questão(ões) · ${r.acertos} ✓ ${r.erros} ✕ · ${fmtPts(r.pontos)}/${fmtPts(r.pontosMax)} pts · ${esc(discs.join(', '))}</div>
+      </div>
+    </li>`;
+  }).join('') : '<li class="empty">Nenhuma sessão registrada.</li>';
+  $('clearHistBtn').hidden = !SESSIONS.length;
+}
+function openPerf() { clearInterval(S.timerId); renderPerf(); show('perf'); }
+
+$('perfBtn').addEventListener('click', () => { if ($('quiz').hidden || confirmQuit()) openPerf(); });
+$('homePerfBtn').addEventListener('click', openPerf);
+$('perfBackBtn').addEventListener('click', goHome);
+$('perfPeriodo').addEventListener('change', renderPerf);
+$('perfAssunto').addEventListener('click', (e) => {
+  const b = e.target.closest('.btn-train'); if (!b) return;
+  $('fDisc').value = b.dataset.disc; refreshAssuntos();
+  $('fAssunto').value = b.dataset.assunto;
+  $('fDif').value = ''; $('fModo').value = 'todas';
+  updateCount();
+  let list = filtered();
+  if ($('fShuffle').checked) list = shuffle(list);
+  const qtd = +$('fQtd').value;
+  startQuiz(qtd > 0 ? list.slice(0, qtd) : list);
+});
+$('clearHistBtn').addEventListener('click', () => {
+  if (!confirm('Apagar o histórico de todas as sessões? Esta ação não pode ser desfeita.')) return;
+  SESSIONS = []; store.del('bbq.sessions'); renderPerf(); toast('Histórico apagado.');
+});
 
 /* =====================================================================
    BANCO: IMPORTAR / EXPORTAR / RESTAURAR
@@ -493,8 +683,10 @@ $('resetBankBtn').addEventListener('click', () => {
   BANK = SAMPLE_QUESTIONS; store.del('bbq.bank'); renderHome(); toast('Banco restaurado.');
 });
 $('resetStatsBtn').addEventListener('click', () => {
-  if (!confirm('Apagar todo o histórico de respostas?')) return;
-  STATS = {}; store.del('bbq.stats'); renderHome(); toast('Estatísticas zeradas.');
+  if (!confirm('Apagar todas as estatísticas e o histórico de sessões?')) return;
+  STATS = {}; store.del('bbq.stats');
+  SESSIONS = []; store.del('bbq.sessions');
+  renderHome(); toast('Estatísticas e histórico zerados.');
 });
 
 /* ===================================================================== */

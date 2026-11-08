@@ -20,6 +20,9 @@
       </div>
     </div>
     <div class="spacer"></div>
+    <button class="icon-btn" id="perfBtn" aria-label="Meu desempenho" title="Meu desempenho">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+    </button>
     <button class="icon-btn" id="themeBtn" aria-label="Alternar tema claro/escuro" title="Alternar tema"></button>
   </div>
 </header>
@@ -86,8 +89,13 @@
     </div>
 
     <div class="card">
-      <h2>Desempenho por assunto</h2>
-      <div class="topic-list" id="topicList"></div>
+      <div class="card-row">
+        <div>
+          <h2 style="margin-bottom:4px">Meu desempenho</h2>
+          <p class="muted" id="homePerfTxt" style="margin:0;font-size:14px"></p>
+        </div>
+        <button class="btn btn-blue" id="homePerfBtn">Ver desempenho →</button>
+      </div>
     </div>
 
     <div class="card">
@@ -108,7 +116,7 @@
     <div class="quiz-head">
       <button class="btn btn-ghost btn-sm" id="quitBtn" aria-label="Sair do treino">✕</button>
       <div class="progress">
-        <div class="progress-label"><span id="qPos">Questão 1 de 1</span><span id="qScore">0 acertos</span></div>
+        <div class="progress-label"><span id="qPos">Questão 1 de 1</span></div>
         <div class="bar"><i id="qBar" style="width:0"></i></div>
       </div>
       <div class="timer" id="timer" title="Tempo nesta questão / tempo-alvo">
@@ -116,6 +124,8 @@
         <span id="timerTxt">0:00</span>
       </div>
     </div>
+
+    <div class="scoreboard" id="qBoard" aria-live="polite"></div>
 
     <div class="card">
       <div class="meta" id="qMeta"></div>
@@ -137,6 +147,7 @@
       </div>
       <h2 id="rTitle">Treino concluído</h2>
       <p class="muted" id="rSub" style="margin:0"></p>
+      <div class="scoreboard" id="rBoard"></div>
     </div>
     <div class="card">
       <h2>Revisão</h2>
@@ -144,6 +155,46 @@
       <div class="res-actions">
         <button class="btn btn-blue" id="retryWrongBtn">Refazer as erradas</button>
         <button class="btn btn-primary" id="newBtn">Novo treino</button>
+        <button class="btn btn-ghost" id="resultPerfBtn">Meu desempenho</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MEU DESEMPENHO ===================== -->
+  <section id="perf" class="screen" hidden>
+    <div class="page-head">
+      <button class="btn btn-ghost btn-sm" id="perfBackBtn">← Início</button>
+      <h2>Meu desempenho</h2>
+      <select id="perfPeriodo" class="select-sm" aria-label="Período">
+        <option value="0">Todo o período</option>
+        <option value="7">Últimos 7 dias</option>
+        <option value="30">Últimos 30 dias</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <div class="scoreboard" id="perfBoard"></div>
+      <p class="muted small-note" id="perfInfo"></p>
+    </div>
+
+    <div class="card">
+      <h2>Por disciplina</h2>
+      <div class="topic-list" id="perfDisc"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-row" style="margin-bottom:14px">
+        <h2 style="margin:0">Por assunto</h2>
+        <span class="legend-low">Em vermelho: abaixo de 60%</span>
+      </div>
+      <div id="perfAssunto"></div>
+    </div>
+
+    <div class="card">
+      <h2>Histórico de sessões</h2>
+      <ul class="res-list" id="perfSessions"></ul>
+      <div class="res-actions">
+        <button class="btn btn-ghost" id="clearHistBtn">Apagar histórico</button>
       </div>
     </div>
   </section>
