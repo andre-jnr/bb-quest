@@ -1,6 +1,7 @@
 /* Prova oficial do Banco do Brasil 2023 — Agente de Tecnologia (Cesgranrio).
-   70 questões com gabarito, convertidas de prova_2023.json (extraído do PDF).
-   Explicações vêm de data/fontes/explicacoes-2023.json (questões sem código).
+   70 questões com gabarito, convertidas de data/fontes/prova_2023.json (extraído do PDF).
+   Gerado por tools/converter-prova.js — não edite à mão.
+   Explicações (50 questões) vêm de data/fontes/explicacoes-2023.json.
    O conteúdo entre os colchetes é JSON puro. */
 window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
   {

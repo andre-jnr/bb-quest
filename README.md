@@ -10,10 +10,11 @@ App/
 ├── index.html            Página única com todas as telas
 ├── data/                 Bancos de questões (cada arquivo soma suas questões)
 │   ├── questoes.js       Questões inéditas no estilo Cesgranrio
+│   ├── prova-2021.js     Prova oficial BB 2021 (70 questões + gabarito) — gerado
 │   ├── prova-2023.js     Prova oficial BB 2023 (70 questões + gabarito) — gerado
 │   └── fontes/               (não são carregados pelo app)
-│       ├── prova_2023.json         Extração original do PDF
-│       └── explicacoes-2023.json   Explicações por número de questão
+│       ├── prova_<ano>.json        Extração original do PDF
+│       └── explicacoes-<ano>.json  Explicações por número de questão (opcional)
 ├── js/                   Carregados nesta ordem pelo index.html
 │   ├── app.js            Núcleo: estado, pesos/tempo-alvo, treino, resultado,
 │   │                     Meu desempenho, Caderno de Erros, importar/exportar banco
@@ -27,7 +28,9 @@ App/
 │   ├── gamificacao.css · dashboard.css
 │   └── provas.css        Texto de apoio e avisos das questões de prova
 ├── tools/
-│   └── converter-prova-2023.js   Gera data/prova-2023.js a partir da fonte
+│   ├── converter-prova.js    Gera data/prova-<ano>.js a partir das fontes
+│   ├── provas/<ano>.js       Correções específicas de cada prova (assuntos, textos, código…)
+│   └── lib/prova-utils.js    Funções comuns às correções
 └── assets/icons/         favicon.svg, favicon-32.png, apple-touch-icon.png
 ```
 
@@ -48,18 +51,24 @@ Campos opcionais além do formato básico: `textoApoio` (texto da prova comparti
 entre questões), `aviso` (nota exibida acima do enunciado), `incompleta` (depende de
 figura que não está no texto), `ano`, `numero` e `paginasPdf`.
 
-## Prova 2023
+## Provas oficiais (2021 e 2023)
 
-`data/prova-2023.js` é gerado — não edite à mão. Para corrigir algo, ajuste
-`data/fontes/prova_2023.json`, as explicações em `data/fontes/explicacoes-2023.json`
+Os arquivos `data/prova-<ano>.js` são gerados — não edite à mão. Para corrigir algo,
+ajuste `data/fontes/prova_<ano>.json`, as explicações em `data/fontes/explicacoes-<ano>.json`
 (chave = número da questão; explique a correta e as 4 erradas) ou as correções em
-`tools/converter-prova-2023.js`, e rode, na pasta `App`:
+`tools/provas/<ano>.js`, e rode, na pasta `App`:
 
 ```
-node tools/converter-prova-2023.js data/fontes/prova_2023.json data/prova-2023.js
+node tools/converter-prova.js 2021
+node tools/converter-prova.js 2023
 ```
 
-As questões 66, 67, 68 e 69 dependem de figuras do PDF e aparecem com aviso.
+Para incluir outra prova: coloque a extração em `data/fontes/prova_<ano>.json`, crie
+`tools/provas/<ano>.js` (use 2021 ou 2023 como modelo), rode o conversor e acrescente
+`<script src="data/prova-<ano>.js" defer></script>` ao `index.html`.
+
+Questões que dependem de figuras do PDF aparecem com aviso: 2021 — 29, 51, 52 e 56;
+2023 — 66, 67, 68 e 69.
 
 ## Onde ficam os dados do usuário
 
