@@ -1,7 +1,7 @@
 /* Prova oficial do Banco do Brasil 2021 — Agente de Tecnologia (Cesgranrio).
    70 questões com gabarito, convertidas de data/fontes/prova_2021.json (extraído do PDF).
    Gerado por tools/converter-prova.js — não edite à mão.
-   Explicações (53 questões) vêm de data/fontes/explicacoes-2021.json.
+   Explicações (58 questões) vêm de data/fontes/explicacoes-2021.json.
    O conteúdo entre os colchetes é JSON puro. */
 window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
   {
@@ -1225,6 +1225,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "oficial"
     ],
     "aviso": "Atenção: com o comando como aparece no texto extraído (`T1 LEFT JOIN T2`), as linhas a mais do LEFT JOIN seriam linhas de **T1** sem correspondência em T2 (alternativa C). O gabarito informado é D (linhas de T2 sem correspondência em T1), o que valeria para `T2 LEFT JOIN T1`. Confira o enunciado e o gabarito definitivo no PDF (pág. 13).",
+    "explicacaoCorreta": "**Atenção: o gabarito informado (D) diverge da lógica do comando.** O `LEFT JOIN` mantém **todas** as linhas de T1 (a tabela da esquerda), mesmo sem par em T2, e o `JOIN` mantém só as linhas com correspondência. A diferença de 214 − 190 = 24 linhas vem, portanto, de linhas de **T1** cuja CHAVE não existe em T2, que é o que diz a alternativa C. Linhas de T2 sem par em T1 (alternativa D) são descartadas pelas **duas** consultas e não mudam nenhuma contagem. Simulando: com 24 linhas a mais em T1 sem par, o resultado foi LEFT JOIN = 214 e JOIN = 190; com 24 linhas a mais em T2 sem par, foi 190 nas duas. O enunciado extraído confere com a prova publicada (`T1 LEFT JOIN T2`), e o gabarito D aparece também em fontes não oficiais. A alternativa D só estaria certa se a consulta fosse `T2 LEFT JOIN T1` (ou um RIGHT JOIN). Confira o gabarito definitivo da Cesgranrio.",
+    "explicacaoAlternativas": {
+      "A": "Errada: uma CHAVE repetida em T2 (por fazer parte de uma chave composta) multiplica as linhas nas **duas** consultas igualmente; não explica a diferença. Na simulação, deu 214 e 214.",
+      "B": "Errada: a mesma lógica: repetições de CHAVE afetam LEFT JOIN e JOIN da mesma forma, pois só as linhas sem correspondência fazem diferença.",
+      "C": "Considerada errada pelo gabarito informado, mas é ela que descreve o que realmente produz a diferença: as 24 linhas de T1 sem correspondência em T2 aparecem no LEFT JOIN (com as colunas de T2 nulas) e somem no JOIN. Veja a explicação acima.",
+      "E": "Errada: se todas as chaves de T1 estão em T2, as duas consultas retornam as mesmas linhas; campos nulos nas outras colunas de T2 não alteram a contagem. Na simulação, deu 190 e 190."
+    },
     "paginasPdf": [
       13
     ]
@@ -1250,6 +1257,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Para selecionar várias colunas de um DataFrame, passa-se uma **lista** de nomes entre os colchetes de indexação: `dp[[\"pais\", \"ano\", \"expectativa de vida\", \"renda per capita\"]]`. Os colchetes de fora indexam o DataFrame; os de dentro criam a lista. A execução retorna um DataFrame só com essas quatro colunas.",
+    "explicacaoAlternativas": {
+      "A": "Errada: com um só par de colchetes, os nomes separados por vírgula formam uma **tupla**, que o pandas procura como se fosse o nome de uma única coluna (KeyError).",
+      "C": "Errada: usa parênteses, como se o DataFrame fosse uma função; a execução dá TypeError (“DataFrame object is not callable”).",
+      "D": "Errada: mesmo com a lista, os parênteses tentam “chamar” o DataFrame (TypeError).",
+      "E": "Errada: a expressão interna já é o erro da alternativa A (KeyError); e `dp[dp[...]]` seria a sintaxe de filtrar linhas por uma condição, e não de selecionar colunas."
+    },
     "paginasPdf": [
       13
     ]
@@ -1332,6 +1346,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "`a > 5` gera uma máscara booleana do mesmo formato de `a`; `a[a > 5]` usa essa máscara para **extrair** os elementos em que ela é True. O resultado de uma indexação booleana é sempre um array de **uma dimensão**, com os valores na ordem de leitura (linha a linha): `[6 7 8 9]`.",
+    "explicacaoAlternativas": {
+      "A": "Errada: essa é a máscara `a > 5`, e não o resultado de `a[a > 5]`; a máscara serve para selecionar os valores, não é o que se imprime.",
+      "B": "Errada: um array NumPy não mistura booleanos e números dessa forma, e a indexação booleana não preserva a forma 3×3; ela devolve só os valores selecionados.",
+      "C": "Errada: o resultado não é organizado por linhas nem tem listas vazias; é um único array 1-D com os valores selecionados.",
+      "D": "Errada: os elementos que não satisfazem a condição são **descartados**, e não substituídos por False."
+    },
     "paginasPdf": [
       14
     ]
@@ -1357,6 +1378,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Com dois arrays NumPy do mesmo tamanho, o operador `*` multiplica **elemento a elemento**: 5000×1, 6000×2, 7000×3, 8000×4. A execução dá `[ 5000 12000 21000 32000]`.",
+    "explicacaoAlternativas": {
+      "A": "Errada: 70000 é a **soma** dos produtos, isto é, o produto escalar (`np.dot(valorAplicado, taxaJuros)`), e não o resultado de `*`.",
+      "B": "Errada: 260000 = (5000 + 6000 + 7000 + 8000) × (1 + 2 + 3 + 4), a soma de um array vezes a soma do outro; não é o que `*` faz.",
+      "D": "Errada: essa matriz 4×4 é o produto externo `np.outer(valorAplicado, taxaJuros)`, que combina cada valor com cada taxa; `*` não faz isso com dois vetores do mesmo tamanho.",
+      "E": "Errada: é o produto externo na ordem inversa (`np.outer(taxaJuros, valorAplicado)`); também não é o resultado de `*`."
+    },
     "paginasPdf": [
       14
     ]
@@ -1414,6 +1442,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "B atende a todas as regras. `CNPJ CHAR(14) PRIMARY KEY`: texto de tamanho fixo 14, que **preserva zeros à esquerda**, e é a chave primária. `NOME VARCHAR(20)`: sem restrição, aceita NULL, que é o padrão. `PAIS VARCHAR(15) NOT NULL`: obrigatório. Testado no SQLite e no DuckDB: o CNPJ '00123456000100' foi guardado intacto, e PAIS nulo e CNPJ repetido foram rejeitados.",
+    "explicacaoAlternativas": {
+      "A": "Errada: `INTEGER` descarta os zeros à esquerda ('00123456000100' vira 123456000100), e `ACCEPT NULL` não existe em SQL (erro de sintaxe). Aceitar nulos é o comportamento padrão, sem palavra-chave.",
+      "C": "Errada: não define a chave primária, proíbe nulo em NOME (que deveria aceitar) e permite nulo em PAIS (que deveria ser obrigatório).",
+      "D": "Errada: a cláusula `PRIMARY KEY (CNPJ)` está **fora** dos parênteses da tabela (erro de sintaxe), e NOME foi declarado `NOT NULL`, mas deveria aceitar nulo.",
+      "E": "Errada: `INTEGER` perde os zeros à esquerda (e `INTEGER(14)` nem é um tipo válido no SQL Server), e a `PRIMARY KEY` também está fora dos parênteses (erro de sintaxe)."
+    },
     "paginasPdf": [
       15
     ]

@@ -1,7 +1,7 @@
 /* Prova oficial do Banco do Brasil 2023 — Agente de Tecnologia (Cesgranrio).
    70 questões com gabarito, convertidas de data/fontes/prova_2023.json (extraído do PDF).
    Gerado por tools/converter-prova.js — não edite à mão.
-   Explicações (50 questões) vêm de data/fontes/explicacoes-2023.json.
+   Explicações (58 questões) vêm de data/fontes/explicacoes-2023.json.
    O conteúdo entre os colchetes é JSON puro. */
 window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
   {
@@ -1166,6 +1166,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "No scikit-learn, cria-se o modelo com `LinearRegression()` (sem dados) e ajusta-se com `.fit(x, y)`. Como `fit` devolve o próprio modelo, `model = skl.LinearRegression().fit(x, y)` já deixa `model` treinado. Executando, `model.coef_[0]` = 2 e `model.intercept_` = 3, exatamente a reta y = 2x + 3 usada para gerar os dados.",
+    "explicacaoAlternativas": {
+      "A": "Errada: não existe `lr` no módulo `sklearn.linear_model` (a execução dá AttributeError). A classe se chama `LinearRegression`.",
+      "B": "Errada: a forma `.fit(x, y)` está certa, mas `skl.lr` não existe (AttributeError).",
+      "C": "Errada: o construtor `LinearRegression` não recebe os dados de treino; passar `x` e `y` gera TypeError. Os dados vão no método `fit`.",
+      "D": "Errada: de novo os dados são passados ao construtor, agora numa lista (TypeError); além disso, o modelo nunca é treinado com `fit`."
+    },
     "paginasPdf": [
       12
     ]
@@ -1426,6 +1433,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Para selecionar várias colunas de um DataFrame, passa-se uma **lista** de nomes dentro dos colchetes: `ef[['x','y']]` (os colchetes de fora indexam; os de dentro formam a lista). `ef` já contém só as linhas em que z é False (índices 0 e 2), e o resultado é exatamente a saída pedida, com as colunas x e y.",
+    "explicacaoAlternativas": {
+      "A": "Errada: `ef['x','y']` passa a **tupla** ('x', 'y') como se fosse o nome de uma única coluna, o que dá KeyError. Para várias colunas, é preciso uma lista: `ef[['x','y']]`.",
+      "B": "Errada: `ef[]` com colchetes vazios é erro de sintaxe em Python.",
+      "D": "Errada: DataFrame não tem método `cols` (AttributeError).",
+      "E": "Errada: também usa o método inexistente `cols`; passar a lista não resolve (AttributeError)."
+    },
     "paginasPdf": [
       14
     ]
@@ -1611,6 +1625,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "`b` é uma matriz 1×4 e `c = b.transpose()` é 4×1. Então: `b.dot(c)` é o produto matricial 1×4 · 4×1 = matriz **1×1**, impressa como `[[39]]` (1 + 4 + 9 + 25). `sum(b)` é a função `sum` do Python, que percorre as **linhas** do array; b tem uma só linha, então o resultado é essa linha: `[1 2 3 5]`. `sum(c)` soma as 4 linhas de c, cada uma do tipo [k], e dá `[11]`. Saída: `[[39]] [1 2 3 5] [11]`.",
+    "explicacaoAlternativas": {
+      "A": "Errada: o produto de matrizes 1×4 por 4×1 é uma matriz 1×1 (`[[39]]`), e não o escalar 39; e `sum(b)` dá a linha `[1 2 3 5]`, e não `[11]`.",
+      "B": "Errada: `b.dot(c)` é `[[39]]` (matriz), e `sum(c)` devolve um array `[11]`, e não o número 11. Seria 11 com `np.sum(c)` ou `c.sum()`.",
+      "C": "Errada: o produto tem duas dimensões (1×1), por isso é impresso `[[39]]`, e não `[39]`; e `sum(c)` é `[11]`.",
+      "D": "Errada: `sum(b)` não soma todos os elementos; o `sum` do Python percorre o primeiro eixo (linhas) e, com uma só linha, devolve `[1 2 3 5]`."
+    },
     "paginasPdf": [
       15
     ]
@@ -1668,6 +1689,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "A subconsulta encontra os CNPJs que **têm** a característica de sigla 'ESG' (junção de Tem com Caracteristica), e o `NOT IN` devolve as empresas que **não** estão nessa lista. Assim aparecem também as empresas sem nenhuma característica cadastrada. Testando com uma empresa com ESG e outra característica, uma sem nenhuma característica e uma só com outra característica, o resultado são as duas últimas, como esperado.",
+    "explicacaoAlternativas": {
+      "A": "Errada: a tabela Caracteristica não está no FROM, então `Caracteristica.Sigla` não pode ser usada (erro “no such column”); além disso, retornaria todas as colunas (`*`), e não só CNPJ e razão social.",
+      "B": "Errada: retornaria as empresas que **têm** a característica, o oposto do pedido. Além disso, compara `cod` (numérico) com o texto 'ESG' e usa `Tem.cod` depois de dar o apelido T à tabela (erro). Mesmo corrigido o apelido, o resultado é vazio.",
+      "C": "Errada: compara `nome` em vez de `sigla` e testa linha a linha. Uma empresa com ESG **e** outra característica aparece pela outra característica (no teste, a empresa ESG veio duas vezes), e as empresas sem nenhuma característica somem por causa do JOIN.",
+      "E": "Errada: compara `Empresa.CNPJ` com `Tem.cod`, colunas sem relação entre si, e compara `cod` com 'ESG'; além disso, retorna todas as colunas de Empresa. No teste, o resultado foi vazio."
+    },
     "paginasPdf": [
       15
     ]
@@ -1725,6 +1753,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "O comando junta Pessoa e Faixa (`P.faixaEtaria = F.nome`), filtra quem nasceu no RJ e as faixas com `maiorIdade <= 19`, ou seja, só “Jovens”. Os “Idosos” têm maiorIdade nula, e NULL <= 19 é desconhecido, então ficam de fora. `COUNT(*)` devolve **quantas** pessoas são jovens nascidas no RJ. No teste, com 2 jovens do RJ, 1 jovem de SP, 1 adulto e 1 idoso do RJ, o resultado foi 2.",
+    "explicacaoAlternativas": {
+      "B": "Errada: o SELECT só tem `COUNT(*)`; o resultado é um número, e não uma lista de nomes e emails.",
+      "C": "Errada: não há `GROUP BY`; o comando conta pessoas, e não grupos de faixas etárias.",
+      "D": "Errada: não há `UNION`; é uma única consulta com junção e filtros.",
+      "E": "Errada: não há agrupamento por UF; o filtro fixa a UF 'RJ' e conta pessoas."
+    },
     "paginasPdf": [
       16
     ]
@@ -1750,6 +1785,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "Listar duas tabelas no FROM **sem condição de junção** produz o **produto cartesiano**: cada linha de Empresa combinada com cada linha de UF. O comando devolve todos os pares (CNPJ, sigla) possíveis. No teste, 3 empresas × 2 UFs = 6 linhas.",
+    "explicacaoAlternativas": {
+      "A": "Errada: não há nenhuma ligação entre empresa e UF da sede; Empresa nem tem coluna de UF, só `endereco`. Além disso, o comando retorna também o CNPJ.",
+      "B": "Errada: não existe condição comparando o nome da UF com a razão social; sem WHERE, todos os pares aparecem.",
+      "C": "Errada: o comando retorna pares (CNPJ, sigla), e não só o CNPJ, e não aplica filtro algum.",
+      "D": "Errada: associar cada empresa à UF da sua sede exigiria uma condição de junção (e uma coluna de UF em Empresa). Sem ela, cada empresa aparece com **todas** as UFs."
+    },
     "paginasPdf": [
       16
     ]
@@ -1807,6 +1849,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "A coluna `atividade` de Empresa guarda o **código** CNAE (é chave estrangeira para `CNAE.codigo`). Basta filtrar `atividade = '4120-4/00'` e projetar só `CNPJ, razaoSocial`; não é preciso juntar com a tabela CNAE. No teste, retornou exatamente as duas construtoras.",
+    "explicacaoAlternativas": {
+      "A": "Errada: retorna **todas** as colunas (`*`) de todas as empresas e seus CNAEs; falta o filtro pelo código 4120-4/00.",
+      "B": "Errada: compara `atividade`, que guarda o código, com a **descrição** “construção de edifícios”; nenhuma linha casa. Além disso, retorna todas as colunas.",
+      "C": "Errada: a tabela CNAE não tem as colunas CNPJ e razaoSocial; a consulta dá erro.",
+      "D": "Errada: compara `C.codigo` com a descrição em texto em vez do código '4120-4/00'; o resultado é vazio."
+    },
     "paginasPdf": [
       17
     ]
@@ -1889,6 +1938,13 @@ window.BBQ_QUESTOES = (window.BBQ_QUESTOES || []).concat([
       "cesgranrio",
       "oficial"
     ],
+    "explicacaoCorreta": "`np.where(condição, valor_se_verdadeiro, valor_se_falso)` avalia a condição elemento a elemento. Com `stars >= 4`, as notas **4 e 5** recebem 'bom' e as notas 1, 2 e 3 recebem 'ruim'. A execução confirma: {1: ruim, 2: ruim, 3: ruim, 4: bom, 5: bom}.",
+    "explicacaoAlternativas": {
+      "A": "Errada: 2 e 3 não satisfazem `stars >= 4`, então recebem 'ruim'. “Entre 2 e 5” seria a condição `stars >= 2`.",
+      "C": "Errada: a nota 3 recebe 'ruim' e a nota 5 recebe 'bom'; a condição é maior ou igual a 4, e não “entre 3 e 4”.",
+      "D": "Errada: inverte os papéis. Quando a condição é verdadeira (4 e 5), `np.where` usa o 2º argumento, 'bom'.",
+      "E": "Errada: a nota 4 satisfaz `stars >= 4` e recebe 'bom'; só 1, 2 e 3 recebem 'ruim'."
+    },
     "paginasPdf": [
       18
     ]
